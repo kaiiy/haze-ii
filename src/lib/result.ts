@@ -13,7 +13,7 @@ export class Failure {
   public readonly success = false;
   public readonly error: Error;
 
-  constructor(error: Error) {
-    this.error = error;
+  constructor(error: Error | string) {
+    this.error = error instanceof Error ? error : new Error(error);
   }
 }
