@@ -1,3 +1,4 @@
+import { KeyboardEventHandler, useState } from "react";
 import { Failure, Result, Success } from "@/lib/result";
 
 type Vector = {
@@ -110,10 +111,20 @@ const Sense1 = () => {
     throw startPositionResult.error;
   }
   const player = startPositionResult.value;
-  const historyIndex = 0;
+  const [historyIndex, setHistoryIndex] = useState(0);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+    if (e.key === "ArrowRight") {
+      setHistoryIndex((prev) => Math.min(prev + 1, ACTION_HISTORY.length - 1));
+    } else if (e.key === "ArrowLeft") {
+      setHistoryIndex((prev) => Math.max(prev - 1, 0));
+    }
   };
+
+  const action = ACTION_HISTORY[historyIndex];
+  const currentCell = board.cells.find((cell) =>
+    isVectorEqual(cell.position, player)
+  );
 
   return (
     <div onKeyDown={handleKeyDown}>
