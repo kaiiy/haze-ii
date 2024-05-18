@@ -10,7 +10,6 @@ type ContainerProps = {
 const Container = ({ children, widthRatio, windowSize }: ContainerProps) => {
   return (
     <div className="flex justify-center w-screen h-screen">
-      {/* TODO: w-1/2 は適宜変更 */}
       <div
         className="h-full border"
         style={{ width: String(windowSize.width * widthRatio) + "px" }}
