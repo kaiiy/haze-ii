@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: volta-cli/action@v4
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build website
+        run: yarn build
+
+    #   - uses: peaceiris/actions-gh-pages@v4
+    #     if: ${{ github.ref == 'refs/heads/main' }}
+    #     with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       publish_dir: ./dist
