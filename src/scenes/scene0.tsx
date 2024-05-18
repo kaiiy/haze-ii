@@ -94,7 +94,11 @@ const getStartPosition = (board: Board): Result<Vector> => {
 
 const Sense1 = () => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
-  const player = getStartPosition(board);
+  const startPositionResult = getStartPosition(board);
+  if (!startPositionResult.success) {
+    throw startPositionResult.error;
+  }
+  const player = startPositionResult.value;
 
   return (
     <div>
