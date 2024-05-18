@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from "react";
+import Scene0 from "./scenes/scene0";
 
 const CONTAINER_WIDTH_RATIO = 0.5;
 
@@ -58,6 +59,8 @@ const App = () => {
       <Canvas>
         <div>width: {windowSize.width}</div>
         <div>height: {windowSize.height}</div>
+        <hr />
+        <Scene0 />
       </Canvas>
     </Container>
   );

@@ -1,5 +1,3 @@
-import { Failure, Result, Success } from "@/lib/result";
-
 type Vector = {
   x: number;
   y: number;
@@ -74,16 +72,6 @@ const isPlayerOnStartCell = (board: Board, player: Vector): boolean => {
   const startCell = startCells[0];
   return isVectorEqual(player, startCell.position);
 };
-
-type Action = "UP" | "DOWN" | "LEFT" | "RIGHT";
-const ACTION_HISTORY: Action[] = [
-  "RIGHT",
-  "RIGHT",
-  "DOWN",
-  "RIGHT",
-  "DOWN",
-  "DOWN",
-];
 
 const Sense1 = () => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);

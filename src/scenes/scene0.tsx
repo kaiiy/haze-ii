@@ -1,10 +1,18 @@
 import { KeyboardEventHandler, useState } from "react";
 import { Failure, Result, Success } from "@/lib/result";
 
-type Vector = {
+interface Vector {
   x: number;
   y: number;
-};
+}
+
+interface OriginalVector extends Vector {
+  type: "OriginalVector";
+}
+
+interface ModifiedVector extends Vector {
+  type: "ModifiedVector";
+}
 
 // number は G までの距離
 type CellType = "S" | "B" | "G" | "W" | number;
@@ -22,10 +30,10 @@ const isBoardSizeValid = (board: BoardRaw) => {
     board.every((row) => row.length === BOARD_WIDTH);
 };
 
-type Cell = {
-  position: Vector;
+interface Cell {
+  position: ModifiedVector;
   type: CellType;
-};
+}
 
 // Cell Position のユニーク性は保証
 type Board = {
@@ -45,90 +53,98 @@ const generateBoard = (
 
   const cells: Cell[] = [];
   for (let i = 0; i < width; i++) {
-    cells.push({ position: { x: i, y: 0 }, type: "B" });
+    cells.push({
+      position: vectorToModifiedVector({ x: i, y: 0 }),
+      type: "B",
+    });
   }
   raw.forEach((row, y) => {
-    cells.push({ position: { x: 0, y: y + 1 }, type: "B" });
-    row.forEach((type, x) => {
-      cells.push({ position: { x: x + 1, y: y + 1 }, type });
+    cells.push({
+      position: vectorToModifiedVector({ x: 0, y: y + 1 }),
+      type: "B",
     });
-    cells.push({ position: { x: width + 1, y: y + 1 }, type: "B" });
+    row.forEach((type, x) => {
+      cells.push({
+        position: vectorToModifiedVector({ x: x + 1, y: y + 1 }),
+        type,
+      });
+    });
+    cells.push({
+      position: vectorToModifiedVector({ x: width + 1, y: y + 1 }),
+      type: "B",
+    });
   });
   for (let i = 0; i < width; i++) {
-    cells.push({ position: { x: i, y: height + 1 }, type: "B" });
+    cells.push({
+      position: vectorToModifiedVector({ x: i, y: height + 1 }),
+      type: "B",
+    });
   }
   return { cells, height, width };
 };
 
-// 指定したセルタイプの position を返却
-const findCell = (board: Board, type: CellType): Cell[] | null => {
-  return board.cells.filter((cell) => cell.type === type);
-};
 // vector の一致性を確認
 const isVectorEqual = (a: Vector, b: Vector) => {
   return a.x === b.x && a.y === b.y;
 };
 
-type Action = "UP" | "DOWN" | "LEFT" | "RIGHT";
-const ACTION_HISTORY: Action[] = [
-  "RIGHT",
-  "RIGHT",
-  "RIGHT",
-];
-
-// スタートのセルの position を取得
-const getStartPosition = (board: Board): Result<Vector> => {
-  const startCells = findCell(board, "S");
-  if (!startCells) {
-    return new Failure("Start cell not found");
-  }
-  if (startCells.length !== 1) {
-    return new Failure("Multiple start cells found");
-  }
-  return new Success(startCells[0].position);
+const vectorToOriginalVector = (vector: Vector): OriginalVector => {
+  return { ...vector, type: "OriginalVector" };
+};
+const vectorToModifiedVector = (vector: Vector): ModifiedVector => {
+  return { ...vector, type: "ModifiedVector" };
+};
+const originalVectorToModifiedVector = (
+  vector: OriginalVector,
+): ModifiedVector => {
+  return vectorToModifiedVector({ x: vector.x + 1, y: vector.y + 1 });
 };
 
-// 移動先があることは一旦保証
-const move = (position: Vector, action: Action): Vector => {
-  switch (action) {
-    case "UP":
-      return { x: position.x, y: position.y - 1 };
-    case "DOWN":
-      return { x: position.x, y: position.y + 1 };
-    case "LEFT":
-      return { x: position.x - 1, y: position.y };
-    case "RIGHT":
-      return { x: position.x + 1, y: position.y };
-  }
-};
+const PLAYER_HISTORY: OriginalVector[] = [
+  { x: 0, y: 0 },
+  { x: 1, y: 0 },
+  { x: 2, y: 0 },
+  { x: 3, y: 0 },
+].map(
+  vectorToOriginalVector,
+);
 
-type SceneAction = "NEXT" | "PREV";
+const vectorToCell = (vector: ModifiedVector, board: Board): Result<Cell> => {
+  const cell = board.cells.find((cell) => isVectorEqual(cell.position, vector));
+  if (!cell) {
+    return new Failure("Cell not found");
+  }
+  return new Success(cell);
+};
 
 const Sense1 = () => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
-  const startPositionResult = getStartPosition(board);
-  if (!startPositionResult.success) {
-    throw startPositionResult.error;
-  }
-  const player = startPositionResult.value;
   const [historyIndex, setHistoryIndex] = useState(0);
+  const cellResult = vectorToCell(
+    originalVectorToModifiedVector(PLAYER_HISTORY[historyIndex]),
+    board,
+  );
+  if (!cellResult.success) {
+    throw cellResult.error;
+  }
+  const cell = cellResult.value;
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === "ArrowRight") {
-      setHistoryIndex((prev) => Math.min(prev + 1, ACTION_HISTORY.length - 1));
+      setHistoryIndex(Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1));
     } else if (e.key === "ArrowLeft") {
-      setHistoryIndex((prev) => Math.max(prev - 1, 0));
+      setHistoryIndex(Math.max(historyIndex - 1, 0));
     }
   };
 
-  const action = ACTION_HISTORY[historyIndex];
-  const currentCell = board.cells.find((cell) =>
-    isVectorEqual(cell.position, player)
-  );
-
   return (
-    <div onKeyDown={handleKeyDown}>
-      <h1>Scene1</h1>
+    // TODO: handleKeyDown を window に対して設定する
+    <div onKeyDown={handleKeyDown} tabIndex={0}>
+      <h1>Scene0</h1>
+      <div>historyIndex: {historyIndex}</div>
+      <div>cell.position.x: {cell.position.x}</div>
+      <div>cell.position.y: {cell.position.y}</div>
+      <div>cell.type: {cell.type}</div>
     </div>
   );
 };
