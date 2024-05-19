@@ -208,6 +208,8 @@ type InputChar =
   | "8"
   | "9";
 
+const ANSWER: InputChar[] = ["ArrowRight", "ArrowRight", "ArrowRight"];
+
 const Sense = ({ baseSize }: SenseProps) => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
   const [historyIndex, setHistoryIndex] = useState(0);
@@ -258,29 +260,41 @@ const Sense = ({ baseSize }: SenseProps) => {
 
   const [inputChars, setInputChars] = useState<InputChar[]>([]);
 
+  const [isClear, setIsClear] = useState(false);
+
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (isBoardFocused) {
-      if (e.key === "ArrowRight") {
-        setHistoryIndex(Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1));
-      } else if (e.key === "ArrowLeft") {
-        setHistoryIndex(Math.max(historyIndex - 1, 0));
-      }
-    } else {
-      const regex = /^[a-z0-9]$/;
-      if (
-        e.key === "ArrowRight" || e.key === "ArrowLeft" ||
-        e.key === "ArrowUp" || e.key === "ArrowDown" ||
-        regex.test(e.key)
-      ) {
-        setInputChars([...inputChars, e.key as InputChar]);
-      } else if (e.key === "Backspace") {
-        if (inputChars.length > 0) {
-          setInputChars(inputChars.slice(0, inputChars.length - 1));
+    if (!isClear) {
+      if (isBoardFocused) {
+        if (e.key === "ArrowRight") {
+          setHistoryIndex(
+            Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1),
+          );
+        } else if (e.key === "ArrowLeft") {
+          setHistoryIndex(Math.max(historyIndex - 1, 0));
+        }
+      } else {
+        const regex = /^[a-z0-9]$/;
+        if (
+          e.key === "ArrowRight" || e.key === "ArrowLeft" ||
+          e.key === "ArrowUp" || e.key === "ArrowDown" ||
+          regex.test(e.key)
+        ) {
+          setInputChars([...inputChars, e.key as InputChar]);
+        } else if (e.key === "Backspace") {
+          if (inputChars.length > 0) {
+            setInputChars(inputChars.slice(0, inputChars.length - 1));
+          }
+        } else if (e.key === "Enter") {
+          if (inputChars.length === ANSWER.length) {
+            if (inputChars.every((char, i) => char === ANSWER[i])) {
+              setIsClear(true);
+            }
+          }
         }
       }
-    }
-    if (e.key === " ") {
-      setIsBoardFocused(!isBoardFocused);
+      if (e.key === " ") {
+        setIsBoardFocused(!isBoardFocused);
+      }
     }
   };
 
@@ -289,14 +303,41 @@ const Sense = ({ baseSize }: SenseProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [historyIndex, isBoardFocused, inputChars]);
+  }, [historyIndex, isBoardFocused, inputChars, isClear]);
+
+  const [showClear, setShowClear] = useState(false);
+
+  useEffect(() => {
+    if (isClear) {
+      const timer = setTimeout(() => {
+        setShowClear(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isClear]);
+
+  const blinkStyle = {
+    animation: "blink 5s infinite",
+  };
+
+  const keyframesStyle = `
+    @keyframes blink {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+      }
+    }
+  `;
 
   return (
     <div>
-      <div className="flex justify-center">
+      <div className="flex flex-col justify-center">
         <div
           className={`border-black text-black bg-white flex items-center justify-center ${
-            isBoardFocused ? "opacity-100" : "opacity-25"
+            isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
           }`}
           style={{
             width: String(cellSize) + "px",
@@ -320,17 +361,44 @@ const Sense = ({ baseSize }: SenseProps) => {
       </div>
       <div
         className={`flex justify-center ${
-          !isBoardFocused ? "opacity-100" : "opacity-25"
+          !isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
         }`}
         style={{
+          marginTop: String(fontSize * 0.3) + "px",
           fontSize: String(fontSize * 0.85) + "px",
-          height: String(fontSize * 1.2) + "px",
-          lineHeight: String(fontSize * 1.2) + "px",
+          height: String(fontSize * 0.6) + "px",
+          lineHeight: String(fontSize * 0.8) + "px",
         }}
       >
         <span className="">
           {"*".repeat(inputChars.length)}
         </span>
+      </div>
+      <div
+        className={`flex flex-col`}
+        style={{
+          opacity: showClear ? 1 : 0,
+          transition: "opacity 1s ease-in-out",
+        }}
+      >
+        <div
+          className="flex justify-center"
+          style={{
+            fontSize: String(fontSize * 0.3) + "px",
+          }}
+        >
+          Clear!
+        </div>
+        <style>{keyframesStyle}</style>
+        <div
+          className="flex justify-center"
+          style={{
+            fontSize: String(fontSize * 0.25) + "px",
+            ...blinkStyle,
+          }}
+        >
+          -- Press Space --
+        </div>
       </div>
     </div>
   );
