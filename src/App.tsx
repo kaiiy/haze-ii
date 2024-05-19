@@ -54,13 +54,16 @@ const App = () => {
     ),
   };
 
+  const baseSize = windowSize.width * CONTAINER_WIDTH_RATIO / 24;
+
   return (
     <Container windowSize={windowSize} widthRatio={CONTAINER_WIDTH_RATIO}>
       <Canvas>
         <div>width: {windowSize.width}</div>
         <div>height: {windowSize.height}</div>
+        <div>baseSize: {baseSize}</div>
         <hr />
-        <Scene0 baseSize={10} />
+        <Scene0 baseSize={baseSize} />
       </Canvas>
     </Container>
   );

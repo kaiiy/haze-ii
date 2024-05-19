@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useState } from "react";
+import { KeyboardEventHandler, useEffect, useState } from "react";
 import { Failure, Result, Success } from "@/lib/result";
 
 interface Vector {
@@ -52,7 +52,7 @@ const generateBoard = (
   }
 
   const cells: Cell[] = [];
-  for (let i = 0; i < width; i++) {
+  for (let i = 0; i < width + 2; i++) {
     cells.push({
       position: vectorToModifiedVector({ x: i, y: 0 }),
       type: "B",
@@ -74,12 +74,13 @@ const generateBoard = (
       type: "B",
     });
   });
-  for (let i = 0; i < width; i++) {
+  for (let i = 0; i < width + 2; i++) {
     cells.push({
       position: vectorToModifiedVector({ x: i, y: height + 1 }),
       type: "B",
     });
   }
+
   return { cells, height, width };
 };
 
@@ -110,7 +111,6 @@ const PLAYER_HISTORY: OriginalVector[] = [
 );
 
 const vectorToCell = (vector: ModifiedVector, board: Board): Result<Cell> => {
-  console.log(board.cells);
   const cell = board.cells.find((cell) => isVectorEqual(cell.position, vector));
   if (!cell) {
     return new Failure("Cell not found: " + JSON.stringify(vector));
@@ -145,32 +145,31 @@ interface SenseProps {
 }
 
 const getBorderWidthPx = (
-  baseSize: number,
+  cellSize: number,
   cell: Cell,
   board: Board,
   direction: Direction,
 ): Result<number> => {
-  console.log(cell);
   const adjacentCellResult = getAdjacentCell(cell, direction, board);
-  console.log(adjacentCellResult);
   if (adjacentCellResult.success) {
     const adjacentCell = adjacentCellResult.value;
     if (adjacentCell.type === "B") {
-      return new Success(baseSize * 0.8);
+      return new Success(cellSize * 0.06);
     } else if (
       adjacentCell.type === "S" || adjacentCell.type === "G" ||
       adjacentCell.type === "W" || typeof adjacentCell.type === "number"
     ) {
-      return new Success(baseSize * 0.2);
+      return new Success(cellSize * 0.02);
     }
     return new Failure("Invalid cell type: " + adjacentCell.type);
   }
   return adjacentCellResult;
 };
 
+type FocusedTarget = "Board" | "Input";
+
 const Sense = ({ baseSize }: SenseProps) => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
-  console.log(board);
   const [historyIndex, setHistoryIndex] = useState(0);
   const cellResult = vectorToCell(
     originalVectorToModifiedVector(PLAYER_HISTORY[historyIndex]),
@@ -181,19 +180,19 @@ const Sense = ({ baseSize }: SenseProps) => {
   }
   const cell = cellResult.value;
 
-  const cellSize = baseSize * 24;
+  const cellSize = baseSize * 4;
   const fontSize = cellSize / 2;
 
-  const borderLeftWidthResult = getBorderWidthPx(baseSize, cell, board, "Left");
+  const borderLeftWidthResult = getBorderWidthPx(cellSize, cell, board, "Left");
   const borderRightWidthResult = getBorderWidthPx(
-    baseSize,
+    cellSize,
     cell,
     board,
     "Right",
   );
-  const borderTopWidthResult = getBorderWidthPx(baseSize, cell, board, "Up");
+  const borderTopWidthResult = getBorderWidthPx(cellSize, cell, board, "Up");
   const borderBottomWidthResult = getBorderWidthPx(
-    baseSize,
+    cellSize,
     cell,
     board,
     "Down",
@@ -215,7 +214,7 @@ const Sense = ({ baseSize }: SenseProps) => {
   const borderTopWidth = borderTopWidthResult.value;
   const borderBottomWidth = borderBottomWidthResult.value;
 
-  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "ArrowRight") {
       setHistoryIndex(Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1));
     } else if (e.key === "ArrowLeft") {
@@ -223,9 +222,15 @@ const Sense = ({ baseSize }: SenseProps) => {
     }
   };
 
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [historyIndex]);
+
   return (
-    // TODO: handleKeyDown を window に対して設定する
-    <div onKeyDown={handleKeyDown} tabIndex={0}>
+    <div>
       <h1>Scene0</h1>
       <div>historyIndex: {historyIndex}</div>
       <div>cell.position.x: {cell.position.x}</div>
@@ -251,6 +256,8 @@ const Sense = ({ baseSize }: SenseProps) => {
         >
           {cell.type}
         </span>
+      </div>
+      <div className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
       </div>
     </div>
   );
