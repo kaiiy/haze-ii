@@ -154,12 +154,12 @@ const getBorderWidthPx = (
   if (adjacentCellResult.success) {
     const adjacentCell = adjacentCellResult.value;
     if (adjacentCell.type === "B") {
-      return new Success(cellSize * 0.06);
+      return new Success(cellSize * 0.05);
     } else if (
       adjacentCell.type === "S" || adjacentCell.type === "G" ||
       adjacentCell.type === "W" || typeof adjacentCell.type === "number"
     ) {
-      return new Success(cellSize * 0.02);
+      return new Success(cellSize * 0.01);
     }
     return new Failure("Invalid cell type: " + adjacentCell.type);
   }
@@ -230,20 +230,10 @@ const Sense = ({ baseSize }: SenseProps) => {
   }, [historyIndex]);
 
   return (
-    <div
-      className="overflow-hidden"
-      style={{
-        height: String(baseSize * 14) + "px",
-      }}
-    >
-      <div
-        className="relative"
-        style={{
-          height: String(baseSize * 12) + "px",
-        }}
-      >
+    <div>
+      <div className="flex justify-center">
         <div
-          className="border-black flex items-center justify-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          className="border-black flex items-center justify-center"
           style={{
             width: String(cellSize) + "px",
             height: String(cellSize) + "px",
@@ -264,17 +254,12 @@ const Sense = ({ baseSize }: SenseProps) => {
         </div>
       </div>
       <div
-        className="flex items-center justify-center"
+        className="flex justify-center"
         style={{
-          height: String(baseSize * 2) + "px",
-          fontSize: String(fontSize * 0.9) + "px",
+          fontSize: String(fontSize * 0.85) + "px",
         }}
       >
-        <span
-          style={{
-            marginTop: String(fontSize / 3) + "px",
-          }}
-        >
+        <span>
           *****
         </span>
       </div>

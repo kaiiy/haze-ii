@@ -26,7 +26,7 @@ type CanvasProps = {
 };
 const Canvas = ({ children }: CanvasProps) => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full relative">
       {children}
     </div>
   );
@@ -64,7 +64,9 @@ const App = () => {
         <div>height: {windowSize.height}</div>
         <div className="mb-4">baseSize: {baseSize}</div> */
         }
-        <Scene0 baseSize={baseSize} />
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <Scene0 baseSize={baseSize} />
+        </div>
       </Canvas>
     </Container>
   );
