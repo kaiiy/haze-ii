@@ -180,7 +180,7 @@ const Sense = ({ baseSize }: SenseProps) => {
   }
   const cell = cellResult.value;
 
-  const cellSize = baseSize * 4;
+  const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
 
   const borderLeftWidthResult = getBorderWidthPx(cellSize, cell, board, "Left");
@@ -230,34 +230,53 @@ const Sense = ({ baseSize }: SenseProps) => {
   }, [historyIndex]);
 
   return (
-    <div>
-      <h1>Scene0</h1>
-      <div>historyIndex: {historyIndex}</div>
-      <div>cell.position.x: {cell.position.x}</div>
-      <div>cell.position.y: {cell.position.y}</div>
-      <div>cell.type: {cell.type}</div>
-      <hr />
+    <div
+      className="overflow-hidden"
+      style={{
+        height: String(baseSize * 14) + "px",
+      }}
+    >
       <div
-        className="border-black flex items-center justify-center"
+        className="relative"
         style={{
-          width: String(cellSize) + "px",
-          height: String(cellSize) + "px",
-          fontSize: String(fontSize) + "px",
-          borderLeftWidth: String(borderLeftWidth) + "px",
-          borderRightWidth: String(borderRightWidth) + "px",
-          borderTopWidth: String(borderTopWidth) + "px",
-          borderBottomWidth: String(borderBottomWidth) + "px",
+          height: String(baseSize * 12) + "px",
+        }}
+      >
+        <div
+          className="border-black flex items-center justify-center absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          style={{
+            width: String(cellSize) + "px",
+            height: String(cellSize) + "px",
+            fontSize: String(fontSize) + "px",
+            borderLeftWidth: String(borderLeftWidth) + "px",
+            borderRightWidth: String(borderRightWidth) + "px",
+            borderTopWidth: String(borderTopWidth) + "px",
+            borderBottomWidth: String(borderBottomWidth) + "px",
+          }}
+        >
+          <span
+            style={{
+              marginTop: String(-fontSize / 6) + "px",
+            }}
+          >
+            {cell.type}
+          </span>
+        </div>
+      </div>
+      <div
+        className="flex items-center justify-center"
+        style={{
+          height: String(baseSize * 2) + "px",
+          fontSize: String(fontSize * 0.9) + "px",
         }}
       >
         <span
           style={{
-            marginTop: String(-fontSize / 6) + "px",
+            marginTop: String(fontSize / 3) + "px",
           }}
         >
-          {cell.type}
+          *****
         </span>
-      </div>
-      <div className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
       </div>
     </div>
   );

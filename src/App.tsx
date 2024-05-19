@@ -12,7 +12,7 @@ const Container = ({ children, widthRatio, windowSize }: ContainerProps) => {
   return (
     <div className="flex justify-center w-screen h-screen">
       <div
-        className="h-full border"
+        className="h-full"
         style={{ width: String(windowSize.width * widthRatio) + "px" }}
       >
         {children}
@@ -26,7 +26,7 @@ type CanvasProps = {
 };
 const Canvas = ({ children }: CanvasProps) => {
   return (
-    <div className="h-full w-full border">
+    <div className="h-full w-full">
       {children}
     </div>
   );
@@ -59,10 +59,11 @@ const App = () => {
   return (
     <Container windowSize={windowSize} widthRatio={CONTAINER_WIDTH_RATIO}>
       <Canvas>
-        <div>width: {windowSize.width}</div>
+        {
+          /* <div>width: {windowSize.width}</div>
         <div>height: {windowSize.height}</div>
-        <div>baseSize: {baseSize}</div>
-        <hr />
+        <div className="mb-4">baseSize: {baseSize}</div> */
+        }
         <Scene0 baseSize={baseSize} />
       </Canvas>
     </Container>
