@@ -1,4 +1,4 @@
-import { KeyboardEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Failure, Result, Success } from "@/lib/result";
 
 interface Vector {
@@ -166,7 +166,47 @@ const getBorderWidthPx = (
   return adjacentCellResult;
 };
 
-type FocusedTarget = "Board" | "Input";
+type InputChar =
+  | "ArrowRight"
+  | "ArrowLeft"
+  | "ArrowUp"
+  | "ArrowDown"
+  | "a"
+  | "b"
+  | "c"
+  | "d"
+  | "e"
+  | "f"
+  | "g"
+  | "h"
+  | "i"
+  | "j"
+  | "k"
+  | "l"
+  | "m"
+  | "n"
+  | "o"
+  | "p"
+  | "q"
+  | "r"
+  | "s"
+  | "t"
+  | "u"
+  | "v"
+  | "w"
+  | "x"
+  | "y"
+  | "z"
+  | "0"
+  | "1"
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9";
 
 const Sense = ({ baseSize }: SenseProps) => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
@@ -214,11 +254,33 @@ const Sense = ({ baseSize }: SenseProps) => {
   const borderTopWidth = borderTopWidthResult.value;
   const borderBottomWidth = borderBottomWidthResult.value;
 
+  const [isBoardFocused, setIsBoardFocused] = useState(true);
+
+  const [inputChars, setInputChars] = useState<InputChar[]>([]);
+
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "ArrowRight") {
-      setHistoryIndex(Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1));
-    } else if (e.key === "ArrowLeft") {
-      setHistoryIndex(Math.max(historyIndex - 1, 0));
+    if (isBoardFocused) {
+      if (e.key === "ArrowRight") {
+        setHistoryIndex(Math.min(historyIndex + 1, PLAYER_HISTORY.length - 1));
+      } else if (e.key === "ArrowLeft") {
+        setHistoryIndex(Math.max(historyIndex - 1, 0));
+      }
+    } else {
+      const regex = /^[a-z0-9]$/;
+      if (
+        e.key === "ArrowRight" || e.key === "ArrowLeft" ||
+        e.key === "ArrowUp" || e.key === "ArrowDown" ||
+        regex.test(e.key)
+      ) {
+        setInputChars([...inputChars, e.key as InputChar]);
+      } else if (e.key === "Backspace") {
+        if (inputChars.length > 0) {
+          setInputChars(inputChars.slice(0, inputChars.length - 1));
+        }
+      }
+    }
+    if (e.key === " ") {
+      setIsBoardFocused(!isBoardFocused);
     }
   };
 
@@ -227,13 +289,15 @@ const Sense = ({ baseSize }: SenseProps) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [historyIndex]);
+  }, [historyIndex, isBoardFocused, inputChars]);
 
   return (
     <div>
       <div className="flex justify-center">
         <div
-          className="border-black flex items-center justify-center"
+          className={`border-black text-black bg-white flex items-center justify-center ${
+            isBoardFocused ? "opacity-100" : "opacity-25"
+          }`}
           style={{
             width: String(cellSize) + "px",
             height: String(cellSize) + "px",
@@ -245,6 +309,7 @@ const Sense = ({ baseSize }: SenseProps) => {
           }}
         >
           <span
+            className="bg-white"
             style={{
               marginTop: String(-fontSize / 6) + "px",
             }}
@@ -254,13 +319,17 @@ const Sense = ({ baseSize }: SenseProps) => {
         </div>
       </div>
       <div
-        className="flex justify-center"
+        className={`flex justify-center ${
+          !isBoardFocused ? "opacity-100" : "opacity-25"
+        }`}
         style={{
           fontSize: String(fontSize * 0.85) + "px",
+          height: String(fontSize * 1.2) + "px",
+          lineHeight: String(fontSize * 1.2) + "px",
         }}
       >
-        <span>
-          *****
+        <span className="">
+          {"*".repeat(inputChars.length)}
         </span>
       </div>
     </div>
