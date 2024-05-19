@@ -117,6 +117,28 @@ const vectorToCell = (vector: ModifiedVector, board: Board): Result<Cell> => {
   return new Success(cell);
 };
 
+type Direction = "Up" | "Right" | "Down" | "Left";
+
+const getAdjacentCell = (
+  cell: Cell,
+  direction: Direction,
+  board: Board,
+): Result<Cell> => {
+  const { x, y } = cell.position;
+
+  if (direction === "Up") {
+    return vectorToCell(vectorToModifiedVector({ x, y: y - 1 }), board);
+  } else if (direction === "Right") {
+    return vectorToCell(vectorToModifiedVector({ x: x + 1, y }), board);
+  } else if (direction === "Down") {
+    return vectorToCell(vectorToModifiedVector({ x, y: y + 1 }), board);
+  } else if (direction === "Left") {
+    return vectorToCell(vectorToModifiedVector({ x: x - 1, y }), board);
+  }
+
+  return new Failure("Invalid direction");
+};
+
 const Sense1 = () => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
   const [historyIndex, setHistoryIndex] = useState(0);
