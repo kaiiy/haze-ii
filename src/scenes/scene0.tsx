@@ -139,7 +139,11 @@ const getAdjacentCell = (
   return new Failure("Invalid direction");
 };
 
-const Sense1 = () => {
+interface SenseProps {
+  baseSize: number;
+}
+
+const Sense = ({ baseSize }: SenseProps) => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
   const [historyIndex, setHistoryIndex] = useState(0);
   const cellResult = vectorToCell(
@@ -171,4 +175,4 @@ const Sense1 = () => {
   );
 };
 
-export default Sense1;
+export default Sense;

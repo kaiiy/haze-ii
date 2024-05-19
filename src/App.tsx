@@ -60,7 +60,7 @@ const App = () => {
         <div>width: {windowSize.width}</div>
         <div>height: {windowSize.height}</div>
         <hr />
-        <Scene0 />
+        <Scene0 baseSize={10} />
       </Canvas>
     </Container>
   );
