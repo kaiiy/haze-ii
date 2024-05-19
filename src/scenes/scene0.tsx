@@ -110,9 +110,10 @@ const PLAYER_HISTORY: OriginalVector[] = [
 );
 
 const vectorToCell = (vector: ModifiedVector, board: Board): Result<Cell> => {
+  console.log(board.cells);
   const cell = board.cells.find((cell) => isVectorEqual(cell.position, vector));
   if (!cell) {
-    return new Failure("Cell not found");
+    return new Failure("Cell not found: " + JSON.stringify(vector));
   }
   return new Success(cell);
 };
@@ -143,8 +144,33 @@ interface SenseProps {
   baseSize: number;
 }
 
+const getBorderWidthPx = (
+  baseSize: number,
+  cell: Cell,
+  board: Board,
+  direction: Direction,
+): Result<number> => {
+  console.log(cell);
+  const adjacentCellResult = getAdjacentCell(cell, direction, board);
+  console.log(adjacentCellResult);
+  if (adjacentCellResult.success) {
+    const adjacentCell = adjacentCellResult.value;
+    if (adjacentCell.type === "B") {
+      return new Success(baseSize * 0.8);
+    } else if (
+      adjacentCell.type === "S" || adjacentCell.type === "G" ||
+      adjacentCell.type === "W" || typeof adjacentCell.type === "number"
+    ) {
+      return new Success(baseSize * 0.2);
+    }
+    return new Failure("Invalid cell type: " + adjacentCell.type);
+  }
+  return adjacentCellResult;
+};
+
 const Sense = ({ baseSize }: SenseProps) => {
   const board = generateBoard(BOARD_RAW, BOARD_HEIGHT, BOARD_WIDTH);
+  console.log(board);
   const [historyIndex, setHistoryIndex] = useState(0);
   const cellResult = vectorToCell(
     originalVectorToModifiedVector(PLAYER_HISTORY[historyIndex]),
@@ -154,6 +180,40 @@ const Sense = ({ baseSize }: SenseProps) => {
     throw cellResult.error;
   }
   const cell = cellResult.value;
+
+  const cellSize = baseSize * 24;
+  const fontSize = cellSize / 2;
+
+  const borderLeftWidthResult = getBorderWidthPx(baseSize, cell, board, "Left");
+  const borderRightWidthResult = getBorderWidthPx(
+    baseSize,
+    cell,
+    board,
+    "Right",
+  );
+  const borderTopWidthResult = getBorderWidthPx(baseSize, cell, board, "Up");
+  const borderBottomWidthResult = getBorderWidthPx(
+    baseSize,
+    cell,
+    board,
+    "Down",
+  );
+  if (!borderLeftWidthResult.success) {
+    throw borderLeftWidthResult.error;
+  }
+  if (!borderRightWidthResult.success) {
+    throw borderRightWidthResult.error;
+  }
+  if (!borderTopWidthResult.success) {
+    throw borderTopWidthResult.error;
+  }
+  if (!borderBottomWidthResult.success) {
+    throw borderBottomWidthResult.error;
+  }
+  const borderLeftWidth = borderLeftWidthResult.value;
+  const borderRightWidth = borderRightWidthResult.value;
+  const borderTopWidth = borderTopWidthResult.value;
+  const borderBottomWidth = borderBottomWidthResult.value;
 
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (e) => {
     if (e.key === "ArrowRight") {
@@ -171,6 +231,27 @@ const Sense = ({ baseSize }: SenseProps) => {
       <div>cell.position.x: {cell.position.x}</div>
       <div>cell.position.y: {cell.position.y}</div>
       <div>cell.type: {cell.type}</div>
+      <hr />
+      <div
+        className="border-black flex items-center justify-center"
+        style={{
+          width: String(cellSize) + "px",
+          height: String(cellSize) + "px",
+          fontSize: String(fontSize) + "px",
+          borderLeftWidth: String(borderLeftWidth) + "px",
+          borderRightWidth: String(borderRightWidth) + "px",
+          borderTopWidth: String(borderTopWidth) + "px",
+          borderBottomWidth: String(borderBottomWidth) + "px",
+        }}
+      >
+        <span
+          style={{
+            marginTop: String(-fontSize / 6) + "px",
+          }}
+        >
+          {cell.type}
+        </span>
+      </div>
     </div>
   );
 };
