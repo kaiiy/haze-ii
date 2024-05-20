@@ -382,7 +382,7 @@ const Sense = ({ baseSize }: SenseProps) => {
         }}
       >
         <div
-          className="flex justify-center"
+          className="flex justify-center font-semibold"
           style={{
             fontSize: String(fontSize * 0.3) + "px",
           }}
@@ -391,7 +391,7 @@ const Sense = ({ baseSize }: SenseProps) => {
         </div>
         <style>{keyframesStyle}</style>
         <div
-          className="flex justify-center"
+          className="flex justify-center font-semibold"
           style={{
             fontSize: String(fontSize * 0.25) + "px",
             ...blinkStyle,
