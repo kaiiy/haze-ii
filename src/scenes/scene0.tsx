@@ -334,7 +334,7 @@ const Sense = ({ baseSize }: SenseProps) => {
 
   return (
     <div>
-      <div className="flex flex-col justify-center">
+      <div className="flex justify-center">
         <div
           className={`border-black text-black bg-white flex items-center justify-center ${
             isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
@@ -382,7 +382,7 @@ const Sense = ({ baseSize }: SenseProps) => {
         }}
       >
         <div
-          className="flex justify-center font-semibold"
+          className="flex justify-center"
           style={{
             fontSize: String(fontSize * 0.3) + "px",
           }}
@@ -391,7 +391,7 @@ const Sense = ({ baseSize }: SenseProps) => {
         </div>
         <style>{keyframesStyle}</style>
         <div
-          className="flex justify-center font-semibold"
+          className="flex justify-center"
           style={{
             fontSize: String(fontSize * 0.25) + "px",
             ...blinkStyle,
