@@ -1,12 +1,5 @@
-import { useSyncExternalStore } from "react";
 import Container from "@/components/Container";
 import BudouX from "@/components/BudouX";
-import { WindowSize } from "@/lib/window";
-
-const subscribeWindowSizeChange = (callback: () => void) => {
-  window.addEventListener("resize", callback);
-  return () => window.removeEventListener("resize", callback);
-};
 
 interface InfoProps {
   title: string;
@@ -23,7 +16,7 @@ const Info = ({ title, content }: InfoProps) => (
 );
 
 const NoticeContent = () => (
-  <div className="text-2xl flex flex-col text-center pt-1">
+  <div className="text-xl flex flex-col text-center pt-1">
     <div>
       <BudouX text="各ステージはそれ単体で解くことができます。" />
     </div>
@@ -48,7 +41,7 @@ const NoticeContent = () => (
 );
 
 const TutorialContent = () => (
-  <div className="text-2xl flex flex-col text-center pt-1">
+  <div className="text-xl flex flex-col text-center pt-1">
     <div>
       <BudouX text="下の正方形「0」をクリックして、「右矢印キー」を3回、「スペースキー」を1回、「右矢印キー」を3回、そして最後に「エンターキー」を1回押してください。" />
     </div>
@@ -56,23 +49,12 @@ const TutorialContent = () => (
 );
 
 interface HomeProps {
-  containerWidthRatio: number;
+  containerWidth: number;
 }
 
-const Home = ({ containerWidthRatio }: HomeProps) => {
-  const windowSize: WindowSize = {
-    width: useSyncExternalStore(
-      subscribeWindowSizeChange,
-      () => window.innerWidth,
-    ),
-    height: useSyncExternalStore(
-      subscribeWindowSizeChange,
-      () => window.innerHeight,
-    ),
-  };
-
+const Home = ({ containerWidth }: HomeProps) => {
   return (
-    <Container windowSize={windowSize} widthRatio={containerWidthRatio}>
+    <Container width={containerWidth}>
       <div className="flex flex-col font-sawarabi">
         <div
           className="w-full text-center text-8xl"

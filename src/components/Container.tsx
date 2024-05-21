@@ -1,17 +1,14 @@
-import { WindowSize } from "@/lib/window";
-
 type ContainerProps = {
   children: React.ReactNode;
-  widthRatio: number;
-  windowSize: WindowSize;
+  width: number;
 };
 
-const Container = ({ children, widthRatio, windowSize }: ContainerProps) => {
+const Container = ({ children, width }: ContainerProps) => {
   return (
     <div className="flex justify-center w-screen">
       <div
         className="h-full"
-        style={{ width: String(windowSize.width * widthRatio) + "px" }}
+        style={{ width: String(width) + "px" }}
       >
         {children}
       </div>
