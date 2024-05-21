@@ -75,14 +75,7 @@
   }
 }
 
-* {
+body {
   overflow-x: hidden;
-  /* font-family: "Noto Sans JP", serif; */
-  font-family: "Sawarabi Mincho", serif;
   background-color: #f7f7f7;
-}
-
-span {
-  display: inline-block;
-  overflow: hidden;
 }
