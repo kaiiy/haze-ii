@@ -1,5 +1,6 @@
 import Container from "@/components/Container";
 import BudouX from "@/components/BudouX";
+import { Link } from "react-router-dom";
 
 interface InfoProps {
   title: string;
@@ -11,7 +12,7 @@ const Info = ({ title, content }: InfoProps) => (
     <div className="text-2xl border-b border-black mb-3 text-center">
       {title}
     </div>
-    <p className="text-2xl text-center">{content}</p>
+    <div className="text-2xl text-center">{content}</div>
   </div>
 );
 
@@ -57,7 +58,7 @@ const Home = ({ containerWidth }: HomeProps) => {
     <Container width={containerWidth}>
       <div className="flex flex-col font-sawarabi">
         <div
-          className="w-full text-center text-8xl"
+          className="w-full text-center text-8xl text-[#202020]"
           style={{
             marginTop: "80px",
             marginBottom: "80px",
@@ -77,16 +78,12 @@ const Home = ({ containerWidth }: HomeProps) => {
         <div className="flex flex-wrap gap-3 justify-center">
           {[
             "0",
-            "1",
-            "2",
-            "3",
-            "1",
-            "2",
-            "3",
-          ].map((stage) => (
-            <div className="w-32 h-32 border border-black text-center text-2xl flex items-center justify-center">
-              {stage}
-            </div>
+          ].map((stage, index) => (
+            <Link to={`/${stage}`} key={index}>
+              <div className="w-32 h-32 border border-black text-center text-2xl flex items-center justify-center cursor-pointer bg-white hover:text-[#f7f7f7] hover:bg-[#202020] transition duration-300">
+                {stage}
+              </div>
+            </Link>
           ))}
         </div>
       </div>
