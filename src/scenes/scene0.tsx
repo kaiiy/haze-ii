@@ -333,7 +333,7 @@ const Sense = ({ baseSize }: SenseProps) => {
   `;
 
   return (
-    <div>
+    <div className="w-full h-full">
       <div className="flex justify-center">
         <div
           className={`border-black text-black bg-white flex items-center justify-center ${
