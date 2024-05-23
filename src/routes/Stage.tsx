@@ -26,7 +26,7 @@ const Stage = ({ containerWidth }: StageProps) => {
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-notoSans">
           <Scene0 baseSize={baseSize} />
         </div>
-        <Nav />
+        <Nav text="SCENE 0" />
       </Canvas>
     </Container>
   );

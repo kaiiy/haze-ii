@@ -1,6 +1,8 @@
 import Container from "@/components/Container";
 import BudouX from "@/components/BudouX";
 import { Link } from "react-router-dom";
+import Nav from "@/components/Nav";
+import { Tooltip } from "react-tooltip";
 
 interface InfoProps {
   title: string;
@@ -56,6 +58,9 @@ interface HomeProps {
 const Home = ({ containerWidth }: HomeProps) => {
   return (
     <Container width={containerWidth}>
+      <Nav text="HOME" />
+      <Tooltip id="my-tooltip" />;
+
       <div className="flex flex-col font-sawarabi">
         <div
           className="w-full text-center text-8xl text-[#202020]"
