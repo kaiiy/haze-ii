@@ -10,8 +10,8 @@ interface InfoProps {
 }
 
 const Info = ({ title, content }: InfoProps) => (
-  <div className="mb-6">
-    <div className="text-2xl border-b border-black mb-3 text-center">
+  <div className="mb-6 font-notoSans">
+    <div className="text-2xl border-b border-charcoal mb-3 text-center">
       {title}
     </div>
     <div className="text-2xl text-center">{content}</div>
@@ -64,11 +64,11 @@ const Home = ({ containerWidth }: HomeProps) => {
         style={{
           zIndex: "calc(infinity)",
         }}
-      />;
+      />
 
-      <div className="flex flex-col font-sawarabi">
+      <div className="flex flex-col ">
         <div
-          className="w-full text-center text-8xl text-[#202020]"
+          className="w-full text-center text-8xl text-charcoal font-sawarabi"
           style={{
             marginTop: "80px",
             marginBottom: "80px",
@@ -77,6 +77,7 @@ const Home = ({ containerWidth }: HomeProps) => {
           VIEW
         </div>
         <div
+          className="text-charcoal"
           style={{
             marginBottom: "40px",
           }}
@@ -85,12 +86,13 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Info title="注意事項" content={NoticeContent()} />
           <Info title="チュートリアル" content={TutorialContent()} />
         </div>
-        <div className="flex flex-wrap gap-3 justify-center">
+        <div className="flex flex-wrap gap-3 justify-center font-notoSans">
           {[
             "0",
+            "1",
           ].map((stage, index) => (
             <Link to={`/${stage}`} key={index}>
-              <div className="w-32 h-32 border border-black text-center text-2xl flex items-center justify-center cursor-pointer bg-white hover:text-[#f7f7f7] hover:bg-[#202020] transition duration-300">
+              <div className="w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer bg-white hover:text-[#f7f7f7] hover:bg-charcoal transition duration-30 text-charcoal">
                 {stage}
               </div>
             </Link>

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
-import Stage from "./routes/Stage";
+import Scene0 from "./routes/Scene0";
 import { WindowSize } from "@/lib/window";
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 const CONTAINER_WIDTH_RATIO = 0.5;
 
@@ -25,6 +25,21 @@ const App = () => {
 
   const containerWidth = windowSize.width * CONTAINER_WIDTH_RATIO;
 
+  const baseSize = containerWidth / 24;
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Backspace") {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <Routes>
       <Route
@@ -33,7 +48,7 @@ const App = () => {
       />
       <Route
         path="/0"
-        element={<Stage containerWidth={containerWidth} />}
+        element={<Scene0 containerWidth={containerWidth} baseSize={baseSize} />}
       />
     </Routes>
   );
