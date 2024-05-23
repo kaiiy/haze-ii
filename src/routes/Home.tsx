@@ -74,7 +74,7 @@ const Home = ({ containerWidth }: HomeProps) => {
             marginBottom: "80px",
           }}
         >
-          VIEW
+          MIST
         </div>
         <div
           className="text-charcoal"
