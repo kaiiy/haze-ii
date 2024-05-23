@@ -20,7 +20,9 @@ const PLAYER_HISTORY: OriginalVector[] = [
   vectorToOriginalVector,
 );
 
-const ANSWER: InputChar[] = ["ArrowRight", "ArrowRight", "ArrowRight"];
+const ANSWER: InputChar[][] = [
+  ["ArrowRight", "ArrowRight", "ArrowRight"],
+];
 
 interface SceneProps {
   baseSize: number;

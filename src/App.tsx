@@ -8,6 +8,7 @@ import Scene0 from "./routes/Scene0";
 import Scene1 from "./routes/Scene1";
 import Scene2 from "./routes/Scene2";
 import Scene3 from "./routes/Scene3";
+import Scene4 from "./routes/Scene4";
 
 const CONTAINER_WIDTH_RATIO = 0.5;
 
@@ -62,6 +63,10 @@ const App = () => {
       <Route
         path="/3"
         element={<Scene3 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/4"
+        element={<Scene4 containerWidth={containerWidth} baseSize={baseSize} />}
       />
     </Routes>
   );

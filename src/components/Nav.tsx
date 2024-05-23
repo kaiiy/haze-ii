@@ -42,8 +42,9 @@ const Nav = ({ text }: NavProps) => {
           >
             <FaGithub className="w-8 h-8" />
           </a>
+          <hr />
         </div>
-        <hr className="my-4" />
+
         <span
           className="text-3xl inline-block"
           style={{

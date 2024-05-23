@@ -18,7 +18,7 @@ interface BaseSceneProps {
   boardWidth: number;
   boardRaw: BoardRaw;
   playerHistory: OriginalVector[];
-  answer: InputChar[];
+  answer: InputChar[][];
 }
 
 const BaseScene = (
@@ -112,9 +112,12 @@ const BaseScene = (
             setInputChars(inputChars.slice(0, inputChars.length - 1));
           }
         } else if (e.key === "Enter") {
-          if (inputChars.length === answer.length) {
-            if (inputChars.every((char, i) => char === answer[i])) {
-              setIsClear(true);
+          for (let i = 0; i < answer.length; i++) {
+            if (inputChars.length === answer[i].length) {
+              if (inputChars.every((char, j) => char === answer[i][j])) {
+                setIsClear(true);
+                break;
+              }
             }
           }
         }

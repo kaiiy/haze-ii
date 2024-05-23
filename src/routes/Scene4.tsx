@@ -3,44 +3,39 @@ import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
 import BaseScene from "@/components/BaseScene";
 
-const SCENE_NAME = "SCENE 3";
+const SCENE_NAME = "SCENE 4";
 
-const BOARD_HEIGHT = 4;
+const BOARD_HEIGHT = 1;
 const BOARD_WIDTH = 3;
 const BOARD_RAW: BoardRaw = [
-  ["B", 1, "G"],
-  [3, 2, "B"],
-  ["B", "S", "B"],
-  [5, 4, 5],
+  ["S", " ", "G"],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 1, y: 2 },
-  { x: 1, y: 3 },
-  { x: 0, y: 3 },
-  { x: 1, y: 3 },
-  { x: 1, y: 2 },
-  { x: 1, y: 1 },
-  { x: 0, y: 1 },
-  { x: 1, y: 1 },
-  { x: 1, y: 1 },
+  { x: 0, y: 0 },
+  { x: 1, y: 0 },
   { x: 1, y: 0 },
   { x: 2, y: 0 },
 ].map(
   vectorToOriginalVector,
 );
 
-const ANSWER: InputChar[] = [
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowUp",
-  "ArrowUp",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowRight",
-  "ArrowUp",
-  "ArrowRight",
+const ANSWER: InputChar[][] = [
+  [
+    "ArrowRight",
+    "ArrowRight",
+    "ArrowRight",
+  ],
+  [
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowRight",
+  ],
+  [
+    "ArrowRight",
+    "ArrowDown",
+    "ArrowRight",
+  ],
 ];
 
 interface SceneProps {

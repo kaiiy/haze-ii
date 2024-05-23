@@ -29,16 +29,18 @@ const PLAYER_HISTORY: OriginalVector[] = [
   vectorToOriginalVector,
 );
 
-const ANSWER: InputChar[] = [
-  "ArrowDown",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowUp",
-  "ArrowUp",
-  "ArrowLeft",
-  "ArrowRight",
-  "ArrowUp",
-  "ArrowRight",
+const ANSWER: InputChar[][] = [
+  [
+    "ArrowDown",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowUp",
+    "ArrowLeft",
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowRight",
+  ],
 ];
 
 interface SceneProps {

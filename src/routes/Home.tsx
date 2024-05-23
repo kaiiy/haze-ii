@@ -92,6 +92,7 @@ const Home = ({ containerWidth }: HomeProps) => {
             "1",
             "2",
             "3",
+            "4",
           ].map((stage, index) => (
             <Link to={`/${stage}`} key={index}>
               <div className="w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer bg-white hover:text-[#f7f7f7] hover:bg-charcoal transition duration-30 text-charcoal">
