@@ -1,15 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
-import Scene0 from "./routes/Scene0";
-import { WindowSize } from "@/lib/window";
+
+import { subscribeWindowSizeChange, WindowSize } from "@/lib/window";
 import { useEffect, useSyncExternalStore } from "react";
 
-const CONTAINER_WIDTH_RATIO = 0.5;
+import Scene0 from "./routes/Scene0";
+import Scene1 from "./routes/Scene1";
+import Scene2 from "./routes/Scene2";
+import Scene3 from "./routes/Scene3";
 
-const subscribeWindowSizeChange = (callback: () => void) => {
-  window.addEventListener("resize", callback);
-  return () => window.removeEventListener("resize", callback);
-};
+const CONTAINER_WIDTH_RATIO = 0.5;
 
 const App = () => {
   const windowSize: WindowSize = {
@@ -29,6 +29,7 @@ const App = () => {
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
+      // ブラウザのページバックを無効化
       e.preventDefault();
     }
   };
@@ -49,6 +50,18 @@ const App = () => {
       <Route
         path="/0"
         element={<Scene0 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/1"
+        element={<Scene1 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/2"
+        element={<Scene2 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/3"
+        element={<Scene3 containerWidth={containerWidth} baseSize={baseSize} />}
       />
     </Routes>
   );

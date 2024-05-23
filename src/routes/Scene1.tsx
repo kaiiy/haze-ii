@@ -3,24 +3,32 @@ import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
 import BaseScene from "@/components/BaseScene";
 
-const SCENE_NAME = "SCENE 0";
+const SCENE_NAME = "SCENE 1";
 
-const BOARD_HEIGHT = 1;
-const BOARD_WIDTH = 4;
+const BOARD_HEIGHT = 2;
+const BOARD_WIDTH = 5;
 const BOARD_RAW: BoardRaw = [
-  ["S", 2, 1, "G"],
+  ["S", 4, 3, "B", "B"],
+  ["B", "B", 2, 1, "G"],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
   { x: 0, y: 0 },
   { x: 1, y: 0 },
   { x: 2, y: 0 },
-  { x: 3, y: 0 },
+  { x: 2, y: 1 },
+  { x: 3, y: 1 },
+  { x: 4, y: 1 },
 ].map(
   vectorToOriginalVector,
 );
-
-const ANSWER: InputChar[] = ["ArrowRight", "ArrowRight", "ArrowRight"];
+const ANSWER: InputChar[] = [
+  "ArrowRight",
+  "ArrowRight",
+  "ArrowDown",
+  "ArrowRight",
+  "ArrowRight",
+];
 
 interface SceneProps {
   baseSize: number;
