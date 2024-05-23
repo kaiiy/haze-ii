@@ -370,7 +370,7 @@ const Sense = ({ baseSize }: SenseProps) => {
           lineHeight: String(fontSize * 0.8) + "px",
         }}
       >
-        <span className="">
+        <span>
           {"*".repeat(inputChars.length)}
         </span>
       </div>
@@ -397,7 +397,24 @@ const Sense = ({ baseSize }: SenseProps) => {
             ...blinkStyle,
           }}
         >
-          -- Press Space --
+          <span
+            style={{
+              letterSpacing: "-.2em",
+              width: "2em",
+              marginRight: ".5em",
+            }}
+          >
+            ――
+          </span>Press Space
+          <span
+            style={{
+              letterSpacing: "-.2em",
+              width: "2em",
+              marginLeft: ".5em",
+            }}
+          >
+            ――
+          </span>
         </div>
       </div>
     </div>
