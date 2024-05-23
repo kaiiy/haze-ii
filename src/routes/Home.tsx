@@ -59,7 +59,12 @@ const Home = ({ containerWidth }: HomeProps) => {
   return (
     <Container width={containerWidth}>
       <Nav text="HOME" />
-      <Tooltip id="my-tooltip" />;
+      <Tooltip
+        id="my-tooltip"
+        style={{
+          zIndex: "calc(infinity)",
+        }}
+      />;
 
       <div className="flex flex-col font-sawarabi">
         <div
