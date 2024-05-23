@@ -21,7 +21,7 @@ const Nav = ({ text }: NavProps) => {
             />
           </Link>
           <a
-            href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fkaiiy%2Freplay&text=VIEW"
+            href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fkaiiy%mist&text=MIST"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center w-10 h-10"
@@ -32,7 +32,7 @@ const Nav = ({ text }: NavProps) => {
             <RiTwitterXFill className="w-8 h-8" />
           </a>
           <a
-            href="https://github.com/kaiiy/replay"
+            href="https://github.com/kaiiy/mist"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center w-10 h-10"
