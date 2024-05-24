@@ -21,7 +21,7 @@ const Nav = ({ text }: NavProps) => {
             />
           </Link>
           <a
-            href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fkaiiy%mist&text=MIST"
+            href="https://x.com/intent/post?url=https%3A%2F%2Fgithub.com%2Fkaiiy%2Fmist&text=MIST"
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-center w-10 h-10"
