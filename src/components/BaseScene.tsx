@@ -88,6 +88,8 @@ const BaseScene = (
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
       e.preventDefault();
+    } else if (e.key === "Escape") {
+      navigate("/");
     }
 
     if (!isClear) {

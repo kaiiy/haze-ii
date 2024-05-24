@@ -3,6 +3,8 @@ import BudouX from "@/components/BudouX";
 import { Link } from "react-router-dom";
 import Nav from "@/components/Nav";
 import { Tooltip } from "react-tooltip";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface InfoProps {
   title: string;
@@ -51,11 +53,38 @@ const TutorialContent = () => (
   </div>
 );
 
+const SCENES = ["0", "1", "2", "3", "4"];
+
 interface HomeProps {
   containerWidth: number;
 }
 
 const Home = ({ containerWidth }: HomeProps) => {
+  const navigate = useNavigate();
+
+  const [sceneIndex, setSceneIndex] = useState<number>(-1);
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
+      const nextIndex = Math.min(sceneIndex + 1, SCENES.length - 1);
+      setSceneIndex(nextIndex);
+    } else if (e.key === "ArrowLeft") {
+      const nextIndex = Math.max(sceneIndex - 1, 0);
+      setSceneIndex(nextIndex);
+    } else if (e.key === "Enter" || e.key === " ") {
+      if (sceneIndex !== -1) {
+        navigate(`/${SCENES[sceneIndex]}`);
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [sceneIndex]);
+
   return (
     <Container width={containerWidth}>
       <Nav text="HOME" />
@@ -87,15 +116,15 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Info title="チュートリアル" content={TutorialContent()} />
         </div>
         <div className="flex flex-wrap gap-3 justify-center font-notoSans">
-          {[
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-          ].map((stage, index) => (
+          {SCENES.map((stage, index) => (
             <Link to={`/${stage}`} key={index}>
-              <div className="w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer bg-white hover:text-[#f7f7f7] hover:bg-charcoal transition duration-30 text-charcoal">
+              <div
+                className={`w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer   transition duration-300 hover:text-[#f7f7f7] hover:bg-charcoal ${
+                  sceneIndex === index
+                    ? "text-[#f7f7f7] bg-charcoal"
+                    : "text-charcoal bg-white"
+                }`}
+              >
                 {stage}
               </div>
             </Link>

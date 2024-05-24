@@ -16,7 +16,7 @@ const Nav = ({ text }: NavProps) => {
             <MdHome
               className="w-10 h-10"
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="Home"
+              data-tooltip-content="Home (Esc)"
               data-tooltip-place="right"
             />
           </Link>
