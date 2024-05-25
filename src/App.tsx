@@ -10,7 +10,15 @@ import Scene2 from "./routes/Scene2";
 import Scene3 from "./routes/Scene3";
 import Scene4 from "./routes/Scene4";
 
-const CONTAINER_WIDTH_RATIO = 0.5;
+const getContainerWidthRatio = (width: number) => {
+  if (width <= 768) {
+    return 0.8;
+  } else if (width <= 1024) {
+    return -0.3 / 256 * (width - 1024) + 0.5;
+  } else {
+    return 0.5;
+  }
+};
 
 const App = () => {
   const windowSize: WindowSize = {
@@ -24,7 +32,9 @@ const App = () => {
     ),
   };
 
-  const containerWidth = windowSize.width * CONTAINER_WIDTH_RATIO;
+  const containerWidthRatio = getContainerWidthRatio(windowSize.width);
+
+  const containerWidth = windowSize.width * containerWidthRatio;
 
   const baseSize = containerWidth / 24;
 
