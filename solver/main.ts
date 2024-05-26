@@ -1,7 +1,7 @@
 // 数字: 隣接する黒マスの数
 // T,B,R,L: その方向に黒マスがあるかどうか
 // ただし、Nはその方向に黒マスがないことを表す
-type Cell =
+type CellStr =
   | "0"
   | "1T"
   | "1R"
@@ -18,6 +18,36 @@ type Cell =
   | "3NB"
   | "3NL";
 
+interface CellBase {
+  type: CellStr;
+  next: {
+    top: CellBase | null | undefined;
+    right: CellBase | null | undefined;
+    bottom: CellBase | null | undefined;
+    left: CellBase | null | undefined;
+  };
+}
+
+interface Cell0 extends CellBase {
+  type: "0";
+  next: {
+    top: CellBase;
+    right: CellBase;
+    bottom: CellBase;
+    left: CellBase;
+  };
+}
+
+interface Cell1T extends CellBase {
+  type: "1T";
+  next: {
+    top: null;
+    right: CellBase;
+    bottom: CellBase;
+    left: CellBase;
+  };
+}
+
 interface Vec2 {
   x: number;
   y: number;
@@ -25,14 +55,14 @@ interface Vec2 {
 
 interface VecCell {
   vec: Vec2;
-  cell: Cell;
+  cell: CellStr;
 }
 
 type Board = VecCell[];
 
 // board namespace
 const boardNs = {
-  addCell: (board: Board, vec: Vec2, cell: Cell) => {
+  addCell: (board: Board, vec: Vec2, cell: CellStr) => {
     const vecCell: VecCell = { vec, cell };
     const newBoard = [...board, vecCell];
     return newBoard;
@@ -40,7 +70,7 @@ const boardNs = {
 };
 
 const viewNs = {
-  shift: (view: Cell[]) => {
+  shift: (view: CellStr[]) => {
     if (view.length === 0) {
       throw new Error("view is empty");
     }
@@ -51,7 +81,7 @@ const viewNs = {
 };
 
 const main = () => {
-  const VIEW: Cell[] = ["3NR", "0", "2TR"];
+  const VIEW: CellStr[] = ["3NR", "0", "2TR"];
   //   先頭の要素を取得する
   const { head, tail: newView } = viewNs.shift(VIEW);
   const board: Board = boardNs.addCell([], { x: 0, y: 0 }, head);
