@@ -1,6 +1,5 @@
 // 数字: 隣接する黒マスの数
 // T,B,R,L: その方向に黒マスがあるかどうか
-// ただし、Nはその方向に黒マスがないことを表す
 type CellStr =
   | "0"
   | "1T"
@@ -13,38 +12,19 @@ type CellStr =
   | "2LT"
   | "2TB"
   | "2RL"
-  | "3NT"
-  | "3NR"
-  | "3NB"
-  | "3NL";
+  | "3RBL"
+  | "3BLT"
+  | "3LTR"
+  | "3TRB";
 
 interface CellBase {
   type: CellStr;
+  prev: CellBase | null | undefined;
   next: {
     top: CellBase | null | undefined;
     right: CellBase | null | undefined;
     bottom: CellBase | null | undefined;
     left: CellBase | null | undefined;
-  };
-}
-
-interface Cell0 extends CellBase {
-  type: "0";
-  next: {
-    top: CellBase;
-    right: CellBase;
-    bottom: CellBase;
-    left: CellBase;
-  };
-}
-
-interface Cell1T extends CellBase {
-  type: "1T";
-  next: {
-    top: null;
-    right: CellBase;
-    bottom: CellBase;
-    left: CellBase;
   };
 }
 
@@ -60,15 +40,6 @@ interface VecCell {
 
 type Board = VecCell[];
 
-// board namespace
-const boardNs = {
-  addCell: (board: Board, vec: Vec2, cell: CellStr) => {
-    const vecCell: VecCell = { vec, cell };
-    const newBoard = [...board, vecCell];
-    return newBoard;
-  },
-};
-
 const viewNs = {
   shift: (view: CellStr[]) => {
     if (view.length === 0) {
@@ -80,14 +51,112 @@ const viewNs = {
   },
 };
 
-const main = () => {
-  const VIEW: CellStr[] = ["3NR", "0", "2TR"];
-  //   先頭の要素を取得する
-  const { head, tail: newView } = viewNs.shift(VIEW);
-  const board: Board = boardNs.addCell([], { x: 0, y: 0 }, head);
+const toCellBase = (cellStr: CellStr): CellBase => {
+  if (cellStr === "0") {
+    return {
+      type: "0",
+      prev: undefined,
+      next: {
+        top: undefined,
+        right: undefined,
+        bottom: undefined,
+        left: undefined,
+      },
+    };
+  } else if (cellStr === "2LT") {
+    return {
+      type: "2LT",
+      prev: undefined,
+      next: {
+        top: null,
+        right: undefined,
+        bottom: undefined,
+        left: null,
+      },
+    };
+  } else if (cellStr === "2RB") {
+    return {
+      type: "2RB",
+      prev: undefined,
+      next: {
+        top: undefined,
+        right: null,
+        bottom: null,
+        left: undefined,
+      },
+    };
+  } else if (cellStr === "2TR") {
+    return {
+      type: "2TR",
+      prev: undefined,
+      next: {
+        top: null,
+        right: null,
+        bottom: undefined,
+        left: undefined,
+      },
+    };
+  }
+  throw new Error("not implemented");
+};
 
-  console.log(newView);
-  console.log(board);
+const main = () => {
+  const VIEW: CellStr[] = ["2LT", "2RB", "2TR"];
+
+  let view = VIEW;
+
+  const { head, tail } = viewNs.shift(view);
+  const root: CellBase = toCellBase(head);
+  root.prev = null;
+  view = tail;
+  let parents: CellBase[] = [root];
+
+  for (const head of view) {
+    const child = toCellBase(head);
+
+    const nextParents: CellBase[] = [];
+
+    for (const parent of parents) {
+      child.prev = parent;
+
+      if (parent.next.top === undefined) {
+        if (child.next.bottom === undefined) {
+          parent.next.top = structuredClone(child);
+          nextParents.push(parent.next.top);
+        } else {
+          parent.next.top = null;
+        }
+      }
+      if (parent.next.right === undefined) {
+        if (child.next.left === undefined) {
+          parent.next.right = structuredClone(child);
+          nextParents.push(parent.next.right);
+        } else {
+          parent.next.right = null;
+        }
+      }
+      if (parent.next.bottom === undefined) {
+        if (child.next.top === undefined) {
+          parent.next.bottom = structuredClone(child);
+          nextParents.push(parent.next.bottom);
+        } else {
+          parent.next.bottom = null;
+        }
+      }
+      if (parent.next.left === undefined) {
+        if (child.next.right === undefined) {
+          parent.next.left = structuredClone(child);
+          nextParents.push(parent.next.left);
+        } else {
+          parent.next.left = null;
+        }
+      }
+    }
+
+    parents = nextParents;
+  }
+
+  console.log(root);
 };
 
 if (import.meta.main) {
