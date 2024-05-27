@@ -105,50 +105,80 @@ const main = () => {
   view = tail;
   let parents: CellBase[] = [root];
 
-  for (const head of view) {
-    const child = toCellBase(head);
+  for (let i = 0; i < view.length; i++) {
+    const child = toCellBase(view[i]);
 
     const nextParents: CellBase[] = [];
 
     for (const parent of parents) {
       if (parent.next.top === undefined) {
         if (child.next.bottom === undefined) {
-          parent.next.top = structuredClone(child);
-          nextParents.push(parent.next.top);
+          const cloned = structuredClone(child);
+          cloned.next.bottom = null;
+          if (i === view.length - 1) {
+            cloned.next.top = null;
+            cloned.next.right = null;
+            cloned.next.left = null;
+          }
+          parent.next.top = cloned;
+          nextParents.push(cloned);
         } else {
           parent.next.top = null;
         }
       }
       if (parent.next.right === undefined) {
         if (child.next.left === undefined) {
-          parent.next.right = structuredClone(child);
-          nextParents.push(parent.next.right);
+          const cloned = structuredClone(child);
+          cloned.next.left = null;
+          if (i === view.length - 1) {
+            cloned.next.top = null;
+            cloned.next.right = null;
+            cloned.next.bottom = null;
+          }
+          parent.next.right = cloned;
+          nextParents.push(cloned);
         } else {
           parent.next.right = null;
         }
       }
       if (parent.next.bottom === undefined) {
         if (child.next.top === undefined) {
-          parent.next.bottom = structuredClone(child);
-          nextParents.push(parent.next.bottom);
+          const cloned = structuredClone(child);
+          cloned.next.top = null;
+          if (i === view.length - 1) {
+            cloned.next.right = null;
+            cloned.next.bottom = null;
+            cloned.next.left = null;
+          }
+          parent.next.bottom = cloned;
+          nextParents.push(cloned);
         } else {
           parent.next.bottom = null;
         }
       }
       if (parent.next.left === undefined) {
         if (child.next.right === undefined) {
-          parent.next.left = structuredClone(child);
-          nextParents.push(parent.next.left);
+          const cloned = structuredClone(child);
+          cloned.next.right = null;
+          if (i === view.length - 1) {
+            cloned.next.top = null;
+            cloned.next.bottom = null;
+            cloned.next.left = null;
+          }
+          parent.next.left = cloned;
+          nextParents.push(cloned);
         } else {
           parent.next.left = null;
         }
       }
     }
 
-    parents = nextParents;
+    if (i < view.length - 1) {
+      parents = nextParents;
+    }
   }
 
-  console.log(root);
+  console.log(JSON.stringify(root, null, 2));
 };
 
 if (import.meta.main) {
