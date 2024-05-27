@@ -19,7 +19,6 @@ type CellStr =
 
 interface CellBase {
   type: CellStr;
-  prev: CellBase | null | undefined;
   next: {
     top: CellBase | null | undefined;
     right: CellBase | null | undefined;
@@ -55,7 +54,6 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   if (cellStr === "0") {
     return {
       type: "0",
-      prev: undefined,
       next: {
         top: undefined,
         right: undefined,
@@ -66,7 +64,6 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   } else if (cellStr === "2LT") {
     return {
       type: "2LT",
-      prev: undefined,
       next: {
         top: null,
         right: undefined,
@@ -77,7 +74,6 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   } else if (cellStr === "2RB") {
     return {
       type: "2RB",
-      prev: undefined,
       next: {
         top: undefined,
         right: null,
@@ -88,7 +84,6 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   } else if (cellStr === "2TR") {
     return {
       type: "2TR",
-      prev: undefined,
       next: {
         top: null,
         right: null,
@@ -107,7 +102,6 @@ const main = () => {
 
   const { head, tail } = viewNs.shift(view);
   const root: CellBase = toCellBase(head);
-  root.prev = null;
   view = tail;
   let parents: CellBase[] = [root];
 
@@ -117,8 +111,6 @@ const main = () => {
     const nextParents: CellBase[] = [];
 
     for (const parent of parents) {
-      child.prev = parent;
-
       if (parent.next.top === undefined) {
         if (child.next.bottom === undefined) {
           parent.next.top = structuredClone(child);
