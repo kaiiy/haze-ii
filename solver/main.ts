@@ -91,17 +91,28 @@ const toCellBase = (cellStr: CellStr): CellBase => {
         left: undefined,
       },
     };
+  } else if (cellStr === "2TB") {
+    return {
+      type: "2TB",
+      next: {
+        top: null,
+        right: undefined,
+        bottom: null,
+        left: undefined,
+      },
+    };
   }
   throw new Error("not implemented");
 };
 
 const main = () => {
-  const VIEW: CellStr[] = ["2LT", "2RB", "2TR"];
+  const VIEW: CellStr[] = ["0", "2TB", "2TB", "0"];
 
   let view = VIEW;
 
   const { head, tail } = viewNs.shift(view);
-  const root: CellBase = toCellBase(head);
+  const root = toCellBase(head);
+  let tree: CellBase | null = root;
   view = tail;
   let parents: CellBase[] = [root];
 
@@ -178,7 +189,114 @@ const main = () => {
     }
   }
 
-  console.log(JSON.stringify(root, null, 2));
+  // 一旦、rootだけ
+  if (
+    [root.next.top, root.next.right, root.next.bottom, root.next.left].every((
+      v,
+    ) => v === null)
+  ) {
+    tree = null;
+    return tree;
+  }
+
+  // rootより下
+  let grandParents = [root];
+  for (let i = 0; i < VIEW.length - 2; i++) {
+    for (const grandParent of grandParents) {
+      let parent = grandParent.next.top;
+      if (parent !== null && parent !== undefined) {
+        if (
+          [
+            parent.next.top,
+            parent.next.right,
+            parent.next.bottom,
+            parent.next.left,
+          ].every((
+            v,
+          ) => v === null)
+        ) {
+          grandParent.next.top = null;
+        }
+      }
+
+      parent = grandParent.next.right;
+      if (parent !== null && parent !== undefined) {
+        if (
+          [
+            parent.next.top,
+            parent.next.right,
+            parent.next.bottom,
+            parent.next.left,
+          ].every((
+            v,
+          ) => v === null)
+        ) {
+          grandParent.next.right = null;
+        }
+      }
+
+      parent = grandParent.next.bottom;
+      if (parent !== null && parent !== undefined) {
+        if (
+          [
+            parent.next.top,
+            parent.next.right,
+            parent.next.bottom,
+            parent.next.left,
+          ].every((
+            v,
+          ) => v === null)
+        ) {
+          grandParent.next.bottom = null;
+        }
+      }
+
+      parent = grandParent.next.left;
+      if (parent !== null && parent !== undefined) {
+        if (
+          [
+            parent.next.top,
+            parent.next.right,
+            parent.next.bottom,
+            parent.next.left,
+          ].every((
+            v,
+          ) => v === null)
+        ) {
+          grandParent.next.left = null;
+        }
+      }
+    }
+    const nextGrandParents = [];
+    for (const grandParent of grandParents) {
+      if (grandParent.next.top !== null && grandParent.next.top !== undefined) {
+        nextGrandParents.push(grandParent.next.top);
+      }
+      if (
+        grandParent.next.right !== null && grandParent.next.right !== undefined
+      ) {
+        nextGrandParents.push(grandParent.next.right);
+      }
+      if (
+        grandParent.next.bottom !== null &&
+        grandParent.next.bottom !== undefined
+      ) {
+        nextGrandParents.push(grandParent.next.bottom);
+      }
+      if (
+        grandParent.next.left !== null && grandParent.next.left !== undefined
+      ) {
+        nextGrandParents.push(grandParent.next.left);
+      }
+    }
+    grandParents = nextGrandParents;
+  }
+
+  tree = root;
+  console.log(JSON.stringify(tree, null, 2));
+
+  // TODO: Cellが重なったら、そのpathは削除
+  // VIEW.length >= 5 以上で発生
 };
 
 if (import.meta.main) {
