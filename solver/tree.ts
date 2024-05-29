@@ -1,5 +1,12 @@
 import { CellBase, CellStr, toCellBase } from "./cell.ts";
 
+const NULL_NEXT = {
+  top: null,
+  right: null,
+  bottom: null,
+  left: null,
+} as const;
+
 const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
   const clonedRoot = structuredClone(root);
   let parents: CellBase[] = [clonedRoot];
@@ -12,15 +19,19 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
     const nextParents: CellBase[] = [];
 
     for (const parent of parents) {
+      // undefined: その方向にマスを置ける可能性がある
       if (parent.next.top === undefined) {
         if (child.next.bottom === undefined) {
           const cloned = structuredClone(child);
 
+          // parent を置いたので、もうその方向は null
           cloned.next.bottom = null;
+          // 最後のマスは、next が全部 null
           if (i === rootlessViewLength - 1) {
-            cloned.next.top = null;
-            cloned.next.right = null;
-            cloned.next.left = null;
+            cloned.next = {
+              ...NULL_NEXT,
+              identical: cloned.next.identical,
+            };
           }
           cloned.depth = i + 1;
 
@@ -36,9 +47,10 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
 
           cloned.next.left = null;
           if (i === rootlessViewLength - 1) {
-            cloned.next.top = null;
-            cloned.next.right = null;
-            cloned.next.bottom = null;
+            cloned.next = {
+              ...NULL_NEXT,
+              identical: cloned.next.identical,
+            };
           }
           cloned.depth = i + 1;
 
@@ -54,9 +66,10 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
 
           cloned.next.top = null;
           if (i === rootlessViewLength - 1) {
-            cloned.next.right = null;
-            cloned.next.bottom = null;
-            cloned.next.left = null;
+            cloned.next = {
+              ...NULL_NEXT,
+              identical: cloned.next.identical,
+            };
           }
           cloned.depth = i + 1;
 
@@ -72,9 +85,10 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
 
           cloned.next.right = null;
           if (i === rootlessViewLength - 1) {
-            cloned.next.top = null;
-            cloned.next.bottom = null;
-            cloned.next.left = null;
+            cloned.next = {
+              ...NULL_NEXT,
+              identical: cloned.next.identical,
+            };
           }
           cloned.depth = i + 1;
 
@@ -83,6 +97,30 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
         } else {
           parent.next.left = null;
         }
+      }
+
+      // identical の可能性あり
+      if (
+        parent.type === child.type &&
+        [
+          parent.next.top,
+          parent.next.right,
+          parent.next.bottom,
+          parent.next.left,
+        ].some((v) => v === null)
+      ) {
+        const cloned = structuredClone(parent);
+        cloned.depth = i + 1;
+
+        // 最後のマスは、next が全部 null
+        if (i === rootlessViewLength - 1) {
+          cloned.next.top = null;
+          cloned.next.right = null;
+          cloned.next.bottom = null;
+          cloned.next.left = null;
+        }
+
+        parent.next.identical = cloned;
       }
     }
 

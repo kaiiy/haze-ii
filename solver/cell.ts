@@ -31,6 +31,8 @@ interface CellBase {
     right: CellBase | null | undefined;
     bottom: CellBase | null | undefined;
     left: CellBase | null | undefined;
+    // 同一のマスに移動
+    identical: CellBase | null | undefined;
   };
 }
 
@@ -44,10 +46,18 @@ const toCellBase = (cellStr: CellStr): CellBase => {
       right: undefined,
       bottom: undefined,
       left: undefined,
+      identical: undefined,
     },
   };
   if (cellStr === "0") {
-    return baseCell;
+    return {
+      ...baseCell,
+      next: {
+        ...baseCell.next,
+        // 黒マスが隣接していないマスは、viewが変われば必ず別マス
+        identical: null,
+      },
+    };
   } else if (cellStr === "1T") {
     return {
       ...baseCell,

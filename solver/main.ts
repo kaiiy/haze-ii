@@ -31,7 +31,7 @@ const generateRoot = (str: CellStr): CellBase => {
 
 const main = () => {
   // const VIEW: CellStr[] = ["2LT", "2RB", "3TRB"];
-  const VIEW: CellStr[] = ["2LT", "2RB", "0"] as const;
+  const VIEW: CellStr[] = ["2TB", "2TB"] as const;
 
   const { head: headStr, tail: rootlessView } = viewNs.shift(VIEW);
   const root = generateRoot(headStr);
