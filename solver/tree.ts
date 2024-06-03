@@ -1,4 +1,5 @@
-import { CellBase, CellStr, toCellBase } from "./cell.ts";
+import { CellBase, CellStr, toCellBase, VecCell } from "./cell.ts";
+import { addVecCell, Board } from "./board.ts";
 
 const NULL_NEXT = {
   top: null,
@@ -20,6 +21,7 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
 
     for (const parent of parents) {
       // undefined: その方向にマスを置ける可能性がある
+      // 上方向に連結
       if (parent.next.top === undefined) {
         if (child.next.bottom === undefined) {
           const cloned = structuredClone(child);
@@ -28,12 +30,18 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
           cloned.next.bottom = null;
           // 最後のマスは、next が全部 null
           if (i === rootlessViewLength - 1) {
+            cloned.leaf = true;
             cloned.next = {
               ...NULL_NEXT,
               identical: cloned.next.identical,
             };
           }
           cloned.depth = i + 1;
+          cloned.vec2 = { x: parent.vec2.x, y: parent.vec2.y - 1 };
+          cloned.path = [...parent.path, {
+            type: child.type,
+            vec2: cloned.vec2,
+          }];
 
           parent.next.top = cloned;
           nextParents.push(cloned);
@@ -41,18 +49,25 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
           parent.next.top = null;
         }
       }
+      // 右方向に連結
       if (parent.next.right === undefined) {
         if (child.next.left === undefined) {
           const cloned = structuredClone(child);
 
           cloned.next.left = null;
           if (i === rootlessViewLength - 1) {
+            cloned.leaf = true;
             cloned.next = {
               ...NULL_NEXT,
               identical: cloned.next.identical,
             };
           }
           cloned.depth = i + 1;
+          cloned.vec2 = { x: parent.vec2.x + 1, y: parent.vec2.y };
+          cloned.path = [...parent.path, {
+            type: child.type,
+            vec2: cloned.vec2,
+          }];
 
           parent.next.right = cloned;
           nextParents.push(cloned);
@@ -60,18 +75,25 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
           parent.next.right = null;
         }
       }
+      // 下方向に連結
       if (parent.next.bottom === undefined) {
         if (child.next.top === undefined) {
           const cloned = structuredClone(child);
 
           cloned.next.top = null;
           if (i === rootlessViewLength - 1) {
+            cloned.leaf = true;
             cloned.next = {
               ...NULL_NEXT,
               identical: cloned.next.identical,
             };
           }
           cloned.depth = i + 1;
+          cloned.vec2 = { x: parent.vec2.x, y: parent.vec2.y + 1 };
+          cloned.path = [...parent.path, {
+            type: child.type,
+            vec2: cloned.vec2,
+          }];
 
           parent.next.bottom = cloned;
           nextParents.push(cloned);
@@ -79,18 +101,25 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
           parent.next.bottom = null;
         }
       }
+      // 左方向に連結
       if (parent.next.left === undefined) {
         if (child.next.right === undefined) {
           const cloned = structuredClone(child);
 
           cloned.next.right = null;
           if (i === rootlessViewLength - 1) {
+            cloned.leaf = true;
             cloned.next = {
               ...NULL_NEXT,
               identical: cloned.next.identical,
             };
           }
           cloned.depth = i + 1;
+          cloned.vec2 = { x: parent.vec2.x - 1, y: parent.vec2.y };
+          cloned.path = [...parent.path, {
+            type: child.type,
+            vec2: cloned.vec2,
+          }];
 
           parent.next.left = cloned;
           nextParents.push(cloned);
@@ -99,7 +128,7 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
         }
       }
 
-      // identical の可能性あり
+      // identical
       if (
         parent.type === child.type &&
         [
@@ -111,13 +140,19 @@ const generateTree = (root: CellBase, rootlessView: CellStr[]): CellBase => {
       ) {
         const cloned = structuredClone(parent);
         cloned.depth = i + 1;
+        cloned.vec2 = { x: parent.vec2.x, y: parent.vec2.y };
+        cloned.path = [...parent.path, {
+          type: child.type,
+          vec2: cloned.vec2,
+        }];
 
         // 最後のマスは、next が全部 null
         if (i === rootlessViewLength - 1) {
-          cloned.next.top = null;
-          cloned.next.right = null;
-          cloned.next.bottom = null;
-          cloned.next.left = null;
+          cloned.leaf = true;
+          cloned.next = {
+            ...NULL_NEXT,
+            identical: cloned.next.identical,
+          };
         }
 
         parent.next.identical = cloned;
@@ -159,6 +194,7 @@ const pruneUnnecessaryLeaves = (
       let parent = grandParent.next.top;
       if (parent !== null && parent !== undefined) {
         if (isLeaf(parent)) {
+          // ↓ parent を削除
           grandParent.next.top = null;
         }
       }
@@ -166,6 +202,7 @@ const pruneUnnecessaryLeaves = (
       parent = grandParent.next.right;
       if (parent !== null && parent !== undefined) {
         if (isLeaf(parent)) {
+          // ↓ parent を削除
           grandParent.next.right = null;
         }
       }
@@ -173,6 +210,7 @@ const pruneUnnecessaryLeaves = (
       parent = grandParent.next.bottom;
       if (parent !== null && parent !== undefined) {
         if (isLeaf(parent)) {
+          // ↓ parent を削除
           grandParent.next.bottom = null;
         }
       }
@@ -180,6 +218,7 @@ const pruneUnnecessaryLeaves = (
       parent = grandParent.next.left;
       if (parent !== null && parent !== undefined) {
         if (isLeaf(parent)) {
+          // ↓ parent を削除
           grandParent.next.left = null;
         }
       }
@@ -213,6 +252,7 @@ const pruneUnnecessaryLeaves = (
 
 // 不要な node を削除
 const pruneTree = (tree: CellBase, fullView: CellStr[]): CellBase | null => {
+  // TODO: board に変換できるかを check して、できない node は削除
   let clonedTree: CellBase | null = structuredClone(tree);
   for (let i = 0; i < fullView.length - 1; i++) {
     const pruned = pruneUnnecessaryLeaves(clonedTree, fullView);

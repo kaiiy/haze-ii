@@ -1,13 +1,6 @@
 import { CellBase, CellStr, toCellBase, Vec2 } from "./cell.ts";
 import { generateTree, pruneTree } from "./tree.ts";
 
-interface VecCell {
-  vec: Vec2;
-  cell: CellStr;
-}
-
-type Board = VecCell[];
-
 const viewNs = {
   shift: (view: CellStr[]) => {
     if (view.length === 0) {
@@ -22,9 +15,12 @@ const viewNs = {
 // rootNodeを作成
 const generateRoot = (str: CellStr): CellBase => {
   const _root = toCellBase(str);
-  const root = {
+  const vec2: Vec2 = { x: 0, y: 0 };
+  const root: CellBase = {
     ..._root,
     depth: 0,
+    vec2,
+    path: [{ type: str, vec2 }],
   };
   return root;
 };

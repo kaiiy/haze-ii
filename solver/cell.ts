@@ -22,10 +22,17 @@ interface Vec2 {
   y: number;
 }
 
+interface VecCell {
+  type: CellStr;
+  vec2: Vec2;
+}
+
 interface CellBase {
   type: CellStr;
   depth: number;
-  vec2: Vec2 | undefined;
+  vec2: Vec2;
+  leaf: boolean;
+  path: VecCell[];
   next: {
     top: CellBase | null | undefined;
     right: CellBase | null | undefined;
@@ -40,7 +47,9 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   const baseCell: CellBase = {
     type: cellStr,
     depth: -1,
-    vec2: undefined,
+    vec2: { x: -1, y: -1 },
+    leaf: false,
+    path: [],
     next: {
       top: undefined,
       right: undefined,
@@ -188,5 +197,5 @@ const toCellBase = (cellStr: CellStr): CellBase => {
   throw new Error("not implemented");
 };
 
-export type { CellBase, CellStr, Vec2 };
+export type { CellBase, CellStr, Vec2, VecCell };
 export { toCellBase };
