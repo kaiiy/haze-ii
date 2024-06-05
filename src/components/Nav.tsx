@@ -14,7 +14,7 @@ const Nav = ({ text }: NavProps) => {
         <div className="flex flex-col gap-4">
           <Link to="/">
             <MdHome
-              className="w-10 h-10"
+              className="w-9 h-9"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="Home (Esc)"
               data-tooltip-place="right"
@@ -24,35 +24,37 @@ const Nav = ({ text }: NavProps) => {
             href="https://x.com/intent/post?url=https%3A%2F%2Fgithub.com%2Fkaiiy%2Fmist&text=MIST"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-center w-10 h-10"
+            className="flex items-center justify-center"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Share on X"
             data-tooltip-place="right"
           >
-            <RiTwitterXFill className="w-8 h-8" />
+            <RiTwitterXFill className="w-7 h-7" />
           </a>
           <a
             href="https://github.com/kaiiy/mist"
             target="_blank"
             rel="noreferrer"
-            className="flex items-center justify-center w-10 h-10"
+            className="flex items-center justify-center"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="View the repository"
             data-tooltip-place="right"
           >
-            <FaGithub className="w-8 h-8" />
+            <FaGithub className="w-7 h-7" />
           </a>
           <hr />
         </div>
 
         <span
-          className="text-3xl inline-block"
+          className="inline-block"
           style={{
             writingMode: "vertical-lr",
-            paddingLeft: "0.3rem",
+            paddingLeft: "6px",
             paddingTop: "8px",
             paddingBottom: "6px",
             whiteSpace: "nowrap",
+            fontSize: "24px",
+            lineHeight: "24px",
           }}
         >
           {text}

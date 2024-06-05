@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/SceneBaseContainer";
 import Nav from "@/components/Nav";
 import { Tooltip } from "react-tooltip";
 
@@ -29,7 +29,7 @@ const SceneContainer = ({ containerWidth, navText, children }: StageProps) => {
             zIndex: "calc(infinity)",
           }}
         />
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-notoSans">
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 font-notoSerif">
           {children}
         </div>
         <Nav text={navText} />

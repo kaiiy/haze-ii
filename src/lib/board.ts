@@ -116,7 +116,7 @@ const getBorderWidthPx = (
   if (adjacentCellResult.success) {
     const adjacentCell = adjacentCellResult.value;
     if (adjacentCell.type === "B") {
-      return new Success(cellSize * 0.04);
+      return new Success(cellSize * 0.03);
     } else if (
       adjacentCell.type === "S" || adjacentCell.type === "G" ||
       adjacentCell.type === " " || typeof adjacentCell.type === "number"

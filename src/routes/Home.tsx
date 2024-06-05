@@ -12,7 +12,7 @@ interface InfoProps {
 }
 
 const Info = ({ title, content }: InfoProps) => (
-  <div className="mb-6 font-notoSans">
+  <div className="mb-6 font-notoSerif">
     <div className="text-2xl border-b border-charcoal mb-3 text-center">
       {title}
     </div>
@@ -53,7 +53,7 @@ const TutorialContent = () => (
   </div>
 );
 
-const SCENES = ["0", "1", "2", "3", "4"];
+const SCENES = ["0", "1", "2", "3", "4", "5", "C1"];
 
 interface HomeProps {
   containerWidth: number;
@@ -99,7 +99,6 @@ const Home = ({ containerWidth }: HomeProps) => {
         <div
           className="w-full text-center text-8xl text-charcoal font-sawarabi"
           style={{
-            marginTop: "80px",
             marginBottom: "80px",
           }}
         >
@@ -115,7 +114,7 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Info title="注意事項" content={NoticeContent()} />
           <Info title="チュートリアル" content={TutorialContent()} />
         </div>
-        <div className="flex flex-wrap gap-3 justify-center font-notoSans">
+        <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
           {SCENES.map((stage, index) => (
             <Link to={`/${stage}`} key={index}>
               <div
