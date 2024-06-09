@@ -16,7 +16,7 @@ const Nav = ({ text }: NavProps) => {
             <MdHome
               className="w-9 h-9"
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="Home (Esc)"
+              data-tooltip-content="Home (Press Esc)"
               data-tooltip-place="right"
             />
           </Link>
@@ -37,7 +37,7 @@ const Nav = ({ text }: NavProps) => {
             rel="noreferrer"
             className="flex items-center justify-center"
             data-tooltip-id="my-tooltip"
-            data-tooltip-content="View the repository"
+            data-tooltip-content="View Repository"
             data-tooltip-place="right"
           >
             <FaGithub className="w-7 h-7" />

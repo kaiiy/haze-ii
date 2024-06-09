@@ -21,6 +21,13 @@ interface BaseSceneProps {
   answer: InputChar[][];
 }
 
+const navigateWithDelay = (navigate: (to: string) => void, to: string) => {
+  const timer = setTimeout(() => {
+    navigate(to);
+  }, 100);
+  return () => clearTimeout(timer);
+};
+
 const BaseScene = (
   {
     baseSize,
@@ -89,7 +96,7 @@ const BaseScene = (
     if (e.key === "Backspace") {
       e.preventDefault();
     } else if (e.key === "Escape") {
-      navigate("/");
+      navigateWithDelay(navigate, "/");
     }
 
     if (!isClear) {
@@ -109,7 +116,7 @@ const BaseScene = (
           regex.test(e.key)
         ) {
           setInputChars([...inputChars, e.key as InputChar]);
-        } else if (e.key === "Backspace") {
+        } else if (e.key === "Backspace" || e.key === "Delete") {
           if (inputChars.length > 0) {
             setInputChars(inputChars.slice(0, inputChars.length - 1));
           }
@@ -129,10 +136,7 @@ const BaseScene = (
       }
     } else {
       if (e.key === " ") {
-        const timer = setTimeout(() => {
-          navigate("/");
-        }, 100);
-        return () => clearTimeout(timer);
+        navigateWithDelay(navigate, "/");
       }
     }
   };
@@ -191,7 +195,7 @@ const BaseScene = (
               }}
             >
               <span
-                className="bg-white"
+                className="bg-white font-notoSans"
                 style={{
                   marginTop: String(-fontSize / 6) + "px",
                 }}
@@ -211,12 +215,13 @@ const BaseScene = (
               lineHeight: String(fontSize * 0.8) + "px",
             }}
           >
-            <span className="text-charcoal">
+            <span className="text-charcoal font-notoSans">
               {"*".repeat(inputChars.length)}
             </span>
           </div>
+
           <div
-            className={`flex flex-col`}
+            className={`flex flex-col font-notoSerif`}
             style={{
               opacity: showClear ? 1 : 0,
               transition: "opacity 1s ease-in-out",

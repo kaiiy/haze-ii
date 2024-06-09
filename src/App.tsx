@@ -45,6 +45,9 @@ const App = () => {
     if (e.key === "Backspace") {
       // ブラウザのページバックを無効化
       e.preventDefault();
+    } else if (e.key === " ") {
+      // スクロールを無効化
+      e.preventDefault();
     }
   };
 
