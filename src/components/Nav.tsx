@@ -12,7 +12,7 @@ const Nav = ({ text }: NavProps) => {
     <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-sm rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-4">
-          <Link to="/">
+          <Link tabIndex={-1} to="/">
             <MdHome
               className="w-9 h-9"
               data-tooltip-id="my-tooltip"
@@ -24,6 +24,7 @@ const Nav = ({ text }: NavProps) => {
             href="https://x.com/intent/post?url=https%3A%2F%2Fgithub.com%2Fkaiiy%2Fmist&text=MIST"
             target="_blank"
             rel="noreferrer"
+            tabIndex={-1}
             className="flex items-center justify-center"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="Share on X"
@@ -35,6 +36,7 @@ const Nav = ({ text }: NavProps) => {
             href="https://github.com/kaiiy/mist"
             target="_blank"
             rel="noreferrer"
+            tabIndex={-1}
             className="flex items-center justify-center"
             data-tooltip-id="my-tooltip"
             data-tooltip-content="View Repository"
