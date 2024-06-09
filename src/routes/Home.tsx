@@ -53,6 +53,9 @@ const TutorialContent = () => (
   </div>
 );
 
+// js の % はモジュロ演算子ではないため
+const mod = (n: number, m: number) => ((n % m) + m) % m;
+
 const SCENES = ["0", "1", "2", "3", "4", "5", "C1"];
 
 interface HomeProps {
@@ -64,12 +67,13 @@ const Home = ({ containerWidth }: HomeProps) => {
 
   const [sceneIndex, setSceneIndex] = useState<number>(-1);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  // 矢印キー長押し対策での keyup
+  const handleKeyUp = (e: KeyboardEvent) => {
     if (e.key === "ArrowRight") {
-      const nextIndex = Math.min(sceneIndex + 1, SCENES.length - 1);
+      const nextIndex = mod(sceneIndex + 1, SCENES.length);
       setSceneIndex(nextIndex);
     } else if (e.key === "ArrowLeft") {
-      const nextIndex = Math.max(sceneIndex - 1, 0);
+      const nextIndex = mod(sceneIndex - 1, SCENES.length);
       setSceneIndex(nextIndex);
     } else if (e.key === "Enter" || e.key === " ") {
       if (sceneIndex !== -1) {
@@ -79,9 +83,9 @@ const Home = ({ containerWidth }: HomeProps) => {
   };
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
     };
   }, [sceneIndex]);
 
