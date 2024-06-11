@@ -9,6 +9,8 @@ import {
   getBorderWidthPx,
   vectorToCell,
 } from "@/lib/board";
+import { BLINK_STYLE, KEYFRAMES_STYLE } from "@/lib/clear";
+import { navigateWithDelay } from "@/lib/navigate";
 
 interface BaseSceneProps {
   baseSize: number;
@@ -20,13 +22,6 @@ interface BaseSceneProps {
   playerHistory: OriginalVector[];
   answer: InputChar[][];
 }
-
-const navigateWithDelay = (navigate: (to: string) => void, to: string) => {
-  const timer = setTimeout(() => {
-    navigate(to);
-  }, 100);
-  return () => clearTimeout(timer);
-};
 
 const BaseScene = (
   {
@@ -159,22 +154,6 @@ const BaseScene = (
     }
   }, [isClear]);
 
-  const blinkStyle = {
-    animation: "blink 3s infinite",
-  };
-
-  const keyframesStyle = `
-    @keyframes blink {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0;
-        animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
-      }
-    }
-  `;
-
   return (
     (
       <SceneContainer containerWidth={containerWidth} navText={sceneName}>
@@ -236,13 +215,13 @@ const BaseScene = (
             >
               Clear!
             </div>
-            <style>{keyframesStyle}</style>
+            <style>{KEYFRAMES_STYLE}</style>
             <div
               className="flex justify-center text-charcoal"
               style={{
                 fontSize: String(fontSize * 0.25) + "px",
                 fontWeight: 500,
-                ...blinkStyle,
+                ...BLINK_STYLE,
               }}
             >
               <span

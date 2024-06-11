@@ -100,6 +100,20 @@ const Home = ({ containerWidth }: HomeProps) => {
     };
   }, [sceneIndex]);
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Backspace") {
+      // ブラウザのページバックを無効化
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <Container width={containerWidth}>
       <Nav text="HOME" />

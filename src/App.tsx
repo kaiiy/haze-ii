@@ -42,10 +42,7 @@ const App = () => {
   const baseSize = containerWidth / 24;
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Backspace") {
-      // ブラウザのページバックを無効化
-      e.preventDefault();
-    } else if (e.key === " ") {
+    if (e.key === " ") {
       // スクロールを無効化
       e.preventDefault();
     }
