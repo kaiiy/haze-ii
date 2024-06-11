@@ -35,12 +35,23 @@ const NoticeContent = () => (
         className="text-blue-500"
         target="_blank"
       >
-        <BudouX text="HAZE" />
+        <BudouX text="HAZE: MINI" />
       </a>
       <BudouX text="」のシステムを踏襲しています。" />
     </div>
+  </div>
+);
+
+const PreconditionContent = () => (
+  <div className="text-xl flex flex-col text-center pt-1">
     <div>
-      <BudouX text="先に「HAZE: STAGE 1」をプレイされることをおすすめします。" />
+      <BudouX text="マスとマスの境界に壁はない。" />
+    </div>
+    <div className="mb-3">
+      <BudouX text="すなわち、進みたい方向に進めない場合、その方向には黒マスがある。" />
+    </div>
+    <div>
+      <BudouX text="以上の条件は「HAZE: MINI」のプレイヤーに対して提示されるべきものである。" />
     </div>
   </div>
 );
@@ -115,6 +126,7 @@ const Home = ({ containerWidth }: HomeProps) => {
           }}
         >
           <Info title="制作" content="kaiiy" />
+          <Info title="前提条件" content={PreconditionContent()} />
           <Info title="注意事項" content={NoticeContent()} />
           <Info title="チュートリアル" content={TutorialContent()} />
         </div>
