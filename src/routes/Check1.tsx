@@ -2,9 +2,9 @@ import ContainerBase from "@/components/ContainerBase";
 import Nav from "@/components/Nav";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BLINK_STYLE, KEYFRAMES_STYLE } from "@/lib/clear";
 import { navigateWithDelay } from "@/lib/navigate";
 import { useNavigate } from "react-router-dom";
+import Clear from "@/components/Clear";
 
 interface InfoProps {
   title: string;
@@ -105,7 +105,6 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         setS4List([...s4List, inputNum]);
         setInputS4Value("");
 
-        console.log(s4List, s5List);
         if (
           s4List.length === S4_CORRECT.length - 1 &&
           s5List.length === S5_CORRECT.length
@@ -254,51 +253,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         </div>
       </div>
 
-      <div
-        className={`flex flex-col font-notoSerif`}
-        style={{
-          opacity: showClear ? 1 : 0,
-          transition: "opacity 1s ease-in-out",
-        }}
-      >
-        <div
-          className="flex justify-center text-charcoal"
-          style={{
-            fontSize: String(fontSize * 0.3) + "px",
-            fontWeight: 500,
-          }}
-        >
-          Clear!
-        </div>
-        <style>{KEYFRAMES_STYLE}</style>
-        <div
-          className="flex justify-center text-charcoal"
-          style={{
-            fontSize: String(fontSize * 0.25) + "px",
-            fontWeight: 500,
-            ...BLINK_STYLE,
-          }}
-        >
-          <span
-            style={{
-              letterSpacing: "-.2em",
-              width: "2em",
-              marginRight: ".5em",
-            }}
-          >
-            ――
-          </span>Press Space
-          <span
-            style={{
-              letterSpacing: "-.2em",
-              width: "2em",
-              marginLeft: ".5em",
-            }}
-          >
-            ――
-          </span>
-        </div>
-      </div>
+      <Clear showClear={showClear} fontSize={fontSize} />
     </ContainerBase>
   );
 };
