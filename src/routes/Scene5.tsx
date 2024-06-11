@@ -61,6 +61,7 @@ const ANSWER: InputChar[][] = [
   [...TERM1, L, U, ...TERM2, R, U, ...TERM3, L, L, ...TERM4],
   //
   [...TERM1, U, U, ...TERM2, U, U, ...TERM3, L, L, ...TERM4],
+  //
   // 上: 全通り, 下: DL固定
   [...TERM1, L, L, ...TERM2, R, R, ...TERM3, D, L, ...TERM4],
   //
@@ -70,6 +71,7 @@ const ANSWER: InputChar[][] = [
   [...TERM1, L, U, ...TERM2, R, U, ...TERM3, D, L, ...TERM4],
   //
   [...TERM1, U, U, ...TERM2, U, U, ...TERM3, D, L, ...TERM4],
+  //
   // 上: 全通り, 下: LD固定
   [...TERM1, L, L, ...TERM2, R, R, ...TERM3, L, D, ...TERM4],
   //
@@ -79,6 +81,7 @@ const ANSWER: InputChar[][] = [
   [...TERM1, L, U, ...TERM2, R, U, ...TERM3, L, D, ...TERM4],
   //
   [...TERM1, U, U, ...TERM2, U, U, ...TERM3, L, D, ...TERM4],
+  //
   // 上: 全通り, 下: DD固定
   [...TERM1, L, L, ...TERM2, R, R, ...TERM3, D, D, ...TERM4],
   //
