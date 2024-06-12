@@ -22,7 +22,6 @@ const PLAYER_HISTORY: OriginalVector[] = [
   { x: 3, y: 0 },
   { x: 2, y: 0 },
   { x: 1, y: 0 },
-  { x: 0, y: 0 },
   { x: 1, y: 0 },
   { x: 2, y: 0 },
   { x: 3, y: 0 },
@@ -47,7 +46,7 @@ const L = "ArrowLeft";
 const R = "ArrowRight";
 
 const TERM1: InputChar[] = [U, U, L];
-const TERM2: InputChar[] = [L, R];
+const TERM2: InputChar[] = [];
 const TERM3: InputChar[] = [R, D, D, D, D, L];
 const TERM4: InputChar[] = [L, U, U];
 
