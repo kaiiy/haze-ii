@@ -54,7 +54,7 @@ interface SceneProps {
 }
 
 const S4_CORRECT: number[] = [2, 3];
-const S5_CORRECT: number[] = [1, 2, 3, 4, 6];
+const S5_CORRECT: number[] = [2, 3, 4, 6];
 const DIGIT1: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
