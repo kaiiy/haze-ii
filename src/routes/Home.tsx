@@ -48,7 +48,10 @@ const PreconditionContent = () => (
       <BudouX text="マスとマスの境界に壁はない。" />
     </div>
     <div className="mb-3">
-      <BudouX text="すなわち、進みたい方向に進めない原因は、その方向に黒マスがあるためである。" />
+      <BudouX text="進みたい方向に進めない場合、その原因は進みたい方向に黒マスがあるためである。" />
+    </div>
+    <div>
+      <BudouX text="以上の条件は、「HAZE:MINI」のプレイヤーに対して提示されるべき情報である。" />
     </div>
   </div>
 );
