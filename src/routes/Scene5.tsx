@@ -22,7 +22,6 @@ const PLAYER_HISTORY: OriginalVector[] = [
   { x: 3, y: 0 },
   { x: 2, y: 0 },
   { x: 1, y: 0 },
-  { x: 1, y: 0 },
   { x: 2, y: 0 },
   { x: 3, y: 0 },
   { x: 4, y: 0 },
@@ -48,6 +47,8 @@ const R = "ArrowRight";
 const TERM1: InputChar[] = [U, U, L];
 const TERM3: InputChar[] = [R, D, D, D, D, L];
 const TERM4: InputChar[] = [L, U, U];
+
+// uul uuuu u rddddl dd luu
 
 const ANSWER: InputChar[][] = [
   // 上: 全通り, 下: LL固定
