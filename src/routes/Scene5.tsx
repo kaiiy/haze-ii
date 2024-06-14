@@ -48,8 +48,6 @@ const TERM1: InputChar[] = [U, U, L];
 const TERM3: InputChar[] = [R, D, D, D, D, L];
 const TERM4: InputChar[] = [L, U, U];
 
-// uul uuuu u rddddl dd luu
-
 const ANSWER: InputChar[][] = [
   // 上: 全通り, 下: LL固定
   [...TERM1, L, L, R, R, ...TERM3, L, L, ...TERM4],

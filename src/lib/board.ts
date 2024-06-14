@@ -6,7 +6,21 @@ import {
 import { Failure, Result, Success } from "@/lib/result";
 
 // number は G までの距離
-type CellType = "S" | "B" | "G" | " " | number;
+type CellType =
+  | "S"
+  | "B"
+  | "G"
+  | " "
+  | number // 後で消す
+  | "1"
+  | "2"
+  | "3"
+  | "4"
+  | "5"
+  | "6"
+  | "7"
+  | "8"
+  | "9";
 interface Cell {
   position: ModifiedVector;
   type: CellType;
@@ -111,21 +125,27 @@ const getBorderWidthPx = (
   cell: Cell,
   board: Board,
   direction: Direction,
-): Result<number> => {
+): number => {
   const adjacentCellResult = getAdjacentCell(cell, direction, board);
-  if (adjacentCellResult.success) {
-    const adjacentCell = adjacentCellResult.value;
-    if (adjacentCell.type === "B") {
-      return new Success(cellSize * 0.03);
-    } else if (
-      adjacentCell.type === "S" || adjacentCell.type === "G" ||
-      adjacentCell.type === " " || typeof adjacentCell.type === "number"
-    ) {
-      return new Success(cellSize * 0.01);
-    }
-    return new Failure("Invalid cell type: " + adjacentCell.type);
+  if (!adjacentCellResult.success) {
+    throw adjacentCellResult.error;
   }
-  return adjacentCellResult;
+
+  const adjacentCell = adjacentCellResult.value;
+  if (adjacentCell.type === "B") {
+    return cellSize * 0.03;
+  } else if (
+    adjacentCell.type === "S" || adjacentCell.type === "G" ||
+    adjacentCell.type === " " || typeof adjacentCell.type === "number" ||
+    adjacentCell.type === "1" || adjacentCell.type === "2" ||
+    adjacentCell.type === "3" || adjacentCell.type === "4" ||
+    adjacentCell.type === "5" || adjacentCell.type === "6" ||
+    adjacentCell.type === "7" || adjacentCell.type === "8" ||
+    adjacentCell.type === "9"
+  ) {
+    return cellSize * 0.01;
+  }
+  throw new Error("Invalid cell type: " + adjacentCell.type);
 };
 
 export type { Board, BoardRaw, Cell };

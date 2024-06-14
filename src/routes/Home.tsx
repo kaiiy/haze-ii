@@ -51,6 +51,12 @@ const PreconditionContent = () => (
       <BudouX text="進みたい方向に進めない場合、その原因は進みたい方向に黒マスがあるためである。" />
     </div>
     <div>
+      <BudouX text="隣接しないマスへと移動することはない。" />
+    </div>
+    <div className="mb-3">
+      <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
+    </div>
+    <div>
       <BudouX text="以上の条件は、「HAZE:MINI」のプレイヤーに対して提示されるべき情報である。" />
     </div>
   </div>
@@ -67,7 +73,7 @@ const TutorialContent = () => (
 // js の % はモジュロ演算子ではないため
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-const SCENES = ["0", "1", "2", "3", "4", "5", "C1"];
+const SCENES = ["0", "1", "2", "3", "4", "5", "C1", "6"];
 
 interface HomeProps {
   containerWidth: number;

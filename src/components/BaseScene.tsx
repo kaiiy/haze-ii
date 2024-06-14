@@ -12,6 +12,15 @@ import {
 import { navigateWithDelay } from "@/lib/navigate";
 import Clear from "@/components/Clear";
 
+const validateAnswerLength = (
+  answer: InputChar[][],
+  playerHistory: OriginalVector[],
+) => {
+  if (answer.some((ans) => ans.length !== playerHistory.length - 1)) {
+    throw new Error("Answer length must be equal to playerHistory length");
+  }
+};
+
 interface BaseSceneProps {
   baseSize: number;
   containerWidth: number;
@@ -35,6 +44,8 @@ const BaseScene = (
     answer,
   }: BaseSceneProps,
 ) => {
+  validateAnswerLength(answer, playerHistory);
+
   const navigate = useNavigate();
   const board = generateBoard(boardRaw, boardHeight, boardWidth);
   const [historyIndex, setHistoryIndex] = useState(0);
@@ -50,36 +61,20 @@ const BaseScene = (
   const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
 
-  const borderLeftWidthResult = getBorderWidthPx(cellSize, cell, board, "Left");
-  const borderRightWidthResult = getBorderWidthPx(
+  const borderLeftWidth = getBorderWidthPx(cellSize, cell, board, "Left");
+  const borderRightWidth = getBorderWidthPx(
     cellSize,
     cell,
     board,
     "Right",
   );
-  const borderTopWidthResult = getBorderWidthPx(cellSize, cell, board, "Up");
-  const borderBottomWidthResult = getBorderWidthPx(
+  const borderTopWidth = getBorderWidthPx(cellSize, cell, board, "Up");
+  const borderBottomWidth = getBorderWidthPx(
     cellSize,
     cell,
     board,
     "Down",
   );
-  if (!borderLeftWidthResult.success) {
-    throw borderLeftWidthResult.error;
-  }
-  if (!borderRightWidthResult.success) {
-    throw borderRightWidthResult.error;
-  }
-  if (!borderTopWidthResult.success) {
-    throw borderTopWidthResult.error;
-  }
-  if (!borderBottomWidthResult.success) {
-    throw borderBottomWidthResult.error;
-  }
-  const borderLeftWidth = borderLeftWidthResult.value;
-  const borderRightWidth = borderRightWidthResult.value;
-  const borderTopWidth = borderTopWidthResult.value;
-  const borderBottomWidth = borderBottomWidthResult.value;
 
   const [isBoardFocused, setIsBoardFocused] = useState(true);
 
