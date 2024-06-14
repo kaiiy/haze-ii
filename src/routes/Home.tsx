@@ -73,7 +73,7 @@ const TutorialContent = () => (
 // js の % はモジュロ演算子ではないため
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-const SCENES = ["0", "1", "2", "3", "4", "5", "C1", "6"];
+const SCENES = ["0", "1", "2", "3", "4", "5", "A", "6"];
 
 interface HomeProps {
   containerWidth: number;

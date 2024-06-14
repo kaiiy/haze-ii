@@ -88,7 +88,7 @@ const App = () => {
         element={<Scene5 containerWidth={containerWidth} baseSize={baseSize} />}
       />
       <Route
-        path="/C1"
+        path="/A"
         element={<Check1 containerWidth={containerWidth} baseSize={baseSize} />}
       />
       <Route
