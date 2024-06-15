@@ -14,6 +14,7 @@ import Scene5 from "./routes/Scene5";
 import Check1 from "./routes/Check1";
 
 import Scene6 from "./routes/Scene6";
+import Scene7 from "./routes/Scene7";
 
 const getContainerWidthRatio = (width: number) => {
   if (width <= 768) {
@@ -94,6 +95,10 @@ const App = () => {
       <Route
         path="/6"
         element={<Scene6 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/7"
+        element={<Scene7 containerWidth={containerWidth} baseSize={baseSize} />}
       />
     </Routes>
   );

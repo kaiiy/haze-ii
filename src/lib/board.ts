@@ -20,7 +20,8 @@ type CellType =
   | "6"
   | "7"
   | "8"
-  | "9";
+  | "9"
+  | "\\";
 interface Cell {
   position: ModifiedVector;
   type: CellType;
@@ -134,15 +135,7 @@ const getBorderWidthPx = (
   const adjacentCell = adjacentCellResult.value;
   if (adjacentCell.type === "B") {
     return cellSize * 0.03;
-  } else if (
-    adjacentCell.type === "S" || adjacentCell.type === "G" ||
-    adjacentCell.type === " " || typeof adjacentCell.type === "number" ||
-    adjacentCell.type === "1" || adjacentCell.type === "2" ||
-    adjacentCell.type === "3" || adjacentCell.type === "4" ||
-    adjacentCell.type === "5" || adjacentCell.type === "6" ||
-    adjacentCell.type === "7" || adjacentCell.type === "8" ||
-    adjacentCell.type === "9"
-  ) {
+  } else {
     return cellSize * 0.01;
   }
   throw new Error("Invalid cell type: " + adjacentCell.type);

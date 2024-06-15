@@ -31,13 +31,13 @@ const NoticeContent = () => (
     <div>
       <BudouX text="本作は、前作「" />
       <a
-        href="https://kaiiy.github.io/haze/"
+        href="https://haze.kaiix.dev/"
         className="text-blue-500"
         target="_blank"
       >
-        <BudouX text="HAZE: MINI" />
+        <BudouX text="HAZE" />
       </a>
-      <BudouX text="」のシステムを踏襲しています。" />
+      <BudouX text="」における「STAGE 1」のシステムを踏襲しています。" />
     </div>
   </div>
 );
@@ -56,9 +56,6 @@ const PreconditionContent = () => (
     <div className="mb-3">
       <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
     </div>
-    <div>
-      <BudouX text="以上の条件は、「HAZE:MINI」のプレイヤーに対して提示されるべき情報である。" />
-    </div>
   </div>
 );
 
@@ -70,10 +67,18 @@ const TutorialContent = () => (
   </div>
 );
 
+const Tutorial2Content = () => (
+  <div className="text-xl flex flex-col text-center pt-1">
+    <div>
+      <BudouX text="下の正方形「6」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を6回、そして最後に「エンターキー」を1回押してください。" />
+    </div>
+  </div>
+);
+
 // js の % はモジュロ演算子ではないため
 const mod = (n: number, m: number) => ((n % m) + m) % m;
 
-const SCENES = ["0", "1", "2", "3", "4", "5", "A", "6"];
+const SCENES = ["0", "1", "2", "3", "4", "5", "A", "6", "7"];
 
 interface HomeProps {
   containerWidth: number;
@@ -146,9 +151,10 @@ const Home = ({ containerWidth }: HomeProps) => {
           }}
         >
           <Info title="制作" content="kaiiy" />
-          <Info title="前提条件" content={PreconditionContent()} />
           <Info title="注意事項" content={NoticeContent()} />
+          <Info title="前提条件" content={PreconditionContent()} />
           <Info title="チュートリアル" content={TutorialContent()} />
+          <Info title="チュートリアル2" content={Tutorial2Content()} />
         </div>
         <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
           {SCENES.map((stage, index) => (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import SceneContainer from "@/components/SceneContainer";
 import { InputChar } from "@/lib/input";
+import { AnswerChecker } from "@/lib/answer";
 import { useNavigate } from "react-router-dom";
 import { OriginalVector, originalVectorToModifiedVector } from "@/lib/vector";
 import {
@@ -29,7 +30,8 @@ interface BaseSceneProps {
   boardWidth: number;
   boardRaw: BoardRaw;
   playerHistory: OriginalVector[];
-  answer: InputChar[][];
+  answer?: InputChar[][];
+  answerChecker?: AnswerChecker;
 }
 
 const BaseScene = (
@@ -42,9 +44,12 @@ const BaseScene = (
     boardRaw,
     playerHistory,
     answer,
+    answerChecker,
   }: BaseSceneProps,
 ) => {
-  validateAnswerLength(answer, playerHistory);
+  if (answerChecker === undefined && answer !== undefined) {
+    validateAnswerLength(answer, playerHistory);
+  }
 
   const navigate = useNavigate();
   const board = generateBoard(boardRaw, boardHeight, boardWidth);
@@ -111,12 +116,21 @@ const BaseScene = (
             setInputChars(inputChars.slice(0, inputChars.length - 1));
           }
         } else if (e.key === "Enter") {
-          for (let i = 0; i < answer.length; i++) {
-            if (inputChars.length === answer[i].length) {
-              if (inputChars.every((char, j) => char === answer[i][j])) {
-                setIsClear(true);
-                break;
+          if (answerChecker === undefined && answer !== undefined) {
+            for (let i = 0; i < answer.length; i++) {
+              if (inputChars.length === answer[i].length) {
+                if (inputChars.every((char, j) => char === answer[i][j])) {
+                  setIsClear(true);
+                  break;
+                }
               }
+            }
+          } else {
+            if (answerChecker === undefined) {
+              throw new Error("answerChecker is undefined");
+            }
+            if (answerChecker(inputChars)) {
+              setIsClear(true);
             }
           }
         }
