@@ -167,9 +167,21 @@ const BaseScene = (
     (
       <SceneContainer containerWidth={containerWidth} navText={sceneName}>
         <div className="w-full h-full">
-          <div className="flex justify-center">
+          <div className="flex justify-center relative">
+            <span
+              className="absolute font-sawarabi text-charcoal"
+              style={{
+                lineHeight: String(fontSize * 0.2) + "px",
+                height: String(fontSize * 0.2) + "px",
+                fontSize: String(fontSize * 0.2) + "px",
+                transform: "translate(0%, -130%)",
+                left: "5%",
+              }}
+            >
+              {historyIndex}
+            </span>
             <div
-              className={`border-charcoal text-charcoal bg-white flex items-center justify-center ${
+              className={`border-charcoal text-charcoal bg-white flex items-center justify-center  ${
                 isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
               }`}
               style={{

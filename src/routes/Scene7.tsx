@@ -3,7 +3,7 @@ import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
 import BaseScene from "@/components/BaseScene";
 
-const SCENE_NAME = "SCENE 6";
+const SCENE_NAME = "SCENE 7";
 
 const BOARD_HEIGHT = 13;
 const BOARD_WIDTH = 6;
