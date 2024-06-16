@@ -2,6 +2,7 @@ import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
+import { FaCoffee } from "react-icons/fa";
 
 interface NavProps {
   text: string;
@@ -16,7 +17,7 @@ const Nav = ({ text }: NavProps) => {
             <MdHome
               className="w-9 h-9"
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="Home (Press Esc)"
+              data-tooltip-content="Home"
               data-tooltip-place="right"
             />
           </Link>
@@ -43,6 +44,18 @@ const Nav = ({ text }: NavProps) => {
             data-tooltip-place="right"
           >
             <FaGithub className="w-7 h-7" />
+          </a>
+          <a
+            href="https://www.buymeacoffee.com/kaiiy"
+            target="_blank"
+            rel="noreferrer"
+            tabIndex={-1}
+            className="flex items-center justify-center"
+            data-tooltip-id="my-tooltip"
+            data-tooltip-content="Buy me a coffee"
+            data-tooltip-place="right"
+          >
+            <FaCoffee className="w-8 h-8" />
           </a>
           <hr />
         </div>
