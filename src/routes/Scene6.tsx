@@ -41,7 +41,7 @@ const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
     return false;
   }
 
-  if (inputChars[0] !== U && inputChars[answerLength - 1] !== U) {
+  if (inputChars[0] !== U || inputChars[answerLength - 1] !== U) {
     return false;
   }
   for (const inputChar of inputChars.slice(1, -1)) {
