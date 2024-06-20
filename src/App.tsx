@@ -21,7 +21,7 @@ const getContainerWidthRatio = (width: number) => {
   if (width <= 768) {
     return 0.8;
   } else if (width <= 1024) {
-    return -0.3 / 256 * (width - 1024) + 0.5;
+    return -0.15 / 256 * (width - 1024) + 0.7;
   } else {
     return 0.5;
   }

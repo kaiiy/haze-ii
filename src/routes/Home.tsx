@@ -5,6 +5,9 @@ import Nav from "@/components/Nav";
 import { Tooltip } from "react-tooltip";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
+import { PiLineVerticalLight } from "react-icons/pi";
 
 interface InfoProps {
   title: string;
@@ -135,7 +138,7 @@ const Home = ({ containerWidth }: HomeProps) => {
         }}
       />
 
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div
           className="w-full text-center text-8xl text-charcoal font-sawarabi"
           style={{
@@ -156,7 +159,8 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Info title="チュートリアル" content={TutorialContent()} />
           <Info title="チュートリアル2" content={Tutorial2Content()} />
         </div>
-        <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
+
+        <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
           {SCENES.map((stage, index) => (
             <Link to={`/${stage}`} key={index}>
               <div
@@ -170,6 +174,25 @@ const Home = ({ containerWidth }: HomeProps) => {
               </div>
             </Link>
           ))}
+        </div>
+        <div className="flex justify-center items-center gap-1">
+          <Button variant="outline" size="icon">
+            <MdOutlineChevronLeft size={24} />
+          </Button>
+          <span
+            style={{
+              fontSize: "22px",
+              lineHeight: "22px",
+              paddingBottom: "4px",
+              width: "10px",
+              textAlign: "center",
+            }}
+          >
+            |
+          </span>
+          <Button variant="outline" size="icon">
+            <MdOutlineChevronRight size={24} />
+          </Button>
         </div>
       </div>
     </Container>
