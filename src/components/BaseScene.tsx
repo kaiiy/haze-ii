@@ -104,13 +104,11 @@ const BaseScene = (
           setHistoryIndex(Math.max(historyIndex - 1, 0));
         }
       } else {
-        const regex = /^[a-z0-9]$/;
         if (
           e.key === "ArrowRight" || e.key === "ArrowLeft" ||
-          e.key === "ArrowUp" || e.key === "ArrowDown" ||
-          regex.test(e.key)
+          e.key === "ArrowUp" || e.key === "ArrowDown"
         ) {
-          setInputChars([...inputChars, e.key as InputChar]);
+          setInputChars([...inputChars, e.key]);
         } else if (e.key === "Backspace" || e.key === "Delete") {
           if (inputChars.length > 0) {
             setInputChars(inputChars.slice(0, inputChars.length - 1));
