@@ -44,7 +44,7 @@ const NoticeContent = () => (
 
 const PreconditionContent = () => (
     <div className="text-xl flex flex-col text-center pt-1">
-        <div>
+        <div className="mb-3">
             <BudouX text="マスとマスの境界に壁はない。" />
         </div>
         <div>
