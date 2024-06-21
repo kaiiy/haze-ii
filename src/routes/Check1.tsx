@@ -54,7 +54,7 @@ interface SceneProps {
 }
 
 const S4_CORRECT: number[] = [2, 3];
-const S5_CORRECT: number[] = [2, 3, 4, 6];
+const S6_CORRECT: number[] = [2, 3, 4, 6];
 const DIGIT1: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
@@ -107,7 +107,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
 
         if (
           s4List.length === S4_CORRECT.length - 1 &&
-          s5List.length === S5_CORRECT.length
+          s6List.length === S6_CORRECT.length
         ) {
           setIsClear(true);
         }
@@ -116,22 +116,22 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   };
 
   // Scene 5
-  const [inputS5Value, setInputS5Value] = useState<string>("");
-  const [s5List, setS5List] = useState<number[]>([]);
-  const s5ListStr = s5List.length === 0
+  const [inputS6Value, setInputS6Value] = useState<string>("");
+  const [s6List, setS6List] = useState<number[]>([]);
+  const s6ListStr = s6List.length === 0
     ? ""
-    : s5List.map((num) => num.toString()).join(", ") + (
-      s5List.length === S5_CORRECT.length ? "" : ", "
+    : s6List.map((num) => num.toString()).join(", ") + (
+      s6List.length === S6_CORRECT.length ? "" : ", "
     );
 
-  const handleS5Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleS6Change = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.length <= 1) {
-      setInputS5Value(value);
+      setInputS6Value(value);
     }
   };
 
-  const handleS5keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleS6keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const input = e.currentTarget.value;
       // 1桁の数字でない場合
@@ -141,13 +141,13 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
 
       const inputNum = parseInt(input, 10);
 
-      if (S5_CORRECT.includes(inputNum) && !s5List?.includes(inputNum)) {
-        setS5List([...s5List, inputNum]);
-        setInputS5Value("");
+      if (S6_CORRECT.includes(inputNum) && !s6List?.includes(inputNum)) {
+        setS6List([...s6List, inputNum]);
+        setInputS6Value("");
 
         if (
           s4List.length === S4_CORRECT.length &&
-          s5List.length === S5_CORRECT.length - 1
+          s6List.length === S6_CORRECT.length - 1
         ) {
           setIsClear(true);
         }
@@ -194,6 +194,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           <Info title="S = 5" />
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
             <SceneBox index="1" />
+            <SceneBox index="5" />
           </div>
         </div>
       </div>
@@ -233,14 +234,14 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             <div className="text-2xl border-b border-charcoal text-center">
               <div className="flex justify-center gap-2">
                 <span>S =</span>
-                {s5List.length === 0 ? "" : <span>{s5ListStr}</span>}
-                {s5List.length === S5_CORRECT.length ? "" : (
+                {s6List.length === 0 ? "" : <span>{s6ListStr}</span>}
+                {s6List.length === S6_CORRECT.length ? "" : (
                   <input
                     className="w-8 h-8 text-center rounded-sm focus-visible:outline-charcoal"
                     type="text"
-                    value={inputS5Value}
-                    onChange={handleS5Change}
-                    onKeyDown={handleS5keyDown}
+                    value={inputS6Value}
+                    onChange={handleS6Change}
+                    onKeyDown={handleS6keyDown}
                     maxLength={1}
                   />
                 )}
@@ -248,7 +249,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             </div>
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
-            <SceneBox index="5" />
+            <SceneBox index="6" />
           </div>
         </div>
       </div>
