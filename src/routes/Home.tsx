@@ -174,7 +174,8 @@ const Home = ({ containerWidth }: HomeProps) => {
             </Link>
           ))}
         </div>
-        <div className="flex justify-center items-center gap-1">
+        {
+          /* <div className="flex justify-center items-center gap-1 font-notoSans">
           <Button variant="outline" size="icon">
             <MdOutlineChevronLeft size={24} />
           </Button>
@@ -182,7 +183,8 @@ const Home = ({ containerWidth }: HomeProps) => {
             style={{
               fontSize: "22px",
               lineHeight: "22px",
-              paddingBottom: "4px",
+              paddingTop: "0px",
+              paddingBottom: "5px",
               width: "10px",
               textAlign: "center",
             }}
@@ -192,7 +194,8 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Button variant="outline" size="icon">
             <MdOutlineChevronRight size={24} />
           </Button>
-        </div>
+        </div> */
+        }
       </div>
     </Container>
   );
