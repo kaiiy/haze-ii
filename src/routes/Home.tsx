@@ -5,8 +5,8 @@ import Nav from "@/components/Nav";
 import { Tooltip } from "react-tooltip";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
+// import { Button } from "@/components/ui/button";
+// import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
 
 interface InfoProps {
   title: string;
