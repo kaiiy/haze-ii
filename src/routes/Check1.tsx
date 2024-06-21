@@ -41,7 +41,7 @@ const ContentInfo = ({ title, content }: ContentInfoProps) => (
 const SceneBox = ({ index }: { index: string }) => (
   <Link to={`/${index}`}>
     <div
-      className={`w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer   transition duration-300 hover:text-[#f7f7f7] hover:bg-charcoal text-charcoal bg-white`}
+      className={`w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer   transition duration-300 hover:text-lime hover:bg-charcoal text-charcoal bg-white`}
     >
       {index}
     </div>

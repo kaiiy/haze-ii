@@ -2,7 +2,7 @@ import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
-import { BiCoffeeTogo } from "react-icons/bi";
+import { GiCoffeeBeans } from "react-icons/gi";
 
 interface NavProps {
   text: string;
@@ -55,7 +55,7 @@ const Nav = ({ text }: NavProps) => {
             data-tooltip-content="Buy me a coffee"
             data-tooltip-place="right"
           >
-            <BiCoffeeTogo className="w-8 h-8" />
+            <GiCoffeeBeans className="w-8 h-8" />
           </a>
           <hr />
         </div>
