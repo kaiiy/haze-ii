@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { navigateWithDelay } from "@/lib/navigate";
 import { useNavigate } from "react-router-dom";
 import Clear from "@/components/Clear";
+import { Tooltip } from "react-tooltip";
 
 interface InfoProps {
   title: string;
@@ -177,6 +178,12 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         marginTop: "40px",
       }}
     >
+      <Tooltip
+        id="my-tooltip"
+        style={{
+          zIndex: "calc(infinity)",
+        }}
+      />
       <Nav text="CHECKPOINT 1" />
 
       <ContentInfo title="問題" content="S はいくつ？" />
