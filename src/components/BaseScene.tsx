@@ -181,13 +181,13 @@ const BaseScene = (
               }}
             >
               <span
-                className="absolute font-sawarabi text-charcoal border"
+                className="absolute font-sawarabi text-charcoal"
                 style={{
                   lineHeight: String(fontSize * 0.2) + "px",
                   height: String(fontSize * 0.2) + "px",
                   fontSize: String(fontSize * 0.2) + "px",
-                  left: "-15px",
-                  top: "-15px",
+                  left: "-18%",
+                  top: "-18%",
                 }}
               >
                 {historyIndex}
