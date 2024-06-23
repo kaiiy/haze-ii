@@ -20,7 +20,6 @@ import Scene9 from "./routes/Scene9";
 
 import Check2 from "./routes/Check2";
 
-
 const getContainerWidthRatio = (width: number) => {
   if (width <= 768) {
     return 0.8;

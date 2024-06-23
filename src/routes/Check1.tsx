@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Clear from "@/components/Clear";
 import NavTooltip from "@/components/NavTooltip";
 
-
 interface InfoProps {
   title: string;
 }
