@@ -5,6 +5,17 @@ interface InfoProps {
     content: string | JSX.Element;
 }
 
+const Title = () => (
+    <div
+        className="w-full text-center text-8xl text-charcoal font-sawarabi"
+        style={{
+            marginBottom: "80px",
+        }}
+    >
+        MIST
+    </div>
+);
+
 const Info = ({ title, content }: InfoProps) => (
     <div className="mb-6 font-notoSerif">
         <div className="text-2xl border-b border-charcoal mb-3 text-center">
@@ -73,7 +84,7 @@ const TutorialContent = () => (
 const Tutorial2Content = () => (
     <div className="text-xl flex flex-col text-center pt-1">
         <div>
-            <BudouX text="下の正方形「6」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を6回、そして最後に「エンターキー」を1回押してください。" />
+            <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を6回、そして最後に「エンターキー」を1回押してください。" />
         </div>
     </div>
 );
@@ -82,6 +93,7 @@ export {
     Info,
     NoticeContent,
     PreconditionContent,
+    Title,
     Tutorial2Content,
     TutorialContent,
 };

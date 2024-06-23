@@ -1,53 +1,39 @@
 import Container from "@/components/Container";
-import { Link } from "react-router-dom";
 import Nav from "@/components/Nav";
 import { Tooltip } from "react-tooltip";
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
+import { useEffect, useState } from "react";
 import {
   Info,
   NoticeContent,
   PreconditionContent,
+  Title,
   Tutorial2Content,
   TutorialContent,
 } from "@/components/homeContent";
+import { Scenes, SwitchPage } from "@/components/homeUI";
 
-const SwitchPage = () => {
-  return (
-    <div className="flex justify-center items-center gap-1 font-notoSans">
-      <Button variant="outline" size="icon">
-        <MdOutlineChevronLeft size={24} />
-      </Button>
-      <span
-        style={{
-          fontSize: "24px",
-          lineHeight: "36px",
-          marginTop: "-4px",
-          paddingTop: "0px",
-          paddingBottom: "0px",
-          width: "10px",
-          textAlign: "center",
-          justifyContent: "center",
-          fontWeight: 500,
-        }}
-      >
-        |
-      </span>
-      <Button variant="outline" size="icon">
-        <MdOutlineChevronRight size={24} />
-      </Button>
-    </div>
-  );
-};
+const PAGE_NUM = 2;
 
-const SCENES = ["0", "1", "2", "3", "4", "5", "6", "A", "7", "8", "9"];
+const PAGE0_SCENES = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "A",
+] as const;
+
+const PAGE1_SCENES = ["7", "8", "9"] as const;
 
 interface HomeProps {
   containerWidth: number;
 }
 
 const Home = ({ containerWidth }: HomeProps) => {
+  const [currentPage, setCurrentPage] = useState(0);
+
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
       // ブラウザのページバックを無効化
@@ -73,14 +59,8 @@ const Home = ({ containerWidth }: HomeProps) => {
       />
 
       <div className="flex flex-col">
-        <div
-          className="w-full text-center text-8xl text-charcoal font-sawarabi"
-          style={{
-            marginBottom: "80px",
-          }}
-        >
-          MIST
-        </div>
+        <Title />
+
         <div
           className="text-charcoal"
           style={{
@@ -90,21 +70,19 @@ const Home = ({ containerWidth }: HomeProps) => {
           <Info title="制作" content="kaiiy" />
           <Info title="注意事項" content={<NoticeContent />} />
           <Info title="前提条件" content={<PreconditionContent />} />
-          <Info title="チュートリアル" content={<TutorialContent />} />
-          <Info title="チュートリアル2" content={<Tutorial2Content />} />
+
+          {currentPage === 0
+            ? <Info title="チュートリアル" content={<TutorialContent />} />
+            : <Info title="チュートリアル 2" content={<Tutorial2Content />} />}
         </div>
 
-        <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-12">
-          {SCENES.map((stage, index) => (
-            <Link to={`/${stage}`} key={index}>
-              <div className="w-32 h-32 border border-charcoal bg-white text-center text-2xl flex items-center justify-center cursor-pointer transition duration-300 hover:text-lime hover:bg-charcoal">
-                {stage}
-              </div>
-            </Link>
-          ))}
-        </div>
+        {currentPage === 0 ? Scenes(PAGE0_SCENES) : Scenes(PAGE1_SCENES)}
 
-        <SwitchPage />
+        <SwitchPage
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageNum={PAGE_NUM}
+        />
       </div>
     </Container>
   );
