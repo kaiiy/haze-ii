@@ -48,7 +48,15 @@ const NoticeContent = () => (
             <BudouX text="」における「STAGE 1」のシステムを踏襲しています。" />
         </div>
         <div>
-            <BudouX text="本作を始める前に「HAZE: STAGE 1」のクリアをおすすめします。" />
+            <BudouX text="本作を始める前に「" />
+            <a
+                href="https://haze.kaiix.dev/stages/stage1.html"
+                className="text-blue-500"
+                target="_blank"
+            >
+                <BudouX text="HAZE: STAGE 1" />
+            </a>
+            <BudouX text="」のクリアをおすすめします。" />
         </div>
     </div>
 );

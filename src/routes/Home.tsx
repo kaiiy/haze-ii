@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import Nav from "@/components/Nav";
-import { Tooltip } from "react-tooltip";
 import { useEffect, useState } from "react";
 import {
   Info,
@@ -11,6 +10,7 @@ import {
   TutorialContent,
 } from "@/components/homeContent";
 import { Scenes, SwitchPage } from "@/components/homeUI";
+import NavTooltip from "@/components/NavTooltip";
 
 const PAGE_NUM = 2;
 
@@ -25,7 +25,7 @@ const PAGE0_SCENES = [
   "A",
 ] as const;
 
-const PAGE1_SCENES = ["7", "8", "9"] as const;
+const PAGE1_SCENES = ["7", "8", "9", "B"] as const;
 
 interface HomeProps {
   containerWidth: number;
@@ -51,12 +51,7 @@ const Home = ({ containerWidth }: HomeProps) => {
   return (
     <Container width={containerWidth}>
       <Nav text="HOME" />
-      <Tooltip
-        id="my-tooltip"
-        style={{
-          zIndex: "calc(infinity)",
-        }}
-      />
+      <NavTooltip />
 
       <div className="flex flex-col">
         <Title />
@@ -73,7 +68,7 @@ const Home = ({ containerWidth }: HomeProps) => {
 
           {currentPage === 0
             ? <Info title="チュートリアル" content={<TutorialContent />} />
-            : <Info title="チュートリアル 2" content={<Tutorial2Content />} />}
+            : <Info title="チュートリアル" content={<Tutorial2Content />} />}
         </div>
 
         {currentPage === 0 ? Scenes(PAGE0_SCENES) : Scenes(PAGE1_SCENES)}
