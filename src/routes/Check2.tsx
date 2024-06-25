@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { vStorage } from "@/lib/storage";
 import { useEffect, useState } from "react";
 
+// temporary data
 const sceneStates = [
   {
     title: "SCENE 7",
@@ -22,7 +23,7 @@ const sceneStates = [
   {
     title: "SCENE 8",
     checked: {
-      light: true,
+      light: false,
       dark: false,
     },
   },
@@ -30,7 +31,7 @@ const sceneStates = [
     title: "SCENE 9",
     checked: {
       light: true,
-      dark: false,
+      dark: true,
     },
   },
 ];
@@ -53,7 +54,7 @@ const Scene = ({ containerWidth }: SceneProps) => {
   useEffect(() => {
     const storage = vStorage.load();
     setIsDark(storage.theme === "dark");
-  }, [isDark]);
+  }, []);
 
   return (
     <ContainerBase
@@ -62,6 +63,7 @@ const Scene = ({ containerWidth }: SceneProps) => {
         minHeight: "100vh",
         position: "relative",
       }}
+      isDark={isDark}
     >
       <NavTooltip />
       <Nav text="CHECKPOINT 2" />
@@ -73,12 +75,16 @@ const Scene = ({ containerWidth }: SceneProps) => {
         }}
       >
         <div
-          className="font-notoSerif"
+          className={`font-notoSerif ${isDark ? "text-lime" : "text-charcoal"}`}
           style={{
             marginBottom: "80px",
           }}
         >
-          <div className="text-2xl border-b border-charcoal text-center mb-3">
+          <div
+            className={`text-2xl border-b ${
+              isDark ? "border-white" : "border-charcoal"
+            } text-center mb-3`}
+          >
             クリア条件
           </div>
           <div className="text-2xl text-center">
@@ -88,12 +94,15 @@ const Scene = ({ containerWidth }: SceneProps) => {
 
         {sceneStates.map((scene, index) => (
           <div
-            className="flex items-center space-x-4 justify-center mb-4"
+            className={`flex items-center space-x-4 justify-center mb-4 ${
+              isDark ? "text-lime" : "text-charcoal"
+            }`}
             key={index}
           >
             <Checkbox
               disabled
               checked={isDark ? scene.checked.dark : scene.checked.light}
+              className={`${isDark ? "border-white" : ""}`}
             />
             <span
               style={{
@@ -112,9 +121,13 @@ const Scene = ({ containerWidth }: SceneProps) => {
             marginTop: "80px",
           }}
         >
-          <CiLight size={36} />
-          <Switch checked={isDark} onClick={switchTheme} />
-          <MdDarkMode size={36} />
+          <CiLight size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
+          <Switch
+            checked={isDark}
+            onClick={switchTheme}
+            className="border-lime"
+          />
+          <MdDarkMode size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
         </div>
       </div>
     </ContainerBase>

@@ -3,33 +3,29 @@ import ContainerBase from "./ContainerBase";
 type ContainerProps = {
   children: React.ReactNode;
   width: number;
+  isDark?: boolean;
 };
 
-const Container = ({ children, width }: ContainerProps) => {
+const Container = ({ children, width, isDark }: ContainerProps) => {
+  // undefinedの場合はfalseを設定
+  const isDarkMode = isDark ?? false;
   return (
-    // <div
-    //   className="flex justify-center w-screen"
-    //   style={{
-    //     paddingTop: "80px",
-    //     paddingBottom: "80px",
-    //   }}
-    // >
-    //   <div
-    //     className="h-full"
-    //     style={{ width: String(width) + "px" }}
-    //   >
-    //     {children}
-    //   </div>
-    // </div>
-    <ContainerBase
-      width={width}
-      style={{
-        paddingTop: "80px",
-        paddingBottom: "80px",
-      }}
+    <div
+      className={`w-full min-h-screen ${
+        isDarkMode ? "bg-charcoal" : "bg-lime"
+      }`}
     >
-      {children}
-    </ContainerBase>
+      <ContainerBase
+        width={width}
+        style={{
+          paddingTop: "80px",
+          paddingBottom: "80px",
+        }}
+        isDark={isDarkMode}
+      >
+        {children}
+      </ContainerBase>
+    </div>
   );
 };
 

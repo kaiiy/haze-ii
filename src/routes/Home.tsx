@@ -11,6 +11,7 @@ import {
 } from "@/components/homeContent";
 import { Scenes, SwitchPage } from "@/components/homeUI";
 import NavTooltip from "@/components/NavTooltip";
+import { vStorage } from "@/lib/storage";
 
 const PAGE_NUM = 2;
 
@@ -33,6 +34,7 @@ interface HomeProps {
 
 const Home = ({ containerWidth }: HomeProps) => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isDark, setIsDark] = useState(false);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
@@ -41,7 +43,21 @@ const Home = ({ containerWidth }: HomeProps) => {
     }
   };
 
+  const updatePage = (page: number) => {
+    setCurrentPage(page);
+    if (page === 0 || page === 1) {
+      vStorage.overwrite({
+        page,
+      });
+    } else {
+      throw new Error("Invalid page number");
+    }
+  };
+
   useEffect(() => {
+    const storage = vStorage.load();
+    setCurrentPage(storage.page);
+    setIsDark(storage.theme === "dark");
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -49,12 +65,12 @@ const Home = ({ containerWidth }: HomeProps) => {
   }, []);
 
   return (
-    <Container width={containerWidth}>
+    <Container width={containerWidth} isDark={isDark}>
       <Nav text="HOME" />
       <NavTooltip />
 
       <div className="flex flex-col">
-        <Title />
+        <Title isDark={isDark} />
 
         <div
           className="text-charcoal"
@@ -62,21 +78,40 @@ const Home = ({ containerWidth }: HomeProps) => {
             marginBottom: "40px",
           }}
         >
-          <Info title="制作" content="kaiiy" />
-          <Info title="注意事項" content={<NoticeContent />} />
-          <Info title="前提条件" content={<PreconditionContent />} />
+          <Info title="制作" content="kaiiy" isDark={isDark} />
+          <Info title="注意事項" content={<NoticeContent />} isDark={isDark} />
+          <Info
+            title="前提条件"
+            content={<PreconditionContent />}
+            isDark={isDark}
+          />
 
           {currentPage === 0
-            ? <Info title="チュートリアル" content={<TutorialContent />} />
-            : <Info title="チュートリアル" content={<Tutorial2Content />} />}
+            ? (
+              <Info
+                title="チュートリアル"
+                content={<TutorialContent />}
+                isDark={isDark}
+              />
+            )
+            : (
+              <Info
+                title="チュートリアル"
+                content={<Tutorial2Content />}
+                isDark={isDark}
+              />
+            )}
         </div>
 
-        {currentPage === 0 ? Scenes(PAGE0_SCENES) : Scenes(PAGE1_SCENES)}
+        {currentPage === 0
+          ? <Scenes scenes={PAGE0_SCENES} />
+          : <Scenes scenes={PAGE1_SCENES} isDark={isDark} />}
 
         <SwitchPage
           currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          setCurrentPage={updatePage}
           pageNum={PAGE_NUM}
+          isDark={isDark}
         />
       </div>
     </Container>

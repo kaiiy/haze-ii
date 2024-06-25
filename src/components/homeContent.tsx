@@ -1,13 +1,14 @@
 import BudouX from "@/components/BudouX";
 
-interface InfoProps {
-  title: string;
-  content: string | JSX.Element;
+interface TitleProps {
+  isDark: boolean;
 }
 
-const Title = () => (
+const Title = ({ isDark }: TitleProps) => (
   <div
-    className="w-full text-center text-8xl text-charcoal font-sawarabi"
+    className={`w-full text-center text-8xl ${
+      !isDark ? "text-black" : "text-white"
+    } font-sawarabi`}
     style={{
       marginBottom: "80px",
     }}
@@ -16,9 +17,21 @@ const Title = () => (
   </div>
 );
 
-const Info = ({ title, content }: InfoProps) => (
-  <div className="mb-6 font-notoSerif">
-    <div className="text-2xl border-b border-charcoal mb-3 text-center">
+interface InfoProps {
+  title: string;
+  content: string | JSX.Element;
+  isDark: boolean;
+}
+
+const Info = ({ title, content, isDark }: InfoProps) => (
+  <div
+    className={`mb-6 font-notoSerif ${!isDark ? "text-charcoal" : "text-lime"}`}
+  >
+    <div
+      className={`text-2xl border-b ${
+        !isDark ? "border-charcoal" : "border-lime"
+      } mb-3 text-center`}
+    >
       {title}
     </div>
     <div className="text-2xl text-center">{content}</div>
