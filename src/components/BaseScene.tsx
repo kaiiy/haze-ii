@@ -198,7 +198,7 @@ const BaseScene = (
 
             <div
               className={`${
-                !isDark ? "border-charcoal" : "border-lime"
+                !isDark ? "border-charcoal bg-white" : "border-lime"
               } text-charcoal flex items-center justify-center ${
                 isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
               }

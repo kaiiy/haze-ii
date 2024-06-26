@@ -19,6 +19,8 @@ import Scene8 from "./routes/Scene8";
 import Scene9 from "./routes/Scene9";
 
 import Scene7d from "./routes/Scene7d";
+import Scene8d from "./routes/Scene8d";
+import Scene9d from "./routes/Scene9d";
 
 import Check2 from "./routes/Check2";
 
@@ -119,8 +121,20 @@ const App = () => {
         element={<Scene8 containerWidth={containerWidth} baseSize={baseSize} />}
       />
       <Route
+        path="/8d"
+        element={
+          <Scene8d containerWidth={containerWidth} baseSize={baseSize} />
+        }
+      />
+      <Route
         path="/9"
         element={<Scene9 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/9d"
+        element={
+          <Scene9d containerWidth={containerWidth} baseSize={baseSize} />
+        }
       />
       <Route
         path="/B"
