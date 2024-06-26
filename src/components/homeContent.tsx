@@ -43,9 +43,6 @@ const NoticeContent = () => (
     <div className="mb-3">
       <BudouX text="キーボード操作が必須です。PCでご覧ください。" />
     </div>
-    <div>
-      <BudouX text="各ステージはそれ単体で解くことができます。" />
-    </div>
     <div className="mb-3">
       <BudouX text="ステージをやり直す際には、ページをリロードしてください。" />
     </div>
@@ -60,7 +57,7 @@ const NoticeContent = () => (
       </a>
       <BudouX text="」における「STAGE 1」のシステムを踏襲しています。" />
     </div>
-    <div>
+    <div className="mb-3">
       <BudouX text="本作を始める前に「" />
       <a
         href="https://haze.kaiix.dev/stages/stage1.html"
@@ -70,6 +67,9 @@ const NoticeContent = () => (
         <BudouX text="HAZE: STAGE 1" />
       </a>
       <BudouX text="」のクリアをおすすめします。" />
+    </div>
+    <div>
+      <BudouX text="また、「HAZE: STAGE 1」以降のステージは、本作と無関係です。" />
     </div>
   </div>
 );
@@ -110,11 +110,20 @@ const Tutorial2Content = () => (
   </div>
 );
 
+const Tutorial2DarkContent = () => (
+  <div className="text-xl flex flex-col text-center pt-1">
+    <div>
+      <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を2回、そして最後に「エンターキー」を1回押してください。" />
+    </div>
+  </div>
+);
+
 export {
   Info,
   NoticeContent,
   PreconditionContent,
   Title,
   Tutorial2Content,
+  Tutorial2DarkContent,
   TutorialContent,
 };

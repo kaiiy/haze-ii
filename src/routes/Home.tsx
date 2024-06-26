@@ -7,13 +7,12 @@ import {
   PreconditionContent,
   Title,
   Tutorial2Content,
+  Tutorial2DarkContent,
   TutorialContent,
 } from "@/components/homeContent";
 import { Scenes, SwitchPage } from "@/components/homeUI";
 import NavTooltip from "@/components/NavTooltip";
 import { vStorage } from "@/lib/storage";
-
-const PAGE_NUM = 2;
 
 const PAGE0_SCENES = [
   "0",
@@ -27,6 +26,7 @@ const PAGE0_SCENES = [
 ] as const;
 
 const PAGE1_SCENES = ["7", "8", "9", "B"] as const;
+const PAGE2_SCENES = ["10"] as const;
 
 interface HomeProps {
   containerWidth: number;
@@ -45,7 +45,7 @@ const Home = ({ containerWidth }: HomeProps) => {
 
   const updatePage = (page: number) => {
     setCurrentPage(page);
-    if (page === 0 || page === 1) {
+    if (page === 0 || page === 1 || page === 2) {
       vStorage.overwrite({
         page,
       });
@@ -63,6 +63,10 @@ const Home = ({ containerWidth }: HomeProps) => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [currentPage]);
 
   return (
     <Container width={containerWidth} isDark={isDark}>
@@ -94,23 +98,36 @@ const Home = ({ containerWidth }: HomeProps) => {
                 isDark={isDark}
               />
             )
-            : (
+            : ""}
+          {currentPage === 1 && !isDark
+            ? (
               <Info
                 title="チュートリアル"
                 content={<Tutorial2Content />}
                 isDark={isDark}
               />
-            )}
+            )
+            : ""}
+          {currentPage === 1 && isDark
+            ? (
+              <Info
+                title="チュートリアル"
+                content={<Tutorial2DarkContent />}
+                isDark={isDark}
+              />
+            )
+            : ""}
         </div>
 
-        {currentPage === 0
-          ? <Scenes scenes={PAGE0_SCENES} />
-          : <Scenes scenes={PAGE1_SCENES} isDark={isDark} />}
+        {currentPage === 0 ? <Scenes scenes={PAGE0_SCENES} /> : ""}
+        {currentPage === 1
+          ? <Scenes scenes={PAGE1_SCENES} isDark={isDark} />
+          : ""}
+        {currentPage === 2 ? <Scenes scenes={PAGE2_SCENES} /> : ""}
 
         <SwitchPage
           currentPage={currentPage}
           setCurrentPage={updatePage}
-          pageNum={PAGE_NUM}
           isDark={isDark}
         />
       </div>

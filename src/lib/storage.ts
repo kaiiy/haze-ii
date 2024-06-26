@@ -3,7 +3,7 @@ import * as v from "valibot";
 // 各 schema 定義
 const themeSchema = v.picklist(["light", "dark"]);
 // Homeにおける表示ページ
-const pageSchema = v.picklist([0, 1]);
+const pageSchema = v.picklist([0, 1, 2]);
 // クリアしたシーン
 const sceneSchema = v.object({
     id: v.picklist([

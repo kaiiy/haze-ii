@@ -17,11 +17,14 @@ interface StageProps {
   containerWidth: number;
   navText: string;
   children: React.ReactNode;
+  isDark?: boolean;
 }
 
-const SceneContainer = ({ containerWidth, navText, children }: StageProps) => {
+const SceneContainer = (
+  { containerWidth, navText, children, isDark }: StageProps,
+) => {
   return (
-    <Container width={containerWidth}>
+    <Container width={containerWidth} isDark={isDark}>
       <Canvas>
         <NavTooltip />
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">

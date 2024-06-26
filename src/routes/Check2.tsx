@@ -23,7 +23,7 @@ const sceneStates = [
   {
     title: "SCENE 8",
     checked: {
-      light: false,
+      light: true,
       dark: false,
     },
   },
@@ -31,7 +31,7 @@ const sceneStates = [
     title: "SCENE 9",
     checked: {
       light: true,
-      dark: true,
+      dark: false,
     },
   },
 ];

@@ -10,15 +10,19 @@ import Scene2 from "./routes/Scene2";
 import Scene3 from "./routes/Scene3";
 import Scene4 from "./routes/Scene4";
 import Scene5 from "./routes/Scene5";
+import Scene6 from "./routes/Scene6";
 
 import Check1 from "./routes/Check1";
 
-import Scene6 from "./routes/Scene6";
 import Scene7 from "./routes/Scene7";
 import Scene8 from "./routes/Scene8";
 import Scene9 from "./routes/Scene9";
 
+import Scene7d from "./routes/Scene7d";
+
 import Check2 from "./routes/Check2";
+
+import Scene10 from "./routes/Scene10";
 
 const getContainerWidthRatio = (width: number) => {
   if (width <= 768) {
@@ -105,6 +109,12 @@ const App = () => {
         element={<Scene7 containerWidth={containerWidth} baseSize={baseSize} />}
       />
       <Route
+        path="/7d"
+        element={
+          <Scene7d containerWidth={containerWidth} baseSize={baseSize} />
+        }
+      />
+      <Route
         path="/8"
         element={<Scene8 containerWidth={containerWidth} baseSize={baseSize} />}
       />
@@ -115,6 +125,12 @@ const App = () => {
       <Route
         path="/B"
         element={<Check2 containerWidth={containerWidth} baseSize={baseSize} />}
+      />
+      <Route
+        path="/10"
+        element={
+          <Scene10 containerWidth={containerWidth} baseSize={baseSize} />
+        }
       />
     </Routes>
   );

@@ -5,14 +5,12 @@ import { Link } from "react-router-dom";
 interface SwitchPageProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
-  pageNum: number;
   isDark: boolean;
 }
 
 const SwitchPage = ({
   currentPage,
   setCurrentPage,
-  pageNum,
   isDark,
 }: SwitchPageProps) => {
   return (
@@ -35,7 +33,7 @@ const SwitchPage = ({
           marginTop: "-4px",
           paddingTop: "0px",
           paddingBottom: "0px",
-          width: "10px",
+          width: "24px",
           textAlign: "center",
           justifyContent: "center",
           fontWeight: 500,
@@ -46,7 +44,9 @@ const SwitchPage = ({
       <Button
         variant="outline"
         size="icon"
-        className={`${currentPage == pageNum - 1 ? "invisible" : ""}`}
+        className={`${
+          currentPage == 0 || currentPage == 1 && isDark ? "invisible" : ""
+        }`}
         onClick={() => setCurrentPage(currentPage + 1)}
       >
         <MdOutlineChevronRight size={24} />
@@ -84,14 +84,20 @@ const Scenes = ({ scenes, isDark }: ScenesProps) => {
     <div>
       <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
         {scenes.slice(0, 4).map((scene, index) => (
-          <Link to={`/${scene}`} key={index}>
+          <Link
+            to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
+            key={index}
+          >
             <SceneBox scene={scene} isDark={isDark} />
           </Link>
         ))}
       </div>
       <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-12">
         {scenes.slice(4).map((scene, index) => (
-          <Link to={`/${scene}`} key={index}>
+          <Link
+            to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
+            key={index}
+          >
             <SceneBox scene={scene} isDark={isDark} />
           </Link>
         ))}

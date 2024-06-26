@@ -4,54 +4,41 @@ import { BoardRaw } from "@/lib/board";
 import BaseScene from "@/components/BaseScene";
 import { AnswerChecker } from "@/lib/answer";
 
-const SCENE_NAME = "SCENE 7";
+const SCENE_NAME = "SCENE 9";
 
-const BOARD_HEIGHT = 7;
+const BOARD_HEIGHT = 3;
 const BOARD_WIDTH = 1;
 const BOARD_RAW: BoardRaw = [
-  ["S"], // y: 0
+  [" "], // y: 0
   ["B"], // y: 1
-  ["\\"], // y: 2
-  [" "], // y: 3
-  ["B"], // y: 4
-  ["G"], // y: 5
-  [" "], // y: 6
+  [" "], // y: 2
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 0, y: 0 }, // S
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 5 }, // G
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
+  { x: 0, y: 1 },
 ].map(
   vectorToOriginalVector,
 );
 
 const U = "ArrowUp";
-const D = "ArrowDown";
+// const D = "ArrowDown";
 // const L = "ArrowLeft";
 // const R = "ArrowRight";
 
 const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
-  const answerLength = PLAYER_HISTORY.length - 1;
-  if (inputChars.length !== answerLength) {
-    return false;
+  if (
+    inputChars.length >= 2 && inputChars.length <= 6 &&
+    inputChars.every((inputChar) => inputChar === U)
+  ) {
+    return true;
   }
-
-  // 最初と最後は必ずU
-  if (inputChars[0] !== U || inputChars[answerLength - 1] !== U) {
-    return false;
-  }
-  for (const inputChar of inputChars.slice(1, -1)) {
-    if (inputChar === D) {
-      return false;
-    }
-  }
-
-  return true;
+  return false;
 };
 
 interface SceneProps {
@@ -70,6 +57,7 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       boardRaw={BOARD_RAW}
       playerHistory={PLAYER_HISTORY}
       answerChecker={answerChecker}
+      isDark={true}
     />
   );
 };

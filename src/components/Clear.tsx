@@ -15,7 +15,11 @@ const KEYFRAMES_STYLE = `
     `;
 
 const Clear = (
-  { showClear, fontSize }: { showClear: boolean; fontSize: number },
+  { showClear, fontSize, isDark = false }: {
+    showClear: boolean;
+    fontSize: number;
+    isDark?: boolean;
+  },
 ) => {
   return (
     <div
@@ -26,7 +30,9 @@ const Clear = (
       }}
     >
       <div
-        className="flex justify-center text-charcoal"
+        className={`flex justify-center ${
+          !isDark ? "text-charcoal" : "text-lime"
+        }`}
         style={{
           fontSize: String(fontSize * 0.3) + "px",
           fontWeight: 500,
@@ -36,7 +42,9 @@ const Clear = (
       </div>
       <style>{KEYFRAMES_STYLE}</style>
       <div
-        className="flex justify-center text-charcoal"
+        className={`flex justify-center ${
+          !isDark ? "text-charcoal" : "text-lime"
+        }`}
         style={{
           fontSize: String(fontSize * 0.25) + "px",
           fontWeight: 500,

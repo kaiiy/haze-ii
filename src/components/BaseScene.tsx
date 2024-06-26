@@ -32,6 +32,7 @@ interface BaseSceneProps {
   playerHistory: OriginalVector[];
   answer?: InputChar[][];
   answerChecker?: AnswerChecker;
+  isDark?: boolean;
 }
 
 const BaseScene = (
@@ -45,6 +46,7 @@ const BaseScene = (
     playerHistory,
     answer,
     answerChecker,
+    isDark,
   }: BaseSceneProps,
 ) => {
   if (answerChecker === undefined && answer !== undefined) {
@@ -66,19 +68,27 @@ const BaseScene = (
   const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
 
-  const borderLeftWidth = getBorderWidthPx(cellSize, cell, board, "Left");
+  const borderLeftWidth = getBorderWidthPx(
+    cellSize,
+    cell,
+    board,
+    "Left",
+    isDark,
+  );
   const borderRightWidth = getBorderWidthPx(
     cellSize,
     cell,
     board,
     "Right",
+    isDark,
   );
-  const borderTopWidth = getBorderWidthPx(cellSize, cell, board, "Up");
+  const borderTopWidth = getBorderWidthPx(cellSize, cell, board, "Up", isDark);
   const borderBottomWidth = getBorderWidthPx(
     cellSize,
     cell,
     board,
     "Down",
+    isDark,
   );
 
   const [isBoardFocused, setIsBoardFocused] = useState(true);
@@ -163,13 +173,37 @@ const BaseScene = (
 
   return (
     (
-      <SceneContainer containerWidth={containerWidth} navText={sceneName}>
+      <SceneContainer
+        containerWidth={containerWidth}
+        navText={sceneName}
+        isDark={isDark}
+      >
         <div className="w-full h-full">
-          <div className="flex justify-center">
-            <div
-              className={`border-charcoal text-charcoal bg-white flex items-center justify-center relative ${
-                isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
+          <div className="flex justify-center relative">
+            {/* historyIndexの位置がずれるバグあり  */}
+            <span
+              className={`absolute font-sawarabi ${
+                !isDark ? "text-charcoal" : "text-lime"
               }`}
+              style={{
+                lineHeight: String(fontSize * 0.2) + "px",
+                height: String(fontSize * 0.2) + "px",
+                fontSize: String(fontSize * 0.2) + "px",
+                left: "0%",
+                top: "-18%",
+              }}
+            >
+              {historyIndex}
+            </span>
+
+            <div
+              className={`${
+                !isDark ? "border-charcoal" : "border-lime"
+              } text-charcoal flex items-center justify-center ${
+                isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
+              }
+              ${cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""}
+              `}
               style={{
                 width: String(cellSize) + "px",
                 height: String(cellSize) + "px",
@@ -181,25 +215,20 @@ const BaseScene = (
               }}
             >
               <span
-                className="absolute font-sawarabi text-charcoal"
-                style={{
-                  lineHeight: String(fontSize * 0.2) + "px",
-                  height: String(fontSize * 0.2) + "px",
-                  fontSize: String(fontSize * 0.2) + "px",
-                  left: "-18%",
-                  top: "-18%",
-                }}
-              >
-                {historyIndex}
-              </span>
-
-              <span
-                className="bg-white font-notoSans"
+                className={`${
+                  cell.type === "B" ? "bg-black" : "bg-white"
+                } font-notoSans`}
                 style={{
                   marginTop: String(-fontSize / 6) + "px",
                 }}
               >
-                {cell.type}
+                {cell.type === "RS"
+                  ? "S"
+                  : cell.type === "RG"
+                  ? "G"
+                  : cell.type === "B"
+                  ? ""
+                  : cell.type}
               </span>
             </div>
           </div>
@@ -214,12 +243,16 @@ const BaseScene = (
               lineHeight: String(fontSize * 0.8) + "px",
             }}
           >
-            <span className="text-charcoal font-notoSans">
+            <span
+              className={`${
+                !isDark ? "text-charcoal" : "text-lime"
+              } font-notoSans`}
+            >
               {"*".repeat(inputChars.length)}
             </span>
           </div>
 
-          <Clear showClear={showClear} fontSize={fontSize} />
+          <Clear showClear={showClear} fontSize={fontSize} isDark={isDark} />
         </div>
       </SceneContainer>
     )

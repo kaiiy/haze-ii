@@ -21,7 +21,9 @@ type CellType =
   | "7"
   | "8"
   | "9"
-  | "\\";
+  | "\\"
+  | "RS"
+  | "RG";
 interface Cell {
   position: ModifiedVector;
   type: CellType;
@@ -126,6 +128,7 @@ const getBorderWidthPx = (
   cell: Cell,
   board: Board,
   direction: Direction,
+  isDark: boolean = false,
 ): number => {
   const adjacentCellResult = getAdjacentCell(cell, direction, board);
   if (!adjacentCellResult.success) {
@@ -133,12 +136,19 @@ const getBorderWidthPx = (
   }
 
   const adjacentCell = adjacentCellResult.value;
-  if (adjacentCell.type === "B") {
-    return cellSize * 0.03;
+  if (!isDark) {
+    if (adjacentCell.type === "B") {
+      return cellSize * 0.03;
+    } else {
+      return cellSize * 0.01;
+    }
   } else {
-    return cellSize * 0.01;
+    if (adjacentCell.type === "B") {
+      return cellSize * 0.01;
+    } else {
+      return cellSize * 0.03;
+    }
   }
-  throw new Error("Invalid cell type: " + adjacentCell.type);
 };
 
 export type { Board, BoardRaw, Cell };
