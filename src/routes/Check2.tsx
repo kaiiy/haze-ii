@@ -2,6 +2,7 @@ import ContainerBase from "@/components/ContainerBase";
 import Nav from "@/components/Nav";
 import NavTooltip from "@/components/NavTooltip";
 import { Switch } from "@/components/ui/switch";
+import Clear from "@/components/Clear";
 
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
@@ -41,8 +42,12 @@ interface SceneProps {
   containerWidth: number;
 }
 
-const Scene = ({ containerWidth }: SceneProps) => {
+const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   const [isDark, setIsDark] = useState(false);
+  const [showClear, setShowClear] = useState(false);
+
+  const cellSize = baseSize * 6;
+  const fontSize = cellSize / 2;
 
   const switchTheme = () => {
     vStorage.overwrite({
@@ -119,6 +124,7 @@ const Scene = ({ containerWidth }: SceneProps) => {
           className="flex items-center space-x-6 justify-center"
           style={{
             marginTop: "80px",
+            marginBottom: "40px",
           }}
         >
           <CiLight size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
@@ -129,6 +135,8 @@ const Scene = ({ containerWidth }: SceneProps) => {
           />
           <MdDarkMode size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
         </div>
+
+        <Clear showClear={showClear} fontSize={fontSize} isDark={isDark} />
       </div>
     </ContainerBase>
   );

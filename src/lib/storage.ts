@@ -19,6 +19,7 @@ const sceneSchema = v.object({
         "8",
         "9",
         "B",
+        "10",
     ]),
     checked: v.object({
         light: v.boolean(),
