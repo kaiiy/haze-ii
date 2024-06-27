@@ -21,6 +21,8 @@ const PLAYER_HISTORY: OriginalVector[] = [
     { x: 2, y: 1 },
     { x: 2, y: 1 },
     { x: 5, y: 1 }, // RS
+    { x: 7, y: 1 }, // RG
+    { x: 5, y: 1 }, // RS
     { x: 3, y: 1 }, // G
 ].map(
     vectorToOriginalVector,
@@ -37,15 +39,25 @@ const R = "ArrowRight";
 // 4. 中央3つ内でUとDは連続しない
 // 5. 1番目と5番目は逆の方向 (逆操作)
 const ANSWER: InputChar[][] = [
-    [U, R, R, R, D],
-    [U, U, R, D, D],
-    [U, L, L, L, D],
-    [U, U, L, D, D],
+    [U, R, R, R, R, L, D],
+    [U, U, R, D, L, R, D],
+    [U, L, L, L, L, R, D],
+    [U, U, L, D, R, D, D],
     //
-    [D, R, R, R, U],
-    [D, D, R, U, U],
-    [D, L, L, L, U],
-    [D, D, L, U, U],
+    [D, R, R, R, R, L, U],
+    [D, D, R, U, L, R, U],
+    [D, L, L, L, L, R, U],
+    [D, D, L, U, R, U, U],
+    //
+    [R, U, U, U, U, D, L],
+    [R, R, U, L, D, U, L],
+    [R, D, D, D, D, U, L],
+    [R, R, D, L, U, L, L],
+    //
+    [L, U, U, U, U, D, R],
+    [L, L, U, R, D, U, R],
+    [L, D, D, D, D, U, R],
+    [L, L, D, R, U, R, R],
 ];
 
 interface SceneProps {

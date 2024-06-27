@@ -44,7 +44,7 @@ interface SceneProps {
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   const [isDark, setIsDark] = useState(false);
-  const [showClear, setShowClear] = useState(false);
+  const [showClear, _] = useState(false);
 
   const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
