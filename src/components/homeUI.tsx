@@ -2,6 +2,25 @@ import { Button } from "@/components/ui/button";
 import { MdOutlineChevronLeft, MdOutlineChevronRight } from "react-icons/md";
 import { Link } from "react-router-dom";
 
+const showLeftArrow = (currentPage: number, isDark: boolean) => {
+  if (currentPage == 2) {
+    return true;
+  } else if (currentPage == 1 && !isDark) {
+    return true;
+  }
+
+  return false;
+};
+
+const showRightArrow = (currentPage: number, isDark: boolean) => {
+  if (currentPage == 0) {
+    return true;
+  } else if (currentPage == 1 && !isDark) {
+    return true;
+  }
+  return false;
+};
+
 interface SwitchPageProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
@@ -18,9 +37,7 @@ const SwitchPage = ({
       <Button
         variant="outline"
         size="icon"
-        className={`${
-          currentPage == 0 || currentPage == 1 && isDark ? "invisible" : ""
-        }`}
+        className={`${showLeftArrow(currentPage, isDark) ? "" : "invisible"}`}
         onClick={() => setCurrentPage(currentPage - 1)}
       >
         <MdOutlineChevronLeft size={24} />
@@ -44,9 +61,7 @@ const SwitchPage = ({
       <Button
         variant="outline"
         size="icon"
-        className={`${
-          currentPage == 0 || currentPage == 1 && isDark ? "invisible" : ""
-        }`}
+        className={`${showRightArrow(currentPage, isDark) ? "" : "invisible"}`}
         onClick={() => setCurrentPage(currentPage + 1)}
       >
         <MdOutlineChevronRight size={24} />
