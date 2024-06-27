@@ -69,7 +69,7 @@ const NoticeContent = () => (
       <BudouX text="」のクリアをおすすめします。" />
     </div>
     <div>
-      <BudouX text="また、「HAZE: STAGE 1」以降のステージは、本作と無関係です。" />
+      <BudouX text="なお、「HAZE: STAGE 1」以降のステージは本作と無関係です。" />
     </div>
   </div>
 );
