@@ -93,7 +93,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             クリア条件
           </div>
           <div className="text-2xl text-center">
-            すべてにチェックがつくこと
+            すべてにチェックがつくこと（現在、Bのクリア判定は未実装です。ただし、ダークモードで各ステージを解くことはできます）
           </div>
         </div>
 
