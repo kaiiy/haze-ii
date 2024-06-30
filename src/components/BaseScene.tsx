@@ -1,26 +1,17 @@
 import { useEffect, useState } from "react";
 import SceneContainer from "@/components/SceneContainer";
-import { InputChar } from "@/lib/input";
-import { AnswerChecker } from "@/lib/answer";
+import { InputChar, isInputChar } from "@/lib/input";
+import { AnswerChecker, validateAnswerLength } from "@/lib/answer";
 import { useNavigate } from "react-router-dom";
 import { OriginalVector, originalVectorToModifiedVector } from "@/lib/vector";
 import {
   BoardRaw,
   generateBoard,
-  getBorderWidthPx,
+  getAllBorderWidthCss,
   vectorToCell,
 } from "@/lib/board";
 import { navigateWithDelay } from "@/lib/navigate";
 import Clear from "@/components/Clear";
-
-const validateAnswerLength = (
-  answer: InputChar[][],
-  playerHistory: OriginalVector[],
-) => {
-  if (answer.some((ans) => ans.length !== playerHistory.length - 1)) {
-    throw new Error("Answer length must be equal to playerHistory length");
-  }
-};
 
 interface BaseSceneProps {
   baseSize: number;
@@ -68,28 +59,7 @@ const BaseScene = (
   const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
 
-  const borderLeftWidth = getBorderWidthPx(
-    cellSize,
-    cell,
-    board,
-    "Left",
-    isDark,
-  );
-  const borderRightWidth = getBorderWidthPx(
-    cellSize,
-    cell,
-    board,
-    "Right",
-    isDark,
-  );
-  const borderTopWidth = getBorderWidthPx(cellSize, cell, board, "Up", isDark);
-  const borderBottomWidth = getBorderWidthPx(
-    cellSize,
-    cell,
-    board,
-    "Down",
-    isDark,
-  );
+  const borderStyle = getAllBorderWidthCss(cellSize, cell, board, isDark);
 
   const [isBoardFocused, setIsBoardFocused] = useState(true);
 
@@ -104,8 +74,15 @@ const BaseScene = (
       navigateWithDelay(navigate, "/");
     }
 
-    if (!isClear) {
+    // クリア時
+    if (isClear) {
+      if (e.key === " ") {
+        navigateWithDelay(navigate, "/");
+      }
+    } else {
+      // 未クリア時
       if (isBoardFocused) {
+        // View mode
         if (e.key === "ArrowRight") {
           setHistoryIndex(
             Math.min(historyIndex + 1, playerHistory.length - 1),
@@ -114,16 +91,17 @@ const BaseScene = (
           setHistoryIndex(Math.max(historyIndex - 1, 0));
         }
       } else {
-        if (
-          e.key === "ArrowRight" || e.key === "ArrowLeft" ||
-          e.key === "ArrowUp" || e.key === "ArrowDown"
-        ) {
+        // Input mode
+        if (isInputChar(e.key)) {
           setInputChars([...inputChars, e.key]);
         } else if (e.key === "Backspace" || e.key === "Delete") {
           if (inputChars.length > 0) {
             setInputChars(inputChars.slice(0, inputChars.length - 1));
           }
         } else if (e.key === "Enter") {
+          // 正誤判定
+
+          // answer配列をもとに正誤判定
           if (answerChecker === undefined && answer !== undefined) {
             for (let i = 0; i < answer.length; i++) {
               if (inputChars.length === answer[i].length) {
@@ -134,6 +112,7 @@ const BaseScene = (
               }
             }
           } else {
+            // answerChecker関数をもとに正誤判定
             if (answerChecker === undefined) {
               throw new Error("answerChecker is undefined");
             }
@@ -145,10 +124,6 @@ const BaseScene = (
       }
       if (e.key === " ") {
         setIsBoardFocused(!isBoardFocused);
-      }
-    } else {
-      if (e.key === " ") {
-        navigateWithDelay(navigate, "/");
       }
     }
   };
@@ -208,10 +183,7 @@ const BaseScene = (
                 width: String(cellSize) + "px",
                 height: String(cellSize) + "px",
                 fontSize: String(fontSize) + "px",
-                borderLeftWidth: String(borderLeftWidth) + "px",
-                borderRightWidth: String(borderRightWidth) + "px",
-                borderTopWidth: String(borderTopWidth) + "px",
-                borderBottomWidth: String(borderBottomWidth) + "px",
+                ...borderStyle,
               }}
             >
               <span

@@ -151,5 +151,23 @@ const getBorderWidthPx = (
   }
 };
 
+const getAllBorderWidthCss = (
+  cellSize: number,
+  cell: Cell,
+  board: Board,
+  isDark: boolean = false,
+) => {
+  return ({
+    borderLeftWidth:
+      String(getBorderWidthPx(cellSize, cell, board, "Left", isDark)) + "px",
+    borderRightWidth:
+      String(getBorderWidthPx(cellSize, cell, board, "Right", isDark)) + "px",
+    borderTopWidth:
+      String(getBorderWidthPx(cellSize, cell, board, "Up", isDark)) + "px",
+    borderBottomWidth:
+      String(getBorderWidthPx(cellSize, cell, board, "Down", isDark)) + "px",
+  });
+};
+
 export type { Board, BoardRaw, Cell };
-export { generateBoard, getBorderWidthPx, vectorToCell };
+export { generateBoard, getAllBorderWidthCss, getBorderWidthPx, vectorToCell };
