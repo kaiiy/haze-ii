@@ -69,24 +69,24 @@ const NoticeContent = () => (
       <BudouX text="」のクリアをおすすめします。" />
     </div>
     <div>
-      <BudouX text="なお、「HAZE: STAGE 2」以降のステージは本作と無関係です。" />
+      <BudouX text="なお、「HAZE: STAGE 2」以降のステージは本作とは無関係です。" />
     </div>
   </div>
 );
 
 const PreconditionContent = () => (
   <div className="text-xl flex flex-col text-center pt-1">
-    <div className="mb-3">
+    <div>
       <BudouX text="マスとマスの境界に壁はない。" />
     </div>
-    <div>
+    <div className="mb-3">
       <BudouX text="進みたい方向に進めない場合、その原因は進みたい方向に黒マスがあるためである。" />
     </div>
     <div className="mb-3">
       <BudouX text="黒マスを通り抜けることはできない。" />
     </div>
     <div>
-      <BudouX text="斜めマス等、隣接しないマスへと移動することはない。" />
+      <BudouX text="移動可能なマスは上下左右に隣接するマスのみである。" />
     </div>
     <div className="mb-3">
       <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />

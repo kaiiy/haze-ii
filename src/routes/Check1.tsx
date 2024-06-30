@@ -6,6 +6,7 @@ import { navigateWithDelay } from "@/lib/navigate";
 import { useNavigate } from "react-router-dom";
 import Clear from "@/components/Clear";
 import NavTooltip from "@/components/NavTooltip";
+import { vStorage } from "@/lib/storage";
 
 interface InfoProps {
   title: string;
@@ -106,17 +107,19 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         setS4List([...s4List, inputNum]);
         setInputS4Value("");
 
+        // クリア判定
         if (
           s4List.length === S4_CORRECT.length - 1 &&
           s6List.length === S6_CORRECT.length
         ) {
           setIsClear(true);
+          vStorage.overwriteChecked("A", true);
         }
       }
     }
   };
 
-  // Scene 5
+  // Scene 6
   const [inputS6Value, setInputS6Value] = useState<string>("");
   const [s6List, setS6List] = useState<number[]>([]);
   const s6ListStr = s6List.length === 0
@@ -146,11 +149,13 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         setS6List([...s6List, inputNum]);
         setInputS6Value("");
 
+        // クリア判定
         if (
           s4List.length === S4_CORRECT.length &&
           s6List.length === S6_CORRECT.length - 1
         ) {
           setIsClear(true);
+          vStorage.overwriteChecked("A", true);
         }
       }
     }
@@ -256,7 +261,11 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         </div>
       </div>
 
-      <Clear showClear={showClear} fontSize={fontSize} />
+      <Clear
+        showClear={showClear}
+        fontSize={fontSize}
+        sharedText={"Checkpoint 1 Clear!"}
+      />
     </ContainerBase>
   );
 };

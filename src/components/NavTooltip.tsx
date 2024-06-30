@@ -5,6 +5,8 @@ const NavTooltip = () => (
     id="my-tooltip"
     style={{
       zIndex: "calc(infinity)",
+      backgroundColor: "#202020",
+      color: "#f7f7f7",
     }}
   />
 );

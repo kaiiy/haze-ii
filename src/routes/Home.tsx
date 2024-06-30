@@ -35,6 +35,7 @@ interface HomeProps {
 const Home = ({ containerWidth }: HomeProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isDark, setIsDark] = useState(false);
+  const [pageUpdated, setPageUpdated] = useState(0);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
@@ -44,6 +45,9 @@ const Home = ({ containerWidth }: HomeProps) => {
   };
 
   const updatePage = (page: number) => {
+    if (currentPage !== page) {
+      setPageUpdated(page);
+    }
     setCurrentPage(page);
     if (page === 0 || page === 1 || page === 2) {
       vStorage.overwrite({
@@ -66,7 +70,7 @@ const Home = ({ containerWidth }: HomeProps) => {
 
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
-  }, [currentPage]);
+  }, [pageUpdated]);
 
   return (
     <Container width={containerWidth} isDark={isDark}>
@@ -83,6 +87,7 @@ const Home = ({ containerWidth }: HomeProps) => {
           }}
         >
           <Info title="制作" content="kaiiy" isDark={isDark} />
+          <Info title="想定プレイ時間" content="3時間" isDark={isDark} />
           <Info title="注意事項" content={<NoticeContent />} isDark={isDark} />
           <Info
             title="前提条件"

@@ -18,7 +18,7 @@ import {
 import { navigateWithDelay } from "@/lib/navigate";
 import Clear from "@/components/Clear";
 import { SceneId, vStorage } from "@/lib/storage";
-import { inputCharToSymbol } from "@/components/arrow";
+import Arrows from "@/components/SceneArrows";
 
 interface BaseSceneProps {
   baseSize: number;
@@ -32,6 +32,7 @@ interface BaseSceneProps {
   answerChecker?: AnswerChecker;
   isDark: boolean;
   id: SceneId;
+  sharedText: string;
 }
 
 const BaseScene = (
@@ -47,6 +48,7 @@ const BaseScene = (
     answerChecker,
     isDark,
     id,
+    sharedText,
   }: BaseSceneProps,
 ) => {
   if (answerChecker === undefined && answer !== undefined) {
@@ -153,17 +155,18 @@ const BaseScene = (
         isDark={isDark}
       >
         <div className="w-full h-full">
-          <div className="flex justify-center relative">
-            {/* historyIndexの位置がずれるバグあり  */}
+          <div className="flex justify-center relative w-full">
             <span
               className={`absolute font-sawarabi ${
                 !isDark ? "text-charcoal" : "text-lime"
-              }`}
+              } ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"}`}
               style={{
                 lineHeight: String(fontSize * 0.2) + "px",
                 height: String(fontSize * 0.2) + "px",
                 fontSize: String(fontSize * 0.2) + "px",
-                left: "0%",
+                width: String(fontSize * 0.25) + "px",
+                left: "50%",
+                transform: "translateX(-550%)",
                 top: "-18%",
               }}
             >
@@ -175,9 +178,9 @@ const BaseScene = (
                 !isDark ? "border-charcoal bg-white" : "border-lime"
               } text-charcoal flex items-center justify-center ${
                 isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
-              }
-              ${cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""}
-              `}
+              } ${
+                cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""
+              }`}
               style={{
                 width: String(cellSize) + "px",
                 height: String(cellSize) + "px",
@@ -197,27 +200,22 @@ const BaseScene = (
               </span>
             </div>
           </div>
-          <div
-            className={`flex justify-center ${
-              !isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
-            }`}
-            style={{
-              marginTop: String(fontSize * 0.3) + "px",
-              fontSize: String(fontSize * 0.85) + "px",
-              height: String(fontSize * 0.6) + "px",
-              lineHeight: String(fontSize * 0.8) + "px",
-            }}
-          >
-            <span className="flex">
-              {inputChars.map((inputChar, index) => (
-                <span key={index}>
-                  {inputCharToSymbol(inputChar, baseSize, isDark)}
-                </span>
-              ))}
-            </span>
-          </div>
 
-          <Clear showClear={showClear} fontSize={fontSize} isDark={isDark} />
+          <Arrows
+            baseSize={baseSize}
+            isDark={isDark}
+            inputChars={inputChars}
+            showClear={showClear}
+            isBoardFocused={isBoardFocused}
+            fontSize={fontSize}
+          />
+
+          <Clear
+            showClear={showClear}
+            fontSize={fontSize}
+            isDark={isDark}
+            sharedText={sharedText}
+          />
         </div>
       </SceneContainer>
     )

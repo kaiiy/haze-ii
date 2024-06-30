@@ -75,6 +75,7 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       answer={ANSWER}
       isDark={false}
       id={"8"}
+      sharedText="Scene 8 Clear!"
     />
   );
 };

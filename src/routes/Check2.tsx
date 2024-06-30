@@ -3,39 +3,23 @@ import Nav from "@/components/Nav";
 import NavTooltip from "@/components/NavTooltip";
 import { Switch } from "@/components/ui/switch";
 import Clear from "@/components/Clear";
+import { calcFontSizeFromBaseSize } from "@/lib/style";
 
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { vStorage } from "@/lib/storage";
+import { VStorage, vStorage } from "@/lib/storage";
 import { useEffect, useState } from "react";
 
-// temporary data
-const sceneStates = [
-  {
-    title: "SCENE 7",
-    checked: {
-      light: true,
-      dark: false,
-    },
-  },
-  {
-    title: "SCENE 8",
-    checked: {
-      light: true,
-      dark: false,
-    },
-  },
-  {
-    title: "SCENE 9",
-    checked: {
-      light: true,
-      dark: false,
-    },
-  },
-];
+const loadChecked = (id: string, storage: VStorage) => {
+  const scene = storage.sceneStates.find((scene) => scene.id === id);
+  if (scene === undefined) {
+    throw new Error(`Scene ${id} is not found in the storage`);
+  }
+  return scene.checked;
+};
 
 interface SceneProps {
   baseSize: number;
@@ -44,10 +28,42 @@ interface SceneProps {
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   const [isDark, setIsDark] = useState(false);
-  const [showClear, _] = useState(false);
 
-  const cellSize = baseSize * 6;
-  const fontSize = cellSize / 2;
+  const storage = vStorage.load();
+
+  const sceneStates = [
+    {
+      title: "SCENE 7",
+      checked: {
+        light: loadChecked("7", storage),
+        dark: loadChecked("7d", storage),
+      },
+    },
+    {
+      title: "SCENE 8",
+      checked: {
+        light: loadChecked("8", storage),
+        dark: loadChecked("8d", storage),
+      },
+    },
+    {
+      title: "SCENE 9",
+      checked: {
+        light: loadChecked("9", storage),
+        dark: loadChecked("9d", storage),
+      },
+    },
+  ] as const;
+
+  const showClear = sceneStates.every((scene) => {
+    return scene.checked.light && scene.checked.dark;
+  });
+
+  if (showClear) {
+    vStorage.overwriteChecked("B", true);
+  }
+
+  const fontSize = calcFontSizeFromBaseSize(baseSize);
 
   const switchTheme = () => {
     vStorage.overwrite({
@@ -93,7 +109,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             クリア条件
           </div>
           <div className="text-2xl text-center">
-            すべてにチェックがつくこと（現在、Bのクリア判定は未実装です。ただし、ダークモードで各ステージを解くことはできます）
+            すべてにチェックがつくこと
           </div>
         </div>
 
@@ -136,7 +152,12 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           <MdDarkMode size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
         </div>
 
-        <Clear showClear={showClear} fontSize={fontSize} isDark={isDark} />
+        <Clear
+          showClear={showClear}
+          fontSize={fontSize}
+          isDark={isDark}
+          sharedText="Checkpoint 2 Clear!"
+        />
       </div>
     </ContainerBase>
   );

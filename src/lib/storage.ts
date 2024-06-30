@@ -115,5 +115,5 @@ const vStorage = {
     overwriteChecked,
 };
 
-export type { SceneId };
+export type { SceneId, Storage as VStorage };
 export { vStorage };
