@@ -16,7 +16,7 @@ const Arrows = (
 ) => {
     return (
         <div
-            className={`flex justify-center ${
+            className={`flex justify-center mb-6 ${
                 !isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
             }`}
             style={{

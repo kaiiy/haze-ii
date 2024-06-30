@@ -6,11 +6,13 @@ import { GiCoffeeBeans } from "react-icons/gi";
 
 interface NavProps {
   text: string;
+  shareText?: string;
 }
 
-const Nav = ({ text }: NavProps) => {
+const Nav = ({ text, shareText }: NavProps) => {
+  const twitterText = shareText || "謎解きゲーム「MIST」";
   return (
-    <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-sm rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans z-50">
+    <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-sm rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans z-50 hidden md:block lg:block">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-4">
           <Link tabIndex={-1} to="/">
@@ -22,7 +24,9 @@ const Nav = ({ text }: NavProps) => {
             />
           </Link>
           <a
-            href="https://x.com/intent/post?url=https%3A%2F%2Fgithub.com%2Fkaiiy%2Fmist&text=MIST"
+            href={`https://x.com/intent/post?url=https%3A%2F%2Fmist.kaiix.dev%2F&text=${
+              encodeURI(twitterText)
+            }`}
             target="_blank"
             rel="noreferrer"
             tabIndex={-1}

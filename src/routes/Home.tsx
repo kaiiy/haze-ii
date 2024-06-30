@@ -12,9 +12,9 @@ import {
 } from "@/components/homeContent";
 import { Scenes, SwitchPage } from "@/components/homeUI";
 import NavTooltip from "@/components/NavTooltip";
-import { vStorage } from "@/lib/storage";
+import { SceneId, vStorage } from "@/lib/storage";
 
-const PAGE0_SCENES = [
+const PAGE0_SCENES: SceneId[] = [
   "0",
   "1",
   "2",
@@ -25,8 +25,8 @@ const PAGE0_SCENES = [
   "A",
 ] as const;
 
-const PAGE1_SCENES = ["7", "8", "9", "B"] as const;
-const PAGE2_SCENES = ["10"] as const;
+const PAGE1_SCENES: SceneId[] = ["7", "8", "9", "B"] as const;
+const PAGE2_SCENES: SceneId[] = ["10"] as const;
 
 interface HomeProps {
   containerWidth: number;
@@ -36,6 +36,11 @@ const Home = ({ containerWidth }: HomeProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isDark, setIsDark] = useState(false);
   const [pageUpdated, setPageUpdated] = useState(0);
+
+  const storage = vStorage.load();
+  const sceneStates = storage.sceneStates;
+
+  const isAllClear = sceneStates.every((scene) => scene.checked);
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
@@ -74,11 +79,18 @@ const Home = ({ containerWidth }: HomeProps) => {
 
   return (
     <Container width={containerWidth} isDark={isDark}>
-      <Nav text="HOME" />
+      <Nav
+        text="HOME"
+        shareText={`${
+          !isAllClear
+            ? "謎解きゲーム「MIST」\n"
+            : "謎解きゲーム「MIST」\n\n ALL CLEAR!\n"
+        }`}
+      />
       <NavTooltip />
 
       <div className="flex flex-col">
-        <Title isDark={isDark} />
+        <Title isDark={isDark} allClear={isAllClear} />
 
         <div
           className="text-charcoal"
@@ -124,11 +136,21 @@ const Home = ({ containerWidth }: HomeProps) => {
             : ""}
         </div>
 
-        {currentPage === 0 ? <Scenes scenes={PAGE0_SCENES} /> : ""}
-        {currentPage === 1
-          ? <Scenes scenes={PAGE1_SCENES} isDark={isDark} />
+        {currentPage === 0
+          ? <Scenes scenes={PAGE0_SCENES} states={sceneStates} />
           : ""}
-        {currentPage === 2 ? <Scenes scenes={PAGE2_SCENES} /> : ""}
+        {currentPage === 1
+          ? (
+            <Scenes
+              scenes={PAGE1_SCENES}
+              isDark={isDark}
+              states={sceneStates}
+            />
+          )
+          : ""}
+        {currentPage === 2
+          ? <Scenes scenes={PAGE2_SCENES} states={sceneStates} />
+          : ""}
 
         <SwitchPage
           currentPage={currentPage}

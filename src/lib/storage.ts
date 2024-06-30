@@ -31,6 +31,7 @@ const sceneSchema = v.object({
 });
 // クリアしたシーンの配列
 const sceneStatesSchema = v.array(sceneSchema);
+type SceneStates = v.InferInput<typeof sceneStatesSchema>;
 
 const storageSchema = v.object({
     theme: themeSchema,
@@ -115,5 +116,5 @@ const vStorage = {
     overwriteChecked,
 };
 
-export type { SceneId, Storage as VStorage };
+export type { SceneId, SceneStates, Storage as VStorage };
 export { vStorage };

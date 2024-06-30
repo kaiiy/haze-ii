@@ -2,18 +2,26 @@ import BudouX from "@/components/BudouX";
 
 interface TitleProps {
   isDark: boolean;
+  allClear: boolean;
 }
 
-const Title = ({ isDark }: TitleProps) => (
+const Title = ({ isDark, allClear }: TitleProps) => (
   <div
-    className={`w-full text-center text-8xl ${
+    className={`w-full text-center  font-sawarabi ${
       !isDark ? "text-black" : "text-white"
-    } font-sawarabi`}
+    }`}
     style={{
       marginBottom: "80px",
     }}
   >
-    MIST
+    <div className="text-8xl">
+      MIST
+    </div>
+    {allClear && (
+      <div className="text-4xl mt-4">
+        ALL CLEAR!
+      </div>
+    )}
   </div>
 );
 

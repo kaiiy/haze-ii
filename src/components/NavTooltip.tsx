@@ -2,6 +2,7 @@ import { Tooltip } from "react-tooltip";
 
 const NavTooltip = () => (
   <Tooltip
+    className="hidden md:block lg:block"
     id="my-tooltip"
     style={{
       zIndex: "calc(infinity)",

@@ -6,7 +6,8 @@ import { navigateWithDelay } from "@/lib/navigate";
 import { useNavigate } from "react-router-dom";
 import Clear from "@/components/Clear";
 import NavTooltip from "@/components/NavTooltip";
-import { vStorage } from "@/lib/storage";
+import { SceneId, vStorage } from "@/lib/storage";
+import { isSceneClear, SceneBox as Box } from "@/components/homeUI";
 
 interface InfoProps {
   title: string;
@@ -40,13 +41,14 @@ const ContentInfo = ({ title, content }: ContentInfoProps) => (
   </div>
 );
 
-const SceneBox = ({ index }: { index: string }) => (
+interface SceneBoxProps {
+  index: SceneId;
+  clear: boolean;
+}
+
+const SceneBox = ({ index, clear }: SceneBoxProps) => (
   <Link to={`/${index}`}>
-    <div
-      className={`w-32 h-32 border border-charcoal text-center text-2xl flex items-center justify-center cursor-pointer   transition duration-300 hover:text-lime hover:bg-charcoal text-charcoal bg-white`}
-    >
-      {index}
-    </div>
+    <Box scene={index} clear={clear} />
   </Link>
 );
 
@@ -169,6 +171,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     }
   };
 
+  const storage = vStorage.load();
+  const sceneStates = storage.sceneStates;
+
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
@@ -192,16 +197,46 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         <div className="w-1/2">
           <Info title="S = 3" />
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
-            <SceneBox index="0" />
-            <SceneBox index="2" />
-            <SceneBox index="3" />
+            <SceneBox
+              index="0"
+              clear={isSceneClear(
+                "0",
+                sceneStates,
+              )}
+            />
+            <SceneBox
+              index="2"
+              clear={isSceneClear(
+                "2",
+                sceneStates,
+              )}
+            />
+            <SceneBox
+              index="3"
+              clear={isSceneClear(
+                "3",
+                sceneStates,
+              )}
+            />
           </div>
         </div>
         <div className="w-1/2">
           <Info title="S = 5" />
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
-            <SceneBox index="1" />
-            <SceneBox index="5" />
+            <SceneBox
+              index="1"
+              clear={isSceneClear(
+                "1",
+                sceneStates,
+              )}
+            />
+            <SceneBox
+              index="5"
+              clear={isSceneClear(
+                "5",
+                sceneStates,
+              )}
+            />
           </div>
         </div>
       </div>
@@ -232,7 +267,13 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             </div>
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
-            <SceneBox index="4" />
+            <SceneBox
+              index="4"
+              clear={isSceneClear(
+                "4",
+                sceneStates,
+              )}
+            />
           </div>
         </div>
 
@@ -256,7 +297,13 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             </div>
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
-            <SceneBox index="6" />
+            <SceneBox
+              index="6"
+              clear={isSceneClear(
+                "6",
+                sceneStates,
+              )}
+            />
           </div>
         </div>
       </div>
