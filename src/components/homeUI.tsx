@@ -43,18 +43,9 @@ const SwitchPage = ({
         <MdOutlineChevronLeft size={24} />
       </Button>
       <span
-        className={`${isDark ? "text-white" : "text-black"}`}
-        style={{
-          fontSize: "24px",
-          lineHeight: "36px",
-          marginTop: "-4px",
-          paddingTop: "0px",
-          paddingBottom: "0px",
-          width: "24px",
-          textAlign: "center",
-          justifyContent: "center",
-          fontWeight: 500,
-        }}
+        className={`${
+          isDark ? "text-white" : "text-black"
+        } text-[24px] leading-[36px] mt-[-4px] pt-0 pb-0 w-[24px] text-center justify-center font-medium`}
       >
         {"|".repeat(currentPage + 1)}
       </span>

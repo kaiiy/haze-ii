@@ -4,27 +4,30 @@ import * as v from "valibot";
 const themeSchema = v.picklist(["light", "dark"]);
 // Homeにおける表示ページ
 const pageSchema = v.picklist([0, 1, 2]);
+
+const SCENE_IDS = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "A",
+    "7",
+    "7d",
+    "8",
+    "8d",
+    "9",
+    "9d",
+    "B",
+    "10",
+] as const;
+type SceneId = typeof SCENE_IDS[number];
 // クリアしたシーン
 const sceneSchema = v.object({
-    id: v.picklist([
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "A",
-        "7",
-        "8",
-        "9",
-        "B",
-        "10",
-    ]),
-    checked: v.object({
-        light: v.boolean(),
-        dark: v.boolean(),
-    }),
+    id: v.picklist(SCENE_IDS),
+    checked: v.boolean(),
 });
 // クリアしたシーンの配列
 const sceneStatesSchema = v.array(sceneSchema);
@@ -39,7 +42,7 @@ type Storage = v.InferInput<typeof storageSchema>;
 const DEFAULT_STORAGE: Storage = {
     theme: "light",
     page: 0,
-    sceneStates: [],
+    sceneStates: SCENE_IDS.map((id) => ({ id, checked: false })),
 } as const;
 
 // local storage key
@@ -93,10 +96,24 @@ const load = (): Storage => {
     return storageResult.output;
 };
 
+// シーンのクリア状態を上書き
+const overwriteChecked = (id: SceneId, checked: boolean): void => {
+    const storage = load();
+    const sceneStates = storage.sceneStates.map((sceneState) => {
+        if (sceneState.id === id) {
+            return { id, checked };
+        }
+        return sceneState;
+    });
+    overwrite({ sceneStates });
+};
+
 const vStorage = {
     load,
     save,
     overwrite,
+    overwriteChecked,
 };
 
+export type { SceneId };
 export { vStorage };

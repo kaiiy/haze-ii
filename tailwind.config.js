@@ -77,6 +77,7 @@ module.exports = {
         sawarabi: ["Sawarabi Mincho"],
         notoSans: ["Noto Sans JP"],
         notoSerif: ["Noto Serif JP"],
+
       }
     },
   },

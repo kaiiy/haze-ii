@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import SceneContainer from "@/components/SceneContainer";
 import { InputChar, isInputChar } from "@/lib/input";
-import { AnswerChecker, validateAnswerLength } from "@/lib/answer";
+import {
+  AnswerChecker,
+  isCorrectAnswer,
+  validateAnswerLength,
+} from "@/lib/answer";
 import { useNavigate } from "react-router-dom";
 import { OriginalVector, originalVectorToModifiedVector } from "@/lib/vector";
 import {
   BoardRaw,
+  cellTypeToSymbol,
   generateBoard,
   getAllBorderWidthCss,
   vectorToCell,
 } from "@/lib/board";
 import { navigateWithDelay } from "@/lib/navigate";
 import Clear from "@/components/Clear";
+import { SceneId, vStorage } from "@/lib/storage";
+import { inputCharToSymbol } from "@/components/arrow";
 
 interface BaseSceneProps {
   baseSize: number;
@@ -23,7 +30,8 @@ interface BaseSceneProps {
   playerHistory: OriginalVector[];
   answer?: InputChar[][];
   answerChecker?: AnswerChecker;
-  isDark?: boolean;
+  isDark: boolean;
+  id: SceneId;
 }
 
 const BaseScene = (
@@ -38,6 +46,7 @@ const BaseScene = (
     answer,
     answerChecker,
     isDark,
+    id,
   }: BaseSceneProps,
 ) => {
   if (answerChecker === undefined && answer !== undefined) {
@@ -98,27 +107,16 @@ const BaseScene = (
           if (inputChars.length > 0) {
             setInputChars(inputChars.slice(0, inputChars.length - 1));
           }
-        } else if (e.key === "Enter") {
-          // 正誤判定
-
-          // answer配列をもとに正誤判定
-          if (answerChecker === undefined && answer !== undefined) {
-            for (let i = 0; i < answer.length; i++) {
-              if (inputChars.length === answer[i].length) {
-                if (inputChars.every((char, j) => char === answer[i][j])) {
-                  setIsClear(true);
-                  break;
-                }
-              }
-            }
-          } else {
-            // answerChecker関数をもとに正誤判定
-            if (answerChecker === undefined) {
-              throw new Error("answerChecker is undefined");
-            }
-            if (answerChecker(inputChars)) {
-              setIsClear(true);
-            }
+        } // 正誤判定
+        else if (e.key === "Enter") {
+          const isCorrect = isCorrectAnswer(
+            inputChars,
+            answer,
+            answerChecker,
+          );
+          if (isCorrect) {
+            setIsClear(true);
+            vStorage.overwriteChecked(id, true);
           }
         }
       }
@@ -137,6 +135,7 @@ const BaseScene = (
 
   const [showClear, setShowClear] = useState(false);
 
+  // クリアの表示を遅らせる
   useEffect(() => {
     if (isClear) {
       const timer = setTimeout(() => {
@@ -194,13 +193,7 @@ const BaseScene = (
                   marginTop: String(-fontSize / 6) + "px",
                 }}
               >
-                {cell.type === "RS"
-                  ? "S"
-                  : cell.type === "RG"
-                  ? "G"
-                  : cell.type === "B"
-                  ? ""
-                  : cell.type}
+                {cellTypeToSymbol(cell.type)}
               </span>
             </div>
           </div>
@@ -215,12 +208,12 @@ const BaseScene = (
               lineHeight: String(fontSize * 0.8) + "px",
             }}
           >
-            <span
-              className={`${
-                !isDark ? "text-charcoal" : "text-lime"
-              } font-notoSans`}
-            >
-              {"*".repeat(inputChars.length)}
+            <span className="flex">
+              {inputChars.map((inputChar, index) => (
+                <span key={index}>
+                  {inputCharToSymbol(inputChar, baseSize, isDark)}
+                </span>
+              ))}
             </span>
           </div>
 

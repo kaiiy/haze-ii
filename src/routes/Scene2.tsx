@@ -59,6 +59,8 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       boardRaw={BOARD_RAW}
       playerHistory={PLAYER_HISTORY}
       answer={ANSWER}
+      isDark={false}
+      id={"2"}
     />
   );
 };

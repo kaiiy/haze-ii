@@ -24,10 +24,24 @@ type CellType =
   | "\\"
   | "RS"
   | "RG";
+
 interface Cell {
   position: ModifiedVector;
   type: CellType;
 }
+
+// cellType を 表示用の文字に変換
+const cellTypeToSymbol = (type: CellType): string => {
+  if (type === "S" || type === "RS") {
+    return "S";
+  } else if (type === "G" || type === "RG") {
+    return "G";
+  } else if (type === "B") {
+    return "";
+  } else {
+    return type.toString();
+  }
+};
 
 // vector から Cell を取得
 const vectorToCell = (vector: ModifiedVector, board: Board): Result<Cell> => {
@@ -170,4 +184,10 @@ const getAllBorderWidthCss = (
 };
 
 export type { Board, BoardRaw, Cell };
-export { generateBoard, getAllBorderWidthCss, getBorderWidthPx, vectorToCell };
+export {
+  cellTypeToSymbol,
+  generateBoard,
+  getAllBorderWidthCss,
+  getBorderWidthPx,
+  vectorToCell,
+};

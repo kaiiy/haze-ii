@@ -58,6 +58,7 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       playerHistory={PLAYER_HISTORY}
       answerChecker={answerChecker}
       isDark={true}
+      id={"7d"}
     />
   );
 };
