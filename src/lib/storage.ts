@@ -70,10 +70,8 @@ const load = (): Storage => {
     const rawPage = localStorage.getItem(KEY.PAGE);
     const rawSceneStates = localStorage.getItem(KEY.SCENE_STATES);
 
+    // If the storage is not initialized, save the default storage and return it
     if (rawTheme === null || rawPage === null || rawSceneStates === null) {
-        console.error(
-            "Storage is not initialized. Saving the default storage.",
-        );
         save(DEFAULT_STORAGE);
         return DEFAULT_STORAGE;
     }
