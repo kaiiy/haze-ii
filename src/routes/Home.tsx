@@ -35,12 +35,13 @@ interface HomeProps {
 const Home = ({ containerWidth }: HomeProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isDark, setIsDark] = useState(false);
-  const [pageUpdated, setPageUpdated] = useState(0);
+  const [pageUpdated, setPageUpdated] = useState(-1);
 
   const storage = vStorage.load();
   const sceneStates = storage.sceneStates;
 
-  const isAllClear = sceneStates.every((scene) => scene.checked);
+  const isAllClear = sceneStates.every((scene) => scene.checked) &&
+    sceneStates.length > 0;
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
@@ -74,7 +75,9 @@ const Home = ({ containerWidth }: HomeProps) => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
+    if (pageUpdated !== -1) {
+      window.scrollTo(0, document.body.scrollHeight);
+    }
   }, [pageUpdated]);
 
   return (

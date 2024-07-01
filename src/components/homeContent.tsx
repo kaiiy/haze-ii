@@ -17,11 +17,13 @@ const Title = ({ isDark, allClear }: TitleProps) => (
     <div className="text-8xl">
       MIST
     </div>
-    {allClear && (
-      <div className="text-4xl mt-4">
-        ALL CLEAR!
-      </div>
-    )}
+    {allClear
+      ? (
+        <div className="text-4xl mt-4">
+          ALL CLEAR!
+        </div>
+      )
+      : ""}
   </div>
 );
 

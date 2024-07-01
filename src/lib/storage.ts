@@ -94,6 +94,15 @@ const load = (): Storage => {
         return DEFAULT_STORAGE;
     }
 
+    if (storageResult.output.sceneStates.length !== SCENE_IDS.length) {
+        console.error(
+            "Storage is corrupted. Saving the default storage.",
+            "The number of scene states is invalid.",
+        );
+        save(DEFAULT_STORAGE);
+        return DEFAULT_STORAGE;
+    }
+
     return storageResult.output;
 };
 
