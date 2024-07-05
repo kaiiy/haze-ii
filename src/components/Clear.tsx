@@ -80,6 +80,7 @@ const Clear = (
         <div className="flex justify-center space-x-2 mt-3">
           <Link tabIndex={-1} to="/">
             <MdHome
+              tabIndex={-1}
               className="w-9 h-9"
               color="#202020"
               data-tooltip-id="my-tooltip"

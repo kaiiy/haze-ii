@@ -17,6 +17,7 @@ const Nav = ({ text, shareText }: NavProps) => {
         <div className="flex flex-col gap-4">
           <Link tabIndex={-1} to="/">
             <MdHome
+              tabIndex={-1}
               className="w-9 h-9"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="Home"
