@@ -1,3 +1,4 @@
+import React from "react";
 import BudouX from "@/components/BudouX";
 
 interface TitleProps {
@@ -29,7 +30,7 @@ const Title = ({ isDark, allClear }: TitleProps) => (
 
 interface InfoProps {
   title: string;
-  content: string | JSX.Element;
+  content: string | React.JSX.Element;
   isDark: boolean;
 }
 

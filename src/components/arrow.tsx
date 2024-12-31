@@ -1,4 +1,5 @@
 import { InputChar } from "@/lib/input";
+import React from "react";
 
 import {
     FaArrowDown,
@@ -11,7 +12,7 @@ const inputCharToSymbol = (
     char: InputChar,
     baseSize: number,
     isDark: boolean,
-): JSX.Element => {
+): React.JSX.Element => {
     const size = baseSize * 1.2;
     const color = isDark ? "#f7f7f7" : "#101010";
     if (char === "ArrowRight") {
