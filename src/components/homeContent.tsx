@@ -115,11 +115,8 @@ const TutorialContent = () => (
 
 const Tutorial2Content = () => (
   <div className="text-xl flex flex-col text-center pt-1">
-    <div className="mb-6">
-      <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を6回、そして最後に「エンターキー」を1回押してください。" />
-    </div>
     <div>
-      <BudouX text="※ 本ページ（7 ～ 9 + B）は高難度です。スキップしていただいても構いません。" />
+      <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を6回、「スペースキー」を1回、「上矢印キー」を6回、そして最後に「エンターキー」を1回押してください。" />
     </div>
   </div>
 );

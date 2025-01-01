@@ -22,8 +22,6 @@ const PLAYER_HISTORY: OriginalVector[] = [
   { x: 1, y: 1 },
   { x: 1, y: 1 },
   { x: 1, y: 1 },
-  { x: 1, y: 1 },
-  { x: 1, y: 1 },
   { x: 1, y: 4 },
 ].map(
   vectorToOriginalVector,
@@ -36,7 +34,7 @@ const U = "ArrowUp";
 
 const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
   if (
-    inputChars.length >= 2 && inputChars.length <= 6 &&
+    inputChars.length >= 2 && inputChars.length <= PLAYER_HISTORY.length - 1 &&
     inputChars.every((inputChar) => inputChar === U)
   ) {
     return true;

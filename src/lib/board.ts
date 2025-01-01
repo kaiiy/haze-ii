@@ -235,6 +235,7 @@ const getBorderColor = (
   cell: Cell,
   board: Board,
   direction: Direction,
+  darkMode: boolean = false,
 ): string => {
   const adjacentCellResult = getAdjacentCell(cell, direction, board);
   if (!adjacentCellResult.success) {
@@ -244,7 +245,7 @@ const getBorderColor = (
 
   // 白マスの場合
   if (adjCell.type !== "B" && adjCell.type !== "M") {
-    return COLOR.LIME;
+    return darkMode ? COLOR.LIME : COLOR.CHARCOAL;
   }
 
   return COLOR.CHARCOAL;
