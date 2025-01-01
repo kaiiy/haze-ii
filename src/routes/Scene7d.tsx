@@ -6,22 +6,25 @@ import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 7";
 
-const BOARD_HEIGHT = 3;
-const BOARD_WIDTH = 1;
+const BOARD_HEIGHT = 6;
+const BOARD_WIDTH = 3;
 const BOARD_RAW: BoardRaw = [
-  [" "], // y: 0
-  ["B"], // y: 1
-  [" "], // y: 2
+  [" ", " ", " "], // y: 0
+  ["B", "B", "B"], // y: 1
+  [" ", " ", " "], // y: 2
+  [" ", "B", " "], // y: 3
+  ["B", "B", "B"], // y: 4
+  [" ", " ", " "], // y: 5
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
-  { x: 0, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 4 },
 ].map(
   vectorToOriginalVector,
 );

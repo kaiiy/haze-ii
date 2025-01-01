@@ -1,6 +1,7 @@
 import Container from "@/components/SceneBaseContainer";
 import Nav from "@/components/Nav";
 import NavTooltip from "@/components/NavTooltip";
+import Info from "./Info";
 
 type CanvasProps = {
   children: React.ReactNode;
@@ -31,6 +32,7 @@ const SceneContainer = (
           {children}
         </div>
         <Nav text={navText} />
+        <Info />
       </Canvas>
     </Container>
   );

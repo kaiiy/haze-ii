@@ -12,6 +12,8 @@ import {
   BoardRaw,
   cellTypeToSymbol,
   generateBoard,
+  getAllBorderColorCss,
+  getAllBorderStyleCss,
   getAllBorderWidthCss,
   vectorToCell,
 } from "@/lib/board";
@@ -70,7 +72,11 @@ const BaseScene = (
   const cellSize = baseSize * 6;
   const fontSize = cellSize / 2;
 
-  const borderStyle = getAllBorderWidthCss(cellSize, cell, board, isDark);
+  const borderStyle = {
+    ...getAllBorderWidthCss(cellSize, cell, board, isDark),
+    ...getAllBorderStyleCss(cell, board),
+    ...getAllBorderColorCss(cell, board),
+  };
 
   const [isBoardFocused, setIsBoardFocused] = useState(true);
 
@@ -175,7 +181,7 @@ const BaseScene = (
 
             <div
               className={`${
-                !isDark ? "border-charcoal bg-white" : "border-lime"
+                !isDark && "bg-white"
               } text-charcoal flex items-center justify-center ${
                 isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
               } ${

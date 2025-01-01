@@ -4,6 +4,7 @@ import {
   vectorToModifiedVector,
 } from "@/lib/vector";
 import { Failure, Result, Success } from "@/lib/result";
+import { COLOR } from "@/lib/const";
 
 // number は G までの距離
 type CellType =
@@ -23,7 +24,8 @@ type CellType =
   | "9"
   | "\\"
   | "RS"
-  | "RG";
+  | "RG"
+  | "M"; // 動かせるマス
 
 interface Cell {
   position: ModifiedVector;
@@ -148,17 +150,21 @@ const getBorderWidthPx = (
   if (!adjacentCellResult.success) {
     throw adjacentCellResult.error;
   }
-
   const adjacentCell = adjacentCellResult.value;
+
+  if (adjacentCell.type === "M") {
+    return cellSize * 0.015;
+  }
+
   if (!isDark) {
     if (adjacentCell.type === "B") {
       return cellSize * 0.03;
     } else {
-      return cellSize * 0.01;
+      return cellSize * 0.02;
     }
   } else {
     if (adjacentCell.type === "B") {
-      return cellSize * 0.01;
+      return cellSize * 0.02;
     } else {
       return cellSize * 0.03;
     }
@@ -183,10 +189,85 @@ const getAllBorderWidthCss = (
   });
 };
 
+type BorderStyle =
+  | "none"
+  | "hidden"
+  | "dotted"
+  | "dashed"
+  | "solid"
+  | "double"
+  | "groove"
+  | "ridge"
+  | "inset"
+  | "outset";
+
+const getBorderStyle = (
+  cell: Cell,
+  board: Board,
+  direction: Direction,
+): BorderStyle => {
+  const adjacentCellResult = getAdjacentCell(cell, direction, board);
+  if (!adjacentCellResult.success) {
+    throw adjacentCellResult.error;
+  }
+  const adjCell = adjacentCellResult.value;
+
+  if (adjCell.type === "M" || adjCell.type === "B") {
+    return "solid";
+  }
+
+  return "dashed";
+};
+
+const getAllBorderStyleCss = (
+  cell: Cell,
+  board: Board,
+) => {
+  return ({
+    borderLeftStyle: getBorderStyle(cell, board, "Left"),
+    borderRightStyle: getBorderStyle(cell, board, "Right"),
+    borderTopStyle: getBorderStyle(cell, board, "Up"),
+    borderBottomStyle: getBorderStyle(cell, board, "Down"),
+  });
+};
+
+const getBorderColor = (
+  cell: Cell,
+  board: Board,
+  direction: Direction,
+): string => {
+  const adjacentCellResult = getAdjacentCell(cell, direction, board);
+  if (!adjacentCellResult.success) {
+    throw adjacentCellResult.error;
+  }
+  const adjCell = adjacentCellResult.value;
+
+  // 白マスの場合
+  if (adjCell.type !== "B" && adjCell.type !== "M") {
+    return COLOR.LIME;
+  }
+
+  return COLOR.CHARCOAL;
+};
+
+const getAllBorderColorCss = (
+  cell: Cell,
+  board: Board,
+) => {
+  return ({
+    borderLeftColor: getBorderColor(cell, board, "Left"),
+    borderRightColor: getBorderColor(cell, board, "Right"),
+    borderTopColor: getBorderColor(cell, board, "Up"),
+    borderBottomColor: getBorderColor(cell, board, "Down"),
+  });
+};
+
 export type { Board, BoardRaw, Cell };
 export {
   cellTypeToSymbol,
   generateBoard,
+  getAllBorderColorCss,
+  getAllBorderStyleCss,
   getAllBorderWidthCss,
   getBorderWidthPx,
   vectorToCell,

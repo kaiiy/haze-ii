@@ -6,26 +6,26 @@ import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 7";
 
-const BOARD_HEIGHT = 7;
+const BOARD_HEIGHT = 9;
 const BOARD_WIDTH = 1;
 const BOARD_RAW: BoardRaw = [
-  ["S"], // y: 0
-  ["B"], // y: 1
-  ["\\"], // y: 2
-  [" "], // y: 3
-  ["B"], // y: 4
-  ["G"], // y: 5
-  [" "], // y: 6
+  ["M"], // y: 0
+  ["S"], // y: 1
+  ["B"], // y: 2
+  ["M"], // y: 3
+  ["\\"], // y: 4
+  [" "], // y: 5
+  ["M"], // y: 6
+  ["G"], // y: 7
+  [" "], // y: 8
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 0, y: 0 }, // S
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 2 },
-  { x: 0, y: 5 }, // G
+  { x: 0, y: 1 }, // S
+  { x: 0, y: 4 },
+  { x: 0, y: 4 },
+  { x: 0, y: 4 },
+  { x: 0, y: 7 }, // G
 ].map(
   vectorToOriginalVector,
 );
@@ -42,9 +42,11 @@ const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
   }
 
   // 最初と最後は必ずU
-  if (inputChars[0] !== U || inputChars[answerLength - 1] !== U) {
+  if (inputChars.at(0) !== U || inputChars.at(-1) !== U) {
     return false;
   }
+
+  // 途中はULRのどれかならOK
   for (const inputChar of inputChars.slice(1, -1)) {
     if (inputChar === D) {
       return false;
