@@ -6,17 +6,20 @@ import keyImg from "@/assets/key.webp";
 const Info = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const openDialog = () => {
-        setIsOpen(true);
-    };
-
     const closeDialog = () => {
         setIsOpen(false);
     };
 
+    const toggleDialog = () => {
+        setIsOpen(!isOpen);
+    };
+
     return (
         <div>
-            <button onClick={openDialog} className="fixed right-4 top-4">
+            <button
+                onClick={toggleDialog}
+                className="fixed right-4 top-4 hover:bg-white rounded-full p-1"
+            >
                 <CiCircleInfo className="w-10 h-10" />
             </button>
 
