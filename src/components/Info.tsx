@@ -24,7 +24,7 @@ const Info = () => {
             </button>
 
             {isOpen && (
-                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed p-4 shadow-lg rounded-lg z-50 md:w-2/3 md:h-2/3 w-10/12 h-2/6">
+                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-lg z-50 px-8 py-16 md:px-16 md:py-24">
                     <div>
                         <button
                             onClick={closeDialog}
@@ -33,8 +33,8 @@ const Info = () => {
                             <IoMdClose className="w-10 h-10" />
                         </button>
                     </div>
-                    <div className="w-full h-full flex justify-center items-center">
-                        <img className="md:w-3/4 w-11/12" src={keyImg} />
+                    <div className="flex justify-center items-center w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw]">
+                        <img className="" src={keyImg} />
                     </div>
                 </div>
             )}

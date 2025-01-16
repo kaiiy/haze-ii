@@ -2,7 +2,7 @@ import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
-import { GiCoffeeBeans } from "react-icons/gi";
+// import { GiCoffeeBeans } from "react-icons/gi";
 
 interface NavProps {
   text: string;
@@ -49,18 +49,6 @@ const Nav = ({ text, shareText }: NavProps) => {
             data-tooltip-place="right"
           >
             <FaGithub className="w-7 h-7" />
-          </a>
-          <a
-            href="https://www.buymeacoffee.com/kaiiy"
-            target="_blank"
-            rel="noreferrer"
-            tabIndex={-1}
-            className="flex items-center justify-center"
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content="Buy me a coffee"
-            data-tooltip-place="right"
-          >
-            <GiCoffeeBeans className="w-8 h-8" />
           </a>
           <hr />
         </div>

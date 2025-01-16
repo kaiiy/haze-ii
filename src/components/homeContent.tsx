@@ -57,7 +57,8 @@ const NoticeContent = () => (
     <div className="mb-3">
       <BudouX text="ステージをやり直す際には、ページをリロードしてください。" />
     </div>
-    <div>
+    {
+      /* <div>
       <BudouX text="本作は、前作「" />
       <a
         href="https://haze.kaiix.dev/"
@@ -67,8 +68,10 @@ const NoticeContent = () => (
         <BudouX text="HAZE" />
       </a>
       <BudouX text="」における「STAGE 1」のシステムを踏襲しています。" />
-    </div>
-    <div className="mb-3">
+    </div> */
+    }
+    {
+      /* <div className="mb-3">
       <BudouX text="本作を始める前に「" />
       <a
         href="https://haze.kaiix.dev/stages/stage1.html"
@@ -81,7 +84,8 @@ const NoticeContent = () => (
     </div>
     <div>
       <BudouX text="なお、「HAZE: STAGE 2」以降のステージは本作とは無関係です。" />
-    </div>
+    </div> */
+    }
   </div>
 );
 
