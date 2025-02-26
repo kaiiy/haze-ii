@@ -25,7 +25,7 @@ const Nav = ({ text, shareText }: NavProps) => {
             />
           </Link>
           <a
-            href={`https://x.com/intent/post?url=https%3A%2F%2Fmist.kaiix.dev%2F&text=${
+            href={`https://x.com/intent/post?url=https%3A%2F%haze-ii.kaiix.dev%2F&text=${
               encodeURI(twitterText)
             }`}
             target="_blank"
@@ -39,7 +39,7 @@ const Nav = ({ text, shareText }: NavProps) => {
             <RiTwitterXFill className="w-7 h-7" />
           </a>
           <a
-            href="https://github.com/kaiiy/mist"
+            href="https://github.com/kaiiy/haze-ii"
             target="_blank"
             rel="noreferrer"
             tabIndex={-1}

@@ -91,7 +91,7 @@ const Clear = (
             />
           </Link>
           <a
-            href={`https://x.com/intent/post?url=https%3A%2F%2Fmist.kaiix.dev%2F&text=${
+            href={`https://x.com/intent/post?url=https%3A%2F%haze-ii.kaiix.dev%2F&text=${
               encodeURI("謎解きゲーム『HAZE II』\n\n" + sharedText + "\n")
             }`}
             target="_blank"
