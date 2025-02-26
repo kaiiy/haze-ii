@@ -12,7 +12,7 @@ interface NavProps {
 const Nav = ({ text, shareText }: NavProps) => {
   const twitterText = shareText || "謎解きゲーム「MIST」";
   return (
-    <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-xs rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans z-50 hidden md:block lg:block">
+    <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-sm rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans z-50 hidden md:block lg:block">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-4">
           <Link tabIndex={-1} to="/">

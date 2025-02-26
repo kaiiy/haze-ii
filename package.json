@@ -28,18 +28,18 @@
     "valibot": "^1.0.0-rc.2"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.0.9",
     "@types/node": "^22.13.5",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.25.0",
     "@typescript-eslint/parser": "^8.25.0",
     "@vitejs/plugin-react-swc": "^3.8.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.0.9",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "vite": "^6.2.0"
   },
