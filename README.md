@@ -4,6 +4,4 @@
 
 謎解きゲーム「HAZE II」
 
-[![](./docs/header.png)](https://mist.kaiix.dev)
-
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kaiiy)
