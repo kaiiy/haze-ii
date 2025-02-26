@@ -1,9 +1,9 @@
-type ContainerProps = {
+interface ContainerProps {
   children: React.ReactNode;
   width: number;
   style?: React.CSSProperties;
   isDark?: boolean;
-};
+}
 
 const ContainerBase = ({ children, width, style, isDark }: ContainerProps) => {
   return (

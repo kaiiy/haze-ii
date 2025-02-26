@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { VStorage, vStorage } from "@/lib/storage";
 import { useEffect, useState } from "react";
 
+import { COLOR } from "@/lib/const";
+
 const loadChecked = (id: string, storage: VStorage) => {
   const scene = storage.sceneStates.find((scene) => scene.id === id);
   if (scene === undefined) {
@@ -143,13 +145,19 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             marginBottom: "40px",
           }}
         >
-          <CiLight size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
+          <CiLight
+            size={36}
+            color={`${isDark ? COLOR.LIME : COLOR.CHARCOAL}`}
+          />
           <Switch
             checked={isDark}
             onClick={switchTheme}
             className="border-lime"
           />
-          <MdDarkMode size={36} color={`${isDark ? "#f7f7f7" : "#202020"}`} />
+          <MdDarkMode
+            size={36}
+            color={`${isDark ? COLOR.LIME : COLOR.CHARCOAL}`}
+          />
         </div>
 
         <Clear

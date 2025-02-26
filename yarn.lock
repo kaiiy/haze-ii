@@ -452,9 +452,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kaiiy/mist@workspace:.":
+"@kaiiy/haze-ii@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@kaiiy/mist@workspace:."
+  resolution: "@kaiiy/haze-ii@workspace:."
   dependencies:
     "@radix-ui/react-checkbox": "npm:^1.1.4"
     "@radix-ui/react-label": "npm:^2.1.2"

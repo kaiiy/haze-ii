@@ -1,5 +1,32 @@
-import { inputCharToSymbol } from "@/components/arrow";
+import React from "react";
+import { COLOR } from "@/lib/const";
 import { InputChar } from "@/lib/input";
+
+import {
+    FaArrowDown,
+    FaArrowLeft,
+    FaArrowRight,
+    FaArrowUp,
+} from "react-icons/fa";
+
+const inputCharToSymbol = (
+    char: InputChar,
+    baseSize: number,
+    isDark: boolean,
+): React.JSX.Element => {
+    const size = baseSize * 1.2;
+    const color = isDark ? COLOR.LIME : COLOR.CHARCOAL;
+    if (char === "ArrowRight") {
+        return <FaArrowRight size={size} color={color} />;
+    } else if (char === "ArrowLeft") {
+        return <FaArrowLeft size={size} color={color} />;
+    } else if (char === "ArrowUp") {
+        return <FaArrowUp size={size} color={color} />;
+    } else if (char === "ArrowDown") {
+        return <FaArrowDown size={size} color={color} />;
+    }
+    throw new Error("Invalid input char");
+};
 
 interface ArrowsProps {
     baseSize: number;

@@ -1,7 +1,7 @@
 import { InputChar } from "@/lib/input";
 import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
-import BaseScene from "@/components/BaseScene";
+import SceneBase from "@/components/SceneBase";
 import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 7";
@@ -63,7 +63,7 @@ interface SceneProps {
 
 const Scene = ({ baseSize, containerWidth }: SceneProps) => {
   return (
-    <BaseScene
+    <SceneBase
       baseSize={baseSize}
       containerWidth={containerWidth}
       sceneName={SCENE_NAME}

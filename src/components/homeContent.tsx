@@ -16,7 +16,7 @@ const Title = ({ isDark, allClear }: TitleProps) => (
     }}
   >
     <div className="text-8xl">
-      MIST
+      HAZE II
     </div>
     {allClear
       ? (

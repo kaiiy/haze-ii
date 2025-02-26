@@ -1,6 +1,7 @@
 import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { RiTwitterXFill } from "react-icons/ri";
+import { COLOR } from "@/lib/const";
 
 const BLINK_STYLE = {
   animation: "blink 3s infinite",
@@ -26,7 +27,7 @@ const Clear = (
     sharedText: string;
   },
 ) => {
-  const iconColor = isDark ? "#f7f7f7" : "#101010";
+  const iconColor = isDark ? COLOR.LIME : COLOR.CHARCOAL;
   return (
     <div>
       <div
@@ -91,7 +92,7 @@ const Clear = (
           </Link>
           <a
             href={`https://x.com/intent/post?url=https%3A%2F%2Fmist.kaiix.dev%2F&text=${
-              encodeURI("謎解きゲーム「MIST」\n\n" + sharedText + "\n")
+              encodeURI("謎解きゲーム『HAZE II』\n\n" + sharedText + "\n")
             }`}
             target="_blank"
             rel="noreferrer"

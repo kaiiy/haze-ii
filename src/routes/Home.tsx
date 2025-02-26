@@ -86,8 +86,8 @@ const Home = ({ containerWidth }: HomeProps) => {
         text="HOME"
         shareText={`${
           !isAllClear
-            ? "謎解きゲーム「MIST」\n"
-            : "謎解きゲーム「MIST」\n\n ALL CLEAR!\n"
+            ? "謎解きゲーム『HAZE II』\n"
+            : "謎解きゲーム『HAZE II』\n\n ALL CLEAR!\n"
         }`}
       />
       <NavTooltip />

@@ -22,7 +22,7 @@ import Clear from "@/components/Clear";
 import { SceneId, vStorage } from "@/lib/storage";
 import Arrows from "@/components/SceneArrows";
 
-interface BaseSceneProps {
+interface SceneBaseProps {
   baseSize: number;
   containerWidth: number;
   sceneName: string;
@@ -37,7 +37,7 @@ interface BaseSceneProps {
   sharedText: string;
 }
 
-const BaseScene = (
+const SceneBase = (
   {
     baseSize,
     containerWidth,
@@ -51,7 +51,7 @@ const BaseScene = (
     isDark,
     id,
     sharedText,
-  }: BaseSceneProps,
+  }: SceneBaseProps,
 ) => {
   if (answerChecker === undefined && answer !== undefined) {
     validateAnswerLength(answer, playerHistory);
@@ -84,6 +84,37 @@ const BaseScene = (
 
   const [isClear, setIsClear] = useState(false);
 
+  const handleViewMode = (e: KeyboardEvent) => {
+    if (e.key === "ArrowRight") {
+      setHistoryIndex(
+        Math.min(historyIndex + 1, playerHistory.length - 1),
+      );
+    } else if (e.key === "ArrowLeft") {
+      setHistoryIndex(Math.max(historyIndex - 1, 0));
+    }
+  };
+
+  const handleInputMode = (e: KeyboardEvent) => {
+    if (isInputChar(e.key)) {
+      setInputChars([...inputChars, e.key]);
+    } else if (e.key === "Backspace" || e.key === "Delete") {
+      if (inputChars.length > 0) {
+        setInputChars(inputChars.slice(0, inputChars.length - 1));
+      }
+    } // 正誤判定
+    else if (e.key === "Enter") {
+      const isCorrect = isCorrectAnswer(
+        inputChars,
+        answer,
+        answerChecker,
+      );
+      if (isCorrect) {
+        setIsClear(true);
+        vStorage.overwriteChecked(id, true);
+      }
+    }
+  };
+
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Backspace") {
       e.preventDefault();
@@ -91,43 +122,20 @@ const BaseScene = (
       navigateWithDelay(navigate, "/");
     }
 
-    // クリア時
     if (isClear) {
+      // クリア時
       if (e.key === " ") {
         navigateWithDelay(navigate, "/");
       }
     } else {
       // 未クリア時
       if (isBoardFocused) {
-        // View mode
-        if (e.key === "ArrowRight") {
-          setHistoryIndex(
-            Math.min(historyIndex + 1, playerHistory.length - 1),
-          );
-        } else if (e.key === "ArrowLeft") {
-          setHistoryIndex(Math.max(historyIndex - 1, 0));
-        }
+        handleViewMode(e);
       } else {
-        // Input mode
-        if (isInputChar(e.key)) {
-          setInputChars([...inputChars, e.key]);
-        } else if (e.key === "Backspace" || e.key === "Delete") {
-          if (inputChars.length > 0) {
-            setInputChars(inputChars.slice(0, inputChars.length - 1));
-          }
-        } // 正誤判定
-        else if (e.key === "Enter") {
-          const isCorrect = isCorrectAnswer(
-            inputChars,
-            answer,
-            answerChecker,
-          );
-          if (isCorrect) {
-            setIsClear(true);
-            vStorage.overwriteChecked(id, true);
-          }
-        }
+        handleInputMode(e);
       }
+
+      // モードの切り替え
       if (e.key === " ") {
         setIsBoardFocused(!isBoardFocused);
       }
@@ -228,4 +236,4 @@ const BaseScene = (
   );
 };
 
-export default BaseScene;
+export default SceneBase;

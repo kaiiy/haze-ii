@@ -1,4 +1,5 @@
 import { Tooltip } from "react-tooltip";
+import { COLOR } from "@/lib/const";
 
 const NavTooltip = () => (
   <Tooltip
@@ -6,8 +7,8 @@ const NavTooltip = () => (
     id="my-tooltip"
     style={{
       zIndex: "calc(infinity)",
-      backgroundColor: "#202020",
-      color: "#f7f7f7",
+      backgroundColor: COLOR.CHARCOAL,
+      color: COLOR.LIME,
     }}
   />
 );

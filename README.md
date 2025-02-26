@@ -1,8 +1,8 @@
-# MIST
+# HAZE II
 
 [![Deploy to GitHub Pages](https://github.com/kaiiy/mist/actions/workflows/deploy.yml/badge.svg)](https://github.com/kaiiy/mist/actions/workflows/deploy.yml)
 
-謎解きゲーム「MIST」
+謎解きゲーム「HAZE II」
 
 [![](./docs/header.png)](https://mist.kaiix.dev)
 
