@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import keyImg from "@/assets/key.webp";
 import { vStorage } from "@/lib/storage";
 
-const Info = () => {
+const InfoDialog = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const storage = vStorage.load();
@@ -38,7 +38,7 @@ const Info = () => {
             <img src={keyImg} alt="preload" style={{ display: "none" }} />
 
             {isOpen && (
-                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-lg z-50 px-8 py-16 md:px-24 md:py-24">
+                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-lg z-50 px-8 py-24 sm:px-24 sm:px-48 lg:px-48 lg:py-48">
                     <div>
                         <button
                             onClick={closeDialog}
@@ -56,4 +56,4 @@ const Info = () => {
     );
 };
 
-export default Info;
+export default InfoDialog;
