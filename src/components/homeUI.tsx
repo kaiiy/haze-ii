@@ -76,7 +76,7 @@ const SceneBox = ({ scene, isDark, clear = false }: SceneBoxProps) => {
           ? "border-charcoal bg-white hover:text-lime hover:bg-charcoal text-charcoal"
           : "border-lime bg-[#070707] hover:text-charcoal hover:bg-lime text-lime"
       } text-center text-2xl flex items-center justify-center cursor-pointer transition duration-300 ${
-        clear ? "border-2" : ""
+        clear ? "border-[3px]" : ""
       }`}
     >
       {scene}
@@ -84,9 +84,14 @@ const SceneBox = ({ scene, isDark, clear = false }: SceneBoxProps) => {
   );
 };
 
-const isClear = (scene: SceneId, states: SceneStates) => {
+const isClear = (
+  scene: SceneId,
+  states: SceneStates,
+  isDark: boolean = false,
+) => {
+  const sceneId = !isDark ? scene : scene + "d";
   for (const state of states) {
-    if (scene === state.id) {
+    if (sceneId === state.id) {
       return state.checked;
     }
   }
@@ -111,7 +116,7 @@ const Scenes = ({ scenes, isDark, states }: ScenesProps) => {
             <SceneBox
               scene={scene}
               isDark={isDark}
-              clear={isClear(scene, states)}
+              clear={isClear(scene, states, isDark)}
             />
           </Link>
         ))}
@@ -125,7 +130,7 @@ const Scenes = ({ scenes, isDark, states }: ScenesProps) => {
             <SceneBox
               scene={scene}
               isDark={isDark}
-              clear={isClear(scene, states)}
+              clear={isClear(scene, states, isDark)}
             />
           </Link>
         ))}

@@ -26,9 +26,9 @@ const PLAYER_HISTORY: OriginalVector[] = [
   { x: 1, y: 1 },
   { x: 1, y: 1 },
   { x: 1, y: 1 },
-  //
+  // 左に押された
   { x: 1, y: 4 },
-  //
+  // 左に押された
   { x: 1, y: 7 },
   { x: 1, y: 7 },
   { x: 1, y: 7 },

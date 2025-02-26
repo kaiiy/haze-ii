@@ -26,6 +26,7 @@ const Clear = (
     sharedText: string;
   },
 ) => {
+  const iconColor = isDark ? "#f7f7f7" : "#101010";
   return (
     <div>
       <div
@@ -82,7 +83,7 @@ const Clear = (
             <MdHome
               tabIndex={-1}
               className="w-9 h-9"
-              color="#202020"
+              color={iconColor}
               data-tooltip-id="my-tooltip"
               data-tooltip-content="Home"
               data-tooltip-place="bottom"
@@ -100,7 +101,7 @@ const Clear = (
             data-tooltip-content="Share on X"
             data-tooltip-place="bottom"
           >
-            <RiTwitterXFill className="w-7 h-7" color="#202020" />
+            <RiTwitterXFill className="w-7 h-7" color={iconColor} />
           </a>
         </div>
       </div>

@@ -1,10 +1,15 @@
 import { CiCircleInfo } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import keyImg from "@/assets/key.webp";
+import { vStorage } from "@/lib/storage";
 
 const Info = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    const storage = vStorage.load();
+    const isDark = storage.theme === "dark";
+    const iconColor = isDark ? "white" : "black";
 
     const closeDialog = () => {
         setIsOpen(false);
@@ -14,17 +19,26 @@ const Info = () => {
         setIsOpen(!isOpen);
     };
 
+    useEffect(() => {
+        const img = new Image();
+        img.src = keyImg;
+    }, []);
+
     return (
         <div>
             <button
                 onClick={toggleDialog}
-                className="fixed right-4 top-4 hover:bg-white rounded-full p-1"
+                className={`fixed right-4 top-4 rounded-full p-1 ${
+                    isDark ? "hover:bg-black" : "hover:bg-white"
+                }`}
             >
-                <CiCircleInfo className="w-10 h-10" />
+                <CiCircleInfo className="w-10 h-10" color={iconColor} />
             </button>
 
+            <img src={keyImg} alt="preload" style={{ display: "none" }} />
+
             {isOpen && (
-                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-lg z-50 px-8 py-16 md:px-16 md:py-24">
+                <div className="bg-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 fixed shadow-lg rounded-lg z-50 px-8 py-16 md:px-24 md:py-24">
                     <div>
                         <button
                             onClick={closeDialog}
@@ -33,8 +47,8 @@ const Info = () => {
                             <IoMdClose className="w-10 h-10" />
                         </button>
                     </div>
-                    <div className="flex justify-center items-center w-[90vw] sm:w-[80vw] md:w-[70vw] lg:w-[60vw] xl:w-[50vw]">
-                        <img className="" src={keyImg} />
+                    <div className="flex justify-center items-center w-[80vw] sm:w-[70vw] md:w-[60vw] lg:w-[50vw] xl:w-[40vw]">
+                        <img src={keyImg} loading="eager" />
                     </div>
                 </div>
             )}

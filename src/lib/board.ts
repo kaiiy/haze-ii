@@ -38,7 +38,7 @@ const cellTypeToSymbol = (type: CellType): string => {
     return "S";
   } else if (type === "G" || type === "RG") {
     return "G";
-  } else if (type === "B") {
+  } else if (type === "B" || type === "M") {
     return "";
   } else {
     return type.toString();
@@ -248,18 +248,20 @@ const getBorderColor = (
     return darkMode ? COLOR.LIME : COLOR.CHARCOAL;
   }
 
+  // 黒マスの場合はisDarkによらず黒
   return COLOR.CHARCOAL;
 };
 
 const getAllBorderColorCss = (
   cell: Cell,
   board: Board,
+  isDark: boolean = false,
 ) => {
   return ({
-    borderLeftColor: getBorderColor(cell, board, "Left"),
-    borderRightColor: getBorderColor(cell, board, "Right"),
-    borderTopColor: getBorderColor(cell, board, "Up"),
-    borderBottomColor: getBorderColor(cell, board, "Down"),
+    borderLeftColor: getBorderColor(cell, board, "Left", isDark),
+    borderRightColor: getBorderColor(cell, board, "Right", isDark),
+    borderTopColor: getBorderColor(cell, board, "Up", isDark),
+    borderBottomColor: getBorderColor(cell, board, "Down", isDark),
   });
 };
 

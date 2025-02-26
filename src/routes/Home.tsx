@@ -102,7 +102,7 @@ const Home = ({ containerWidth }: HomeProps) => {
           }}
         >
           <Info title="制作" content="kaiiy" isDark={isDark} />
-          <Info title="想定プレイ時間" content="3時間" isDark={isDark} />
+          <Info title="想定プレイ時間" content="2時間" isDark={isDark} />
           <Info title="注意事項" content={<NoticeContent />} isDark={isDark} />
           <Info
             title="前提条件"

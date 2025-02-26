@@ -75,7 +75,7 @@ const BaseScene = (
   const borderStyle = {
     ...getAllBorderWidthCss(cellSize, cell, board, isDark),
     ...getAllBorderStyleCss(cell, board),
-    ...getAllBorderColorCss(cell, board),
+    ...getAllBorderColorCss(cell, board, isDark),
   };
 
   const [isBoardFocused, setIsBoardFocused] = useState(true);
