@@ -71,11 +71,14 @@ const PreconditionContent = () => (
     <div className="mb-3">
       <BudouX text="黒マスを通り抜けることはできない。" />
     </div>
+    <div className="mb-3">
+      <BudouX text="移動可能なマスは上下左右に隣接するマスのみであり、方向を維持したまま移動する。" />
+    </div>
     <div>
-      <BudouX text="移動可能なマスは上下左右に隣接するマスのみである。" />
+      <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
     </div>
     <div className="mb-3">
-      <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
+      <BudouX text="盤面は回転しない。" />
     </div>
   </div>
 );
