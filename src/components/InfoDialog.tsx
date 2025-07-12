@@ -43,19 +43,19 @@ const InfoDialog = () => {
                     <div>
                         <button
                             onClick={closeDialog}
-                            className="absolute right-4 top-4"
+                            className="absolute right-8 top-8"
                         >
                             <IoMdClose className="w-10 h-10" />
                         </button>
                     </div>
-                    <div className="flex items-center pl-4 pt-4">
+                    <div className="flex items-center pl-8 pt-8">
                         <MdOutlineKeyboardDoubleArrowRight
                             size={45}
                             className="inline-block align-middle"
                         />
                         <span className="text-3xl ml-2">操作ガイド</span>
                     </div>
-                    <div className="">
+                    <div>
                         <div className="flex justify-center items-center w-full h-full px-8 py-20 sm:px-16 sm:py-20 md:px-16 md:py-24 xl:px-24 xl:py-36">
                             <img src={keyImg} loading="eager" />
                         </div>

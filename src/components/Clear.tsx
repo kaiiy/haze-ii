@@ -35,6 +35,7 @@ const Clear = (
         style={{
           opacity: showClear ? 1 : 0,
           transition: "opacity 1s ease-in-out",
+          pointerEvents: showClear ? "auto" : "none",
         }}
       >
         <div
@@ -91,9 +92,13 @@ const Clear = (
             />
           </Link>
           <a
-            href={`https://x.com/intent/post?url=https%3A%2F%haze-ii.kaiix.dev%2F&text=${
-              encodeURI("謎解きゲーム『HAZE II』\n\n" + sharedText + "\n")
-            }`}
+            href={`https://x.com/intent/post?url=${
+              encodeURIComponent("https://haze-ii.kaiix.dev/")
+            }&text=${
+              encodeURIComponent(
+                "謎解きゲーム『HAZE II』\n\n" + sharedText + "\n",
+              )
+            }&hashtags=${encodeURIComponent("ヘイズHAZE2")}`}
             target="_blank"
             rel="noreferrer"
             tabIndex={-1}

@@ -25,8 +25,10 @@ const Nav = ({ text, shareText }: NavProps) => {
             />
           </Link>
           <a
-            href={`https://x.com/intent/post?url=https%3A%2F%haze-ii.kaiix.dev%2F&text=${
-              encodeURI(twitterText)
+            href={`https://x.com/intent/post?url=${
+              encodeURIComponent("https://haze-ii.kaiix.dev/")
+            }&text=${encodeURIComponent(twitterText)}&hashtags=${
+              encodeURIComponent("ヘイズHAZE2")
             }`}
             target="_blank"
             rel="noreferrer"
