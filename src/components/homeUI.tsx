@@ -89,7 +89,7 @@ const isClear = (
   states: SceneStates,
   isDark: boolean = false,
 ) => {
-  const sceneId = !isDark ? scene : scene + "d";
+  const sceneId = !isDark ? scene : scene === "B" ? "B" : scene + "d";
   for (const state of states) {
     if (sceneId === state.id) {
       return state.checked;
@@ -108,18 +108,20 @@ const Scenes = ({ scenes, isDark, states }: ScenesProps) => {
   return (
     <div>
       <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
-        {scenes.slice(0, 4).map((scene, index) => (
-          <Link
-            to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
-            key={index}
-          >
-            <SceneBox
-              scene={scene}
-              isDark={isDark}
-              clear={isClear(scene, states, isDark)}
-            />
-          </Link>
-        ))}
+        {scenes.slice(0, 4).map((scene, index) => {
+          return (
+            <Link
+              to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
+              key={index}
+            >
+              <SceneBox
+                scene={scene}
+                isDark={isDark}
+                clear={isClear(scene, states, isDark)}
+              />
+            </Link>
+          );
+        })}
       </div>
       <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-12">
         {scenes.slice(4).map((scene, index) => (

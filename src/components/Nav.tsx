@@ -2,14 +2,14 @@ import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
-// import { GiCoffeeBeans } from "react-icons/gi";
 
 interface NavProps {
   text: string;
+  showClickMe?: boolean;
   shareText?: string;
 }
 
-const Nav = ({ text, shareText }: NavProps) => {
+const Nav = ({ text, showClickMe, shareText }: NavProps) => {
   const twitterText = shareText || "謎解きゲーム『HAZE II』";
   return (
     <div className="fixed left-0 top-1/2 transform -translate-y-1/2 bg-white backdrop-blur-md shadow-sm rounded-r-lg p-4 h-1/2 max-h-screen border-r overflow-hidden font-notoSans z-50 hidden md:block lg:block">
@@ -25,6 +25,7 @@ const Nav = ({ text, shareText }: NavProps) => {
             />
           </Link>
           <a
+            id="share-on-x"
             href={`https://x.com/intent/post?url=${
               encodeURIComponent("https://haze-ii.kaiix.dev/")
             }&text=${encodeURIComponent(twitterText)}&hashtags=${
@@ -34,12 +35,13 @@ const Nav = ({ text, shareText }: NavProps) => {
             rel="noreferrer"
             tabIndex={-1}
             className="flex items-center justify-center"
-            data-tooltip-id="my-tooltip"
-            data-tooltip-content="Share on X"
+            data-tooltip-id={showClickMe ? "my-tooltip-clear" : "my-tooltip"}
+            data-tooltip-content={showClickMe ? "Click Me" : "Share on X"}
             data-tooltip-place="right"
           >
             <RiTwitterXFill className="w-7 h-7" />
           </a>
+
           <a
             href="https://github.com/kaiiy/haze-ii"
             target="_blank"

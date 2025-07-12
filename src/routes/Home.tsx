@@ -12,6 +12,7 @@ import {
 } from "@/components/homeContent";
 import { Scenes, SwitchPage } from "@/components/homeUI";
 import NavTooltip from "@/components/NavTooltip";
+import NavTooltipClear from "@/components/NavTooltipClear";
 import { SceneId, vStorage } from "@/lib/storage";
 
 const PAGE0_SCENES: SceneId[] = [
@@ -84,6 +85,7 @@ const Home = ({ containerWidth }: HomeProps) => {
     <Container width={containerWidth} isDark={isDark}>
       <Nav
         text="HOME"
+        showClickMe={isAllClear}
         shareText={`${
           !isAllClear
             ? "謎解きゲーム『HAZE II』\n"
@@ -91,6 +93,7 @@ const Home = ({ containerWidth }: HomeProps) => {
         }`}
       />
       <NavTooltip />
+      <NavTooltipClear show={isAllClear} />
 
       <div className="flex flex-col">
         <Title isDark={isDark} allClear={isAllClear} />

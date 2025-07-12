@@ -4,6 +4,8 @@ import NavTooltip from "@/components/NavTooltip";
 import { Switch } from "@/components/ui/switch";
 import Clear from "@/components/Clear";
 import { calcFontSizeFromBaseSize } from "@/lib/style";
+import { navigateWithDelay } from "@/lib/navigate";
+import { useNavigate } from "react-router-dom";
 
 import { CiLight } from "react-icons/ci";
 import { MdDarkMode } from "react-icons/md";
@@ -66,6 +68,23 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   }
 
   const fontSize = calcFontSizeFromBaseSize(baseSize);
+
+  const navigate = useNavigate();
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (showClear) {
+      if (e.key === " ") {
+        navigateWithDelay(navigate, "/");
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showClear]);
 
   const switchTheme = () => {
     vStorage.overwrite({
