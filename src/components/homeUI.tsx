@@ -105,26 +105,12 @@ interface ScenesProps {
 }
 
 const Scenes = ({ scenes, isDark, states }: ScenesProps) => {
+  const gridColsClass = scenes.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-4";
+
   return (
-    <div>
-      <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-3">
-        {scenes.slice(0, 4).map((scene, index) => {
-          return (
-            <Link
-              to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
-              key={index}
-            >
-              <SceneBox
-                scene={scene}
-                isDark={isDark}
-                clear={isClear(scene, states, isDark)}
-              />
-            </Link>
-          );
-        })}
-      </div>
-      <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-12">
-        {scenes.slice(4).map((scene, index) => (
+    <div className="flex justify-center">
+      <div className={`inline-grid ${gridColsClass} gap-3 font-notoSerif mb-12`}>
+        {scenes.map((scene, index) => (
           <Link
             to={`/${!isDark ? scene : scene === "B" ? "B" : scene + "d"}`}
             key={index}
