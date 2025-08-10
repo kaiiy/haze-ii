@@ -111,6 +111,7 @@ const SceneBase = (
       if (isCorrect) {
         setIsClear(true);
         vStorage.overwriteChecked(id, true);
+        vStorage.updateCurrentSceneToNext(id);
       }
     }
   };
@@ -171,9 +172,8 @@ const SceneBase = (
         <div className="w-full h-full">
           <div className="flex justify-center relative w-full">
             <span
-              className={`absolute font-sawarabi ${
-                !isDark ? "text-charcoal" : "text-lime"
-              } ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"}`}
+              className={`absolute font-sawarabi ${!isDark ? "text-charcoal" : "text-lime"
+                } ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"}`}
               style={{
                 lineHeight: String(fontSize * 0.2) + "px",
                 height: String(fontSize * 0.2) + "px",
@@ -188,13 +188,10 @@ const SceneBase = (
             </span>
 
             <div
-              className={`${
-                !isDark && "bg-white"
-              } text-charcoal flex items-center justify-center ${
-                isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
-              } ${
-                cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""
-              }`}
+              className={`${!isDark && "bg-white"
+                } text-charcoal flex items-center justify-center ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
+                } ${cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""
+                }`}
               style={{
                 width: String(cellSize) + "px",
                 height: String(cellSize) + "px",
@@ -203,9 +200,8 @@ const SceneBase = (
               }}
             >
               <span
-                className={`${
-                  cell.type === "B" ? "bg-black" : "bg-white"
-                } font-notoSans`}
+                className={`${cell.type === "B" ? "bg-black" : "bg-white"
+                  } font-notoSans`}
                 style={{
                   marginTop: String(-fontSize / 6) + "px",
                 }}

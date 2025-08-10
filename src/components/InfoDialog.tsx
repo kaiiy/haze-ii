@@ -2,14 +2,12 @@ import { CiCircleInfo } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import keyImg from "@/assets/key.webp";
-import { vStorage } from "@/lib/storage";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 
 const InfoDialog = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const storage = vStorage.load();
-    const isDark = storage.theme === "dark";
+    const isDark = false
     const iconColor = isDark ? "white" : "black";
 
     const closeDialog = () => {
@@ -29,9 +27,8 @@ const InfoDialog = () => {
         <div>
             <button
                 onClick={toggleDialog}
-                className={`fixed right-4 top-4 rounded-full p-1 ${
-                    isDark ? "hover:bg-black" : "hover:bg-white"
-                }`}
+                className={`fixed right-4 top-4 rounded-full p-1 ${isDark ? "hover:bg-black" : "hover:bg-white"
+                    }`}
             >
                 <CiCircleInfo className="w-10 h-10" color={iconColor} />
             </button>

@@ -115,7 +115,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           s6List.length === S6_CORRECT.length
         ) {
           setIsClear(true);
-          vStorage.overwriteChecked("A", true);
+          vStorage.overwriteChecked("L", true);
         }
       }
     }
@@ -157,7 +157,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           s6List.length === S6_CORRECT.length - 1
         ) {
           setIsClear(true);
-          vStorage.overwriteChecked("A", true);
+          vStorage.overwriteChecked("L", true);
         }
       }
     }
@@ -189,9 +189,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
       }}
     >
       <NavTooltip />
-      <Nav text="CHECKPOINT 1" />
+      <Nav text="LAST" />
 
-      <ContentInfo title="問題" content="S はいくつ？" />
+      <ContentInfo title="最終問題" content="S はいくつ？" />
 
       <div className="flex gap-6">
         <div className="w-1/2">
@@ -311,7 +311,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
       <Clear
         showClear={showClear}
         fontSize={fontSize}
-        sharedText={"Checkpoint 1 Clear!"}
+        sharedText={"All Clear!"}
       />
     </ContainerBase>
   );

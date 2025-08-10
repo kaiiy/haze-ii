@@ -1,62 +1,35 @@
 import * as v from "valibot";
+import { SceneId, SCENE_IDS } from "@/lib/scene";
 
-// 各 schema 定義
-const themeSchema = v.picklist(["light", "dark"]);
-// Homeにおける表示ページ
-const pageSchema = v.picklist([0, 1, 2]);
-
-const SCENE_IDS = [
-    "0",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "A",
-    "7",
-    "7d",
-    "8",
-    "8d",
-    "9",
-    "9d",
-    "B",
-    "10",
-] as const;
-type SceneId = typeof SCENE_IDS[number];
-// クリアしたシーン
 const sceneSchema = v.object({
     id: v.picklist(SCENE_IDS),
     checked: v.boolean(),
 });
+
 // クリアしたシーンの配列
 const sceneStatesSchema = v.array(sceneSchema);
 type SceneStates = v.InferInput<typeof sceneStatesSchema>;
 
 const storageSchema = v.object({
-    theme: themeSchema,
-    page: pageSchema,
+    currentScene: v.picklist(SCENE_IDS),
     sceneStates: sceneStatesSchema,
 });
 type Storage = v.InferInput<typeof storageSchema>;
 
 const DEFAULT_STORAGE: Storage = {
-    theme: "light",
-    page: 0,
+    currentScene: "0",
     sceneStates: SCENE_IDS.map((id) => ({ id, checked: false })),
 } as const;
 
 // local storage key
 const KEY = {
-    THEME: "theme",
-    PAGE: "page",
+    CURRENT_SCENE: "current_scene",
     SCENE_STATES: "scene_states",
 } as const;
 
 // vStorage (Validated Storage) API
 const save = (storage: Storage): void => {
-    localStorage.setItem(KEY.THEME, storage.theme);
-    localStorage.setItem(KEY.PAGE, storage.page.toString());
+    localStorage.setItem(KEY.CURRENT_SCENE, String(storage.currentScene));
     localStorage.setItem(KEY.SCENE_STATES, JSON.stringify(storage.sceneStates));
 };
 
@@ -66,19 +39,17 @@ const overwrite = (partial: Partial<Storage>): void => {
 };
 
 const load = (): Storage => {
-    const rawTheme = localStorage.getItem(KEY.THEME);
-    const rawPage = localStorage.getItem(KEY.PAGE);
+    const rawCurrentScene = localStorage.getItem(KEY.CURRENT_SCENE);
     const rawSceneStates = localStorage.getItem(KEY.SCENE_STATES);
 
     // If the storage is not initialized, save the default storage and return it
-    if (rawTheme === null || rawPage === null || rawSceneStates === null) {
+    if (rawCurrentScene === null || rawSceneStates === null) {
         save(DEFAULT_STORAGE);
         return DEFAULT_STORAGE;
     }
 
     const storageResult = v.safeParse(storageSchema, {
-        theme: rawTheme,
-        page: Number(rawPage),
+        currentScene: rawCurrentScene,
         sceneStates: JSON.parse(rawSceneStates),
     });
 
@@ -116,11 +87,23 @@ const overwriteChecked = (id: SceneId, checked: boolean): void => {
     overwrite({ sceneStates });
 };
 
+const updateCurrentSceneToNext = (currentId: SceneId): void => {
+    const index = SCENE_IDS.indexOf(currentId);
+    if (index === -1) {
+        throw new Error(`The scene ID ${currentId} is not found in SCENE_IDS`);
+    }
+    if (index === SCENE_IDS.length - 1) {
+        return;
+    }
+    overwrite({ currentScene: SCENE_IDS[index + 1] });
+};
+
 const vStorage = {
     load,
     save,
     overwrite,
     overwriteChecked,
+    updateCurrentSceneToNext
 };
 
 export type { SceneId, SceneStates, Storage as VStorage };
