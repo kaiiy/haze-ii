@@ -44,8 +44,9 @@ const SwitchPage = ({
         <MdOutlineChevronLeft size={24} />
       </Button>
       <span
-        className={`${isDark ? "text-white" : "text-black"
-          } text-[24px] leading-[36px] mt-[-4px] pt-0 pb-0 w-[24px] text-center justify-center font-medium`}
+        className={`${
+          isDark ? "text-white" : "text-black"
+        } text-[24px] leading-[36px] mt-[-4px] pt-0 pb-0 w-[24px] text-center justify-center font-medium`}
       >
         {"|".repeat(currentPage + 1)}
       </span>
@@ -70,11 +71,13 @@ interface SceneBoxProps {
 const SceneBox = ({ scene, isDark, clear = false }: SceneBoxProps) => {
   return (
     <div
-      className={`w-32 h-32 border ${!isDark
-        ? "border-charcoal bg-white hover:text-lime hover:bg-charcoal text-charcoal"
-        : "border-lime bg-[#070707] hover:text-charcoal hover:bg-lime text-lime"
-        } text-center text-2xl flex items-center justify-center cursor-pointer transition duration-300 ${clear ? "border-[3px]" : ""
-        }`}
+      className={`w-32 h-32 border ${
+        !isDark
+          ? "border-charcoal bg-white hover:text-lime hover:bg-charcoal text-charcoal"
+          : "border-lime bg-[#070707] hover:text-charcoal hover:bg-lime text-lime"
+      } text-center text-2xl flex items-center justify-center cursor-pointer transition duration-300 ${
+        clear ? "border-[3px]" : ""
+      }`}
     >
       {scene}
     </div>
@@ -99,13 +102,23 @@ interface ScenesProps {
   states: SceneStates;
 }
 
-// TODO: 中央寄せ
 const Scenes = ({ scenes, isDark, states }: ScenesProps) => {
-  const gridColsClass = scenes.length === 1 ? "grid-cols-1" : "grid-cols-2 sm:grid-cols-4";
+  const getGridColsClass = (count: number): string => {
+    const map: Record<number, string> = {
+      1: "grid-cols-1",
+      2: "grid-cols-2",
+      3: "grid-cols-2 sm:grid-cols-3",
+    };
+    return map[count] ?? "grid-cols-2 sm:grid-cols-4";
+  };
+
+  const gridColsClass = getGridColsClass(scenes.length);
 
   return (
     <div className="flex justify-center">
-      <div className={`inline-grid ${gridColsClass} gap-3 font-notoSerif mb-12`}>
+      <div
+        className={`inline-grid ${gridColsClass} gap-3 font-notoSerif mb-12`}
+      >
         {scenes.map((scene, index) => (
           <Link
             to={`/${scene}`}

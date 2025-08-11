@@ -21,6 +21,16 @@ import { navigateWithDelay } from "@/lib/navigate";
 import Clear from "@/components/Clear";
 import { SceneId, vStorage } from "@/lib/storage";
 import Arrows from "@/components/SceneArrows";
+import { Button } from "@/components/ui/button";
+import {
+  FaArrowDown,
+  FaArrowLeft,
+  FaArrowRight,
+  FaArrowUp,
+  FaBackspace,
+} from "react-icons/fa";
+import { FaArrowTurnDown } from "react-icons/fa6";
+import { TbSpace } from "react-icons/tb";
 
 interface SceneBaseProps {
   baseSize: number;
@@ -172,8 +182,9 @@ const SceneBase = (
         <div className="w-full h-full">
           <div className="flex justify-center relative w-full">
             <span
-              className={`absolute font-sawarabi ${!isDark ? "text-charcoal" : "text-lime"
-                } ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"}`}
+              className={`absolute font-sawarabi ${
+                !isDark ? "text-charcoal" : "text-lime"
+              } ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"}`}
               style={{
                 lineHeight: String(fontSize * 0.2) + "px",
                 height: String(fontSize * 0.2) + "px",
@@ -188,10 +199,13 @@ const SceneBase = (
             </span>
 
             <div
-              className={`${!isDark && "bg-white"
-                } text-charcoal flex items-center justify-center ${isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
-                } ${cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""
-                }`}
+              className={`${
+                !isDark && "bg-white"
+              } text-charcoal flex items-center justify-center ${
+                isBoardFocused && !showClear ? "opacity-100" : "opacity-25"
+              } ${
+                cell.type === "RS" || cell.type === "RG" ? "rotate-180" : ""
+              }`}
               style={{
                 width: String(cellSize) + "px",
                 height: String(cellSize) + "px",
@@ -200,8 +214,9 @@ const SceneBase = (
               }}
             >
               <span
-                className={`${cell.type === "B" ? "bg-black" : "bg-white"
-                  } font-notoSans`}
+                className={`${
+                  cell.type === "B" ? "bg-black" : "bg-white"
+                } font-notoSans`}
                 style={{
                   marginTop: String(-fontSize / 6) + "px",
                 }}
@@ -219,6 +234,31 @@ const SceneBase = (
             isBoardFocused={isBoardFocused}
             fontSize={fontSize}
           />
+
+          {/*  TODO: 入力処理 */}
+          <div className="flex justify-center gap-2">
+            <Button variant="default" size="icon" className="size-8">
+              <FaArrowDown />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <FaArrowUp />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <FaArrowLeft />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <FaArrowRight />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <FaArrowTurnDown className="transform rotate-90" />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <FaBackspace />
+            </Button>
+            <Button variant="default" size="icon" className="size-8">
+              <TbSpace />
+            </Button>
+          </div>
 
           <Clear
             showClear={showClear}
