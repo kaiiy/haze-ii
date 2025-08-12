@@ -32,6 +32,26 @@ import {
 import { FaArrowTurnDown } from "react-icons/fa6";
 import { TbSpace } from "react-icons/tb";
 
+const useIsMdOrBelow = () => {
+  const [isMdOrBelow, setIsMdOrBelow] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 768px)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const handler = (e: MediaQueryListEvent) => setIsMdOrBelow(e.matches);
+    // modern browsers
+    if (mq.addEventListener) {
+      mq.addEventListener("change", handler);
+      return () => mq.removeEventListener("change", handler);
+    }
+  }, []);
+
+  return isMdOrBelow;
+};
+
 interface SceneBaseProps {
   baseSize: number;
   containerWidth: number;
@@ -79,7 +99,8 @@ const SceneBase = (
   }
   const cell = cellResult.value;
 
-  const cellSize = baseSize * 6;
+  const isMdOrBelow = useIsMdOrBelow();
+  const cellSize = baseSize * 6 * (isMdOrBelow ? 2 : 1);
   const fontSize = cellSize / 2;
 
   const borderStyle = {
@@ -172,6 +193,26 @@ const SceneBase = (
     }
   }, [isClear]);
 
+  const simulateKey = (key: string) => {
+    const syntheticEvent = {
+      key,
+      preventDefault: () => {},
+    } as unknown as KeyboardEvent;
+    handleKeyDown(syntheticEvent);
+  };
+
+  const preventKeyboardActivation: React.KeyboardEventHandler = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+    }
+  };
+
+  const btnProps = {
+    tabIndex: -1,
+    onMouseDown: (e: React.MouseEvent) => e.preventDefault(),
+    onKeyDown: preventKeyboardActivation,
+  };
+
   return (
     (
       <SceneContainer
@@ -236,28 +277,74 @@ const SceneBase = (
           />
 
           {/*  TODO: 入力処理 */}
-          <div className="flex justify-center gap-2">
-            <Button variant="default" size="icon" className="size-8">
-              <FaArrowDown />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <FaArrowUp />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <FaArrowLeft />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <FaArrowRight />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <FaArrowTurnDown className="transform rotate-90" />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <FaBackspace />
-            </Button>
-            <Button variant="default" size="icon" className="size-8">
-              <TbSpace />
-            </Button>
+          <div className="mb-8">
+            <div className="flex justify-center gap-2 mb-2">
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("ArrowDown")}
+                {...btnProps}
+              >
+                <FaArrowDown size={24} />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("ArrowUp")}
+                {...btnProps}
+              >
+                <FaArrowUp size={24} />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("ArrowLeft")}
+                {...btnProps}
+              >
+                <FaArrowLeft size={24} />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("ArrowRight")}
+                {...btnProps}
+              >
+                <FaArrowRight size={24} />
+              </Button>
+            </div>
+            <div className="flex justify-center gap-2">
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("Backspace")}
+                {...btnProps}
+              >
+                <FaBackspace size={24} />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey(" ")}
+                {...btnProps}
+              >
+                <TbSpace size={24} />
+              </Button>
+              <Button
+                variant="default"
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("Enter")}
+                {...btnProps}
+              >
+                <FaArrowTurnDown className="transform rotate-90" size={24} />
+              </Button>
+            </div>
           </div>
 
           <Clear
