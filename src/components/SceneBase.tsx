@@ -31,26 +31,7 @@ import {
 } from "react-icons/fa";
 import { FaArrowTurnDown } from "react-icons/fa6";
 import { TbSpace } from "react-icons/tb";
-
-const useIsMdOrBelow = () => {
-  const [isMdOrBelow, setIsMdOrBelow] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(max-width: 768px)").matches;
-  });
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 768px)");
-    const handler = (e: MediaQueryListEvent) => setIsMdOrBelow(e.matches);
-    // modern browsers
-    if (mq.addEventListener) {
-      mq.addEventListener("change", handler);
-      return () => mq.removeEventListener("change", handler);
-    }
-  }, []);
-
-  return isMdOrBelow;
-};
+import { useIsMdOrBelow } from "@/lib/window";
 
 interface SceneBaseProps {
   baseSize: number;
@@ -142,7 +123,10 @@ const SceneBase = (
       if (isCorrect) {
         setIsClear(true);
         vStorage.overwriteChecked(id, true);
-        vStorage.updateCurrentSceneToNext(id);
+
+        const loaded = vStorage.load();
+        const prevId = loaded.currentScene;
+        vStorage.updateCurrentSceneToNext(prevId, id);
       }
     }
   };
@@ -268,6 +252,7 @@ const SceneBase = (
           </div>
 
           <Arrows
+            isMdOrBelow={isMdOrBelow}
             baseSize={baseSize}
             isDark={isDark}
             inputChars={inputChars}

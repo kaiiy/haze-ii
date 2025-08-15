@@ -8,7 +8,7 @@ interface TitleProps {
 
 const Title = ({ isDark = false, allClear }: TitleProps) => (
   <div
-    className={`w-full text-center  font-sawarabi ${
+    className={`w-full text-center font-sawarabi ${
       !isDark ? "text-black" : "text-white"
     }`}
     style={{
@@ -34,7 +34,7 @@ interface InfoProps {
   isDark?: boolean;
 }
 
-const Info = ({ title, content, isDark = false}: InfoProps) => (
+const Info = ({ title, content, isDark = false }: InfoProps) => (
   <div
     className={`mb-6 font-notoSerif ${!isDark ? "text-charcoal" : "text-lime"}`}
   >

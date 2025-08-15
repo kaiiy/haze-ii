@@ -10,11 +10,12 @@ import {
 } from "react-icons/fa";
 
 const inputCharToSymbol = (
+    isMdOrBelow: boolean,
     char: InputChar,
     baseSize: number,
     isDark: boolean,
 ): React.JSX.Element => {
-    const size = baseSize * 1.2;
+    const size = baseSize * 1.2 * (isMdOrBelow ? 2 : 1);
     const color = isDark ? COLOR.LIME : COLOR.CHARCOAL;
     if (char === "ArrowRight") {
         return <FaArrowRight size={size} color={color} />;
@@ -29,6 +30,7 @@ const inputCharToSymbol = (
 };
 
 interface ArrowsProps {
+    isMdOrBelow: boolean;
     baseSize: number;
     isDark: boolean;
     inputChars: InputChar[];
@@ -38,8 +40,15 @@ interface ArrowsProps {
 }
 
 const Arrows = (
-    { baseSize, inputChars, isDark, showClear, isBoardFocused, fontSize }:
-        ArrowsProps,
+    {
+        isMdOrBelow,
+        baseSize,
+        inputChars,
+        isDark,
+        showClear,
+        isBoardFocused,
+        fontSize,
+    }: ArrowsProps,
 ) => {
     return (
         <div
@@ -54,7 +63,12 @@ const Arrows = (
             <span className="flex">
                 {inputChars.map((inputChar, index) => (
                     <span key={index}>
-                        {inputCharToSymbol(inputChar, baseSize, isDark)}
+                        {inputCharToSymbol(
+                            isMdOrBelow,
+                            inputChar,
+                            baseSize,
+                            isDark,
+                        )}
                     </span>
                 ))}
             </span>

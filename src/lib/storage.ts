@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import { SceneId, SCENE_IDS } from "@/lib/scene";
+import { SCENE_IDS, SceneId } from "@/lib/scene";
 
 const sceneSchema = v.object({
     id: v.picklist(SCENE_IDS),
@@ -87,7 +87,10 @@ const overwriteChecked = (id: SceneId, checked: boolean): void => {
     overwrite({ sceneStates });
 };
 
-const updateCurrentSceneToNext = (currentId: SceneId): void => {
+const updateCurrentSceneToNext = (
+    previousId: SceneId,
+    currentId: SceneId,
+): void => {
     const index = SCENE_IDS.indexOf(currentId);
     if (index === -1) {
         throw new Error(`The scene ID ${currentId} is not found in SCENE_IDS`);
@@ -95,7 +98,10 @@ const updateCurrentSceneToNext = (currentId: SceneId): void => {
     if (index === SCENE_IDS.length - 1) {
         return;
     }
-    overwrite({ currentScene: SCENE_IDS[index + 1] });
+    const nextId = SCENE_IDS[index + 1];
+    if (nextId > previousId) {
+        overwrite({ currentScene: SCENE_IDS[index + 1] });
+    }
 };
 
 const vStorage = {
@@ -103,7 +109,7 @@ const vStorage = {
     save,
     overwrite,
     overwriteChecked,
-    updateCurrentSceneToNext
+    updateCurrentSceneToNext,
 };
 
 export type { SceneId, SceneStates, Storage as VStorage };
