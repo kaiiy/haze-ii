@@ -8,6 +8,7 @@ import Clear from "@/components/Clear";
 import NavTooltip from "@/components/NavTooltip";
 import { SceneId, vStorage } from "@/lib/storage";
 import { isSceneClear, SceneBox as Box } from "@/components/homeUI";
+import { useIsMdOrBelow } from "@/lib/window";
 
 interface InfoProps {
   title: string;
@@ -76,7 +77,8 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     }
   }, [isClear]);
 
-  const cellSize = baseSize * 6;
+  const isMdOrBelow = useIsMdOrBelow();
+  const cellSize = baseSize * 6 * (isMdOrBelow ? 2 : 1);
   const fontSize = cellSize / 2;
 
   // Scene 4
