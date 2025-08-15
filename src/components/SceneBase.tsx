@@ -261,26 +261,25 @@ const SceneBase = (
             fontSize={fontSize}
           />
 
-          {/*  TODO: 入力処理 */}
           <div className="mb-8">
             <div className="flex justify-center gap-2 mb-2">
               <Button
-                variant="default"
-                size="icon"
-                className="size-16"
-                onClick={() => simulateKey("ArrowDown")}
-                {...btnProps}
-              >
-                <FaArrowDown size={24} />
-              </Button>
-              <Button
-                variant="default"
+                variant={isBoardFocused ? "disabled" : "default"}
                 size="icon"
                 className="size-16"
                 onClick={() => simulateKey("ArrowUp")}
                 {...btnProps}
               >
                 <FaArrowUp size={24} />
+              </Button>
+              <Button
+                variant={isBoardFocused ? "disabled" : "default"}
+                size="icon"
+                className="size-16"
+                onClick={() => simulateKey("ArrowDown")}
+                {...btnProps}
+              >
+                <FaArrowDown size={24} />
               </Button>
               <Button
                 variant="default"
@@ -303,7 +302,7 @@ const SceneBase = (
             </div>
             <div className="flex justify-center gap-2">
               <Button
-                variant="default"
+                variant={isBoardFocused ? "disabled" : "default"}
                 size="icon"
                 className="size-16"
                 onClick={() => simulateKey("Backspace")}
@@ -321,7 +320,7 @@ const SceneBase = (
                 <TbSpace size={24} />
               </Button>
               <Button
-                variant="default"
+                variant={isBoardFocused ? "disabled" : "default"}
                 size="icon"
                 className="size-16"
                 onClick={() => simulateKey("Enter")}
