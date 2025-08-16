@@ -9,6 +9,7 @@ import NavTooltip from "@/components/NavTooltip";
 import { SceneId, vStorage } from "@/lib/storage";
 import { isSceneClear, SceneBox as Box } from "@/components/homeUI";
 import { useIsMdOrBelow } from "@/lib/window";
+import { Button } from "@/components/ui/button";
 
 interface InfoProps {
   title: string;
@@ -97,28 +98,26 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     }
   };
 
-  const handleS4keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const input = e.currentTarget.value;
-      // 1桁の数字でない場合
-      if (!DIGIT1.includes(input)) {
-        return;
-      }
+  const handleS4keyDown = () => {
+    const input = inputS4Value;
+    // 1桁の数字でない場合
+    if (!DIGIT1.includes(input)) {
+      return;
+    }
 
-      const inputNum = parseInt(input, 10);
+    const inputNum = parseInt(input, 10);
 
-      if (S4_CORRECT.includes(inputNum) && !s4List?.includes(inputNum)) {
-        setS4List([...s4List, inputNum]);
-        setInputS4Value("");
+    if (S4_CORRECT.includes(inputNum) && !s4List?.includes(inputNum)) {
+      setS4List([...s4List, inputNum]);
+      setInputS4Value("");
 
-        // クリア判定
-        if (
-          s4List.length === S4_CORRECT.length - 1 &&
-          s6List.length === S6_CORRECT.length
-        ) {
-          setIsClear(true);
-          vStorage.overwriteChecked("L", true);
-        }
+      // クリア判定
+      if (
+        s4List.length === S4_CORRECT.length - 1 &&
+        s6List.length === S6_CORRECT.length
+      ) {
+        setIsClear(true);
+        vStorage.overwriteChecked("L", true);
       }
     }
   };
@@ -139,30 +138,33 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     }
   };
 
-  const handleS6keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      const input = e.currentTarget.value;
-      // 1桁の数字でない場合
-      if (!DIGIT1.includes(input)) {
-        return;
-      }
+  const handleS6keyDown = () => {
+    const input = inputS6Value;
+    // 1桁の数字でない場合
+    if (!DIGIT1.includes(input)) {
+      return;
+    }
 
-      const inputNum = parseInt(input, 10);
+    const inputNum = parseInt(input, 10);
 
-      if (S6_CORRECT.includes(inputNum) && !s6List?.includes(inputNum)) {
-        setS6List([...s6List, inputNum]);
-        setInputS6Value("");
+    if (S6_CORRECT.includes(inputNum) && !s6List?.includes(inputNum)) {
+      setS6List([...s6List, inputNum]);
+      setInputS6Value("");
 
-        // クリア判定
-        if (
-          s4List.length === S4_CORRECT.length &&
-          s6List.length === S6_CORRECT.length - 1
-        ) {
-          setIsClear(true);
-          vStorage.overwriteChecked("L", true);
-        }
+      // クリア判定
+      if (
+        s4List.length === S4_CORRECT.length &&
+        s6List.length === S6_CORRECT.length - 1
+      ) {
+        setIsClear(true);
+        vStorage.overwriteChecked("L", true);
       }
     }
+  };
+
+  const submitAnswer = () => {
+    handleS4keyDown();
+    handleS6keyDown();
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -261,7 +263,6 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
                     type="text"
                     value={inputS4Value}
                     onChange={handleS4Change}
-                    onKeyDown={handleS4keyDown}
                     maxLength={1}
                   />
                 )}
@@ -291,7 +292,6 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
                     type="text"
                     value={inputS6Value}
                     onChange={handleS6Change}
-                    onKeyDown={handleS6keyDown}
                     maxLength={1}
                   />
                 )}
@@ -308,6 +308,18 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             />
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-center mb-6">
+        <Button
+          variant={"default"}
+          size={"text"}
+          onClick={() => {
+            submitAnswer();
+          }}
+        >
+          <span className="text-lg font-notoSerif">確定</span>
+        </Button>
       </div>
 
       <Clear

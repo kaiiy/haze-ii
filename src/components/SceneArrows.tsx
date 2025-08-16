@@ -60,7 +60,7 @@ const Arrows = (
                 minHeight: String(fontSize * 0.4) + "px",
             }}
         >
-            <span className="flex">
+            <div className="flex w-full flex-wrap items-center justify-center">
                 {inputChars.map((inputChar, index) => (
                     <span key={index}>
                         {inputCharToSymbol(
@@ -71,7 +71,7 @@ const Arrows = (
                         )}
                     </span>
                 ))}
-            </span>
+            </div>
         </div>
     );
 };

@@ -14,14 +14,22 @@ import Scene6 from "./routes/Scene6";
 
 import Check1 from "./routes/Check1";
 
-const getContainerWidthRatio = (width: number) => {
+const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+const getContainerWidthRatio = (width: number): number => {
   if (width <= 768) {
-    return 0.8;
-  } else if (width <= 1024) {
-    return -0.15 / 256 * (width - 1024) + 0.7;
-  } else {
-    return 0.5;
+    return 0.9;
   }
+  if (width <= 1024) {
+    const t = (width - 768) / (1024 - 768); // 0..1
+    return lerp(0.9, 0.7, clamp(t, 0, 1));
+  }
+  if (width <= 1440) {
+    const t = (width - 1024) / (1440 - 1024); // 0..1
+    return lerp(0.7, 0.5, clamp(t, 0, 1));
+  }
+  return 0.5;
 };
 
 const App = () => {
@@ -57,8 +65,7 @@ const App = () => {
   }, []);
 
   return (
-
-<main className="pt-16 md:pt-0">
+    <main className="pt-16 md:pt-0">
       <Routes>
         <Route
           path="/"
@@ -66,35 +73,51 @@ const App = () => {
         />
         <Route
           path="/0"
-          element={<Scene0 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene0 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/1"
-          element={<Scene1 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene1 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/2"
-          element={<Scene2 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene2 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/3"
-          element={<Scene3 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene3 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/4"
-          element={<Scene4 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene4 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/5"
-          element={<Scene5 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene5 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/6"
-          element={<Scene6 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Scene6 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
         <Route
           path="/L"
-          element={<Check1 containerWidth={containerWidth} baseSize={baseSize} />}
+          element={
+            <Check1 containerWidth={containerWidth} baseSize={baseSize} />
+          }
         />
       </Routes>
     </main>

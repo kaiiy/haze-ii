@@ -49,17 +49,6 @@ const Info = ({ title, content, isDark = false }: InfoProps) => (
   </div>
 );
 
-const NoticeContent = () => (
-  <div className="text-xl flex flex-col text-center pt-1">
-    <div className="mb-3">
-      <BudouX text="キーボード操作が必須です。PCでご覧ください。" />
-    </div>
-    <div className="mb-3">
-      <BudouX text="ステージをやり直す際には、ページをリロードしてください。" />
-    </div>
-  </div>
-);
-
 const PreconditionContent = () => (
   <div className="text-xl flex flex-col text-center pt-1">
     <div>
@@ -103,7 +92,6 @@ const Tutorial2DarkContent = () => (
 
 export {
   Info,
-  NoticeContent,
   PreconditionContent,
   Title,
   Tutorial2Content,

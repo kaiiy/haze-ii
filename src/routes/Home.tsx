@@ -3,7 +3,6 @@ import Nav from "@/components/Nav";
 import { useEffect } from "react";
 import {
   Info,
-  NoticeContent,
   PreconditionContent,
   Title,
   TutorialContent,
@@ -44,10 +43,11 @@ const Home = ({ containerWidth }: HomeProps) => {
     <Container width={containerWidth}>
       <Nav
         text="HOME"
-        shareText={`${!isAllClear
-          ? "謎解きゲーム『HAZE II』\n"
-          : "謎解きゲーム『HAZE II』\n\n ALL CLEAR!\n"
-          }`}
+        shareText={`${
+          !isAllClear
+            ? "謎解きゲーム『HAZE II』\n"
+            : "謎解きゲーム『HAZE II』\n\n ALL CLEAR!\n"
+        }`}
       />
       <NavTooltip />
       <NavTooltipClear show={isAllClear} />
@@ -63,7 +63,6 @@ const Home = ({ containerWidth }: HomeProps) => {
         >
           <Info title="制作" content="kaiiy" />
           <Info title="想定プレイ時間" content="30分" />
-          <Info title="注意事項" content={<NoticeContent />} />
           <Info
             title="前提条件"
             content={<PreconditionContent />}
