@@ -216,7 +216,7 @@ const getBorderStyle = (
     return "solid";
   }
 
-  return "dashed";
+  return "none";
 };
 
 const getAllBorderStyleCss = (
