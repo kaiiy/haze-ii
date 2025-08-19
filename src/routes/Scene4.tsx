@@ -5,15 +5,25 @@ import SceneBase from "@/components/SceneBase";
 
 const SCENE_NAME = "SCENE 4";
 
-const BOARD_HEIGHT = 1;
+const BOARD_HEIGHT = 4;
 const BOARD_WIDTH = 3;
 const BOARD_RAW: BoardRaw = [
-  ["S", " ", "G"],
+  ["B", 1, "G"],
+  [3, 2, "B"],
+  ["B", "S", "B"],
+  [5, 4, 5],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 0, y: 0 },
-  { x: 1, y: 0 },
+  { x: 1, y: 2 },
+  { x: 1, y: 3 },
+  { x: 0, y: 3 },
+  { x: 1, y: 3 },
+  { x: 1, y: 2 },
+  { x: 1, y: 1 },
+  { x: 0, y: 1 },
+  { x: 1, y: 1 },
+  { x: 1, y: 1 },
   { x: 1, y: 0 },
   { x: 2, y: 0 },
 ].map(
@@ -22,18 +32,15 @@ const PLAYER_HISTORY: OriginalVector[] = [
 
 const ANSWER: InputChar[][] = [
   [
-    "ArrowRight",
-    "ArrowRight",
-    "ArrowRight",
-  ],
-  [
+    "ArrowDown",
+    "ArrowLeft",
     "ArrowRight",
     "ArrowUp",
+    "ArrowUp",
+    "ArrowLeft",
     "ArrowRight",
-  ],
-  [
     "ArrowRight",
-    "ArrowDown",
+    "ArrowUp",
     "ArrowRight",
   ],
 ];

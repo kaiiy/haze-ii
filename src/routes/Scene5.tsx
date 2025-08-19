@@ -2,48 +2,41 @@ import { InputChar } from "@/lib/input";
 import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
 import SceneBase from "@/components/SceneBase";
-import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 5";
 
-const BOARD_HEIGHT = 3;
-const BOARD_WIDTH = 8;
+const BOARD_HEIGHT = 1;
+const BOARD_WIDTH = 3;
 const BOARD_RAW: BoardRaw = [
-  [" ", " ", " ", " ", " ", " ", " ", " "],
-  [" ", "S", "4", " ", " ", "1", "G", " "],
-  [" ", " ", " ", " ", " ", " ", " ", " "],
+  ["S", " ", "G"],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 1, y: 1 },
-  { x: 2, y: 1 },
-  { x: 3, y: 1 },
-  { x: 4, y: 1 },
-  { x: 5, y: 1 },
-  { x: 6, y: 1 },
+  { x: 0, y: 0 },
+  { x: 1, y: 0 },
+  { x: 1, y: 0 },
+  { x: 2, y: 0 },
 ].map(
   vectorToOriginalVector,
 );
 
-const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
-  if (inputChars.length !== PLAYER_HISTORY.length - 1) {
-    return false;
-  }
-
-  const inputCharsSet = new Set(inputChars);
-  if (inputCharsSet.size >= 3) {
-    return false;
-  }
-
-  if (inputCharsSet.has("ArrowLeft") && inputCharsSet.has("ArrowRight")) {
-    return false;
-  }
-  if (inputCharsSet.has("ArrowUp") && inputCharsSet.has("ArrowDown")) {
-    return false;
-  }
-
-  return true;
-};
+const ANSWER: InputChar[][] = [
+  [
+    "ArrowRight",
+    "ArrowRight",
+    "ArrowRight",
+  ],
+  [
+    "ArrowRight",
+    "ArrowUp",
+    "ArrowRight",
+  ],
+  [
+    "ArrowRight",
+    "ArrowDown",
+    "ArrowRight",
+  ],
+];
 
 interface SceneProps {
   baseSize: number;
@@ -60,7 +53,7 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       boardWidth={BOARD_WIDTH}
       boardRaw={BOARD_RAW}
       playerHistory={PLAYER_HISTORY}
-      answerChecker={answerChecker}
+      answer={ANSWER}
       isDark={false}
       id={"5"}
       sharedText="Scene 5 Clear!"

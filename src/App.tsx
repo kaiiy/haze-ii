@@ -11,8 +11,10 @@ import Scene3 from "./routes/Scene3";
 import Scene4 from "./routes/Scene4";
 import Scene5 from "./routes/Scene5";
 import Scene6 from "./routes/Scene6";
+import Scene7 from "./routes/Scene7";
 
-import Check1 from "./routes/Check1";
+import Check from "./routes/Check";
+import Last from "./routes/Last";
 
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -96,6 +98,12 @@ const App = () => {
           }
         />
         <Route
+          path="/C"
+          element={
+            <Check containerWidth={containerWidth} baseSize={baseSize} />
+          }
+        />
+        <Route
           path="/4"
           element={
             <Scene4 containerWidth={containerWidth} baseSize={baseSize} />
@@ -114,10 +122,14 @@ const App = () => {
           }
         />
         <Route
-          path="/L"
+          path="/7"
           element={
-            <Check1 containerWidth={containerWidth} baseSize={baseSize} />
+            <Scene7 containerWidth={containerWidth} baseSize={baseSize} />
           }
+        />
+        <Route
+          path="/L"
+          element={<Last containerWidth={containerWidth} baseSize={baseSize} />}
         />
       </Routes>
     </main>

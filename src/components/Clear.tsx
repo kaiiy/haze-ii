@@ -29,7 +29,7 @@ const Clear = (
 ) => {
   const iconColor = isDark ? COLOR.LIME : COLOR.CHARCOAL;
   return (
-    <div>
+    <div className="mb-6">
       <div
         className={`flex flex-col font-notoSerif`}
         style={{
