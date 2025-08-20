@@ -20,11 +20,12 @@ const KEYFRAMES_STYLE = `
     `;
 
 const Clear = (
-  { showClear, fontSize, isDark = false, sharedText }: {
+  { showClear, fontSize, isDark = false, sharedText, showPressSpace = true }: {
     showClear: boolean;
     fontSize: number;
     isDark?: boolean;
     sharedText: string;
+    showPressSpace?: boolean;
   },
 ) => {
   const iconColor = isDark ? COLOR.LIME : COLOR.CHARCOAL;
@@ -50,35 +51,37 @@ const Clear = (
           Clear!
         </div>
         <style>{KEYFRAMES_STYLE}</style>
-        <div
-          className={`flex justify-center ${
-            !isDark ? "text-charcoal" : "text-lime"
-          }`}
-          style={{
-            fontSize: String(fontSize * 0.25) + "px",
-            fontWeight: 500,
-            ...BLINK_STYLE,
-          }}
-        >
-          <span
+        {showPressSpace && (
+          <div
+            className={`flex justify-center ${
+              !isDark ? "text-charcoal" : "text-lime"
+            }`}
             style={{
-              letterSpacing: "-.2em",
-              width: "2em",
-              marginRight: ".5em",
+              fontSize: String(fontSize * 0.25) + "px",
+              fontWeight: 500,
+              ...BLINK_STYLE,
             }}
           >
-            ――
-          </span>Press Space
-          <span
-            style={{
-              letterSpacing: "-.2em",
-              width: "2em",
-              marginLeft: ".5em",
-            }}
-          >
-            ――
-          </span>
-        </div>
+            <span
+              style={{
+                letterSpacing: "-.2em",
+                width: "2em",
+                marginRight: ".5em",
+              }}
+            >
+              ――
+            </span>Press Space
+            <span
+              style={{
+                letterSpacing: "-.2em",
+                width: "2em",
+                marginLeft: ".5em",
+              }}
+            >
+              ――
+            </span>
+          </div>
+        )}
 
         <div className="flex justify-center space-x-2 mt-3">
           <Link tabIndex={-1} to="/">

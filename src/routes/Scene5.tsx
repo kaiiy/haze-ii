@@ -2,13 +2,15 @@ import { InputChar } from "@/lib/input";
 import { OriginalVector, vectorToOriginalVector } from "@/lib/vector";
 import { BoardRaw } from "@/lib/board";
 import SceneBase from "@/components/SceneBase";
+import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 5";
 
-const BOARD_HEIGHT = 1;
-const BOARD_WIDTH = 3;
+const BOARD_HEIGHT = 2;
+const BOARD_WIDTH = 5;
 const BOARD_RAW: BoardRaw = [
-  ["S", " ", "G"],
+  ["S", " ", " ", " ", "G"],
+  ["B", "B", " ", "B", "B"],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
@@ -16,27 +18,36 @@ const PLAYER_HISTORY: OriginalVector[] = [
   { x: 1, y: 0 },
   { x: 1, y: 0 },
   { x: 2, y: 0 },
+  { x: 2, y: 1 },
+  { x: 2, y: 0 },
+  { x: 3, y: 0 },
+  { x: 3, y: 0 },
+  { x: 4, y: 0 },
 ].map(
   vectorToOriginalVector,
 );
 
-const ANSWER: InputChar[][] = [
-  [
-    "ArrowRight",
-    "ArrowRight",
-    "ArrowRight",
-  ],
-  [
-    "ArrowRight",
-    "ArrowUp",
-    "ArrowRight",
-  ],
-  [
-    "ArrowRight",
-    "ArrowDown",
-    "ArrowRight",
-  ],
-];
+const U = "ArrowUp";
+const D = "ArrowDown";
+const L = "ArrowLeft";
+const R = "ArrowRight";
+
+const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
+  if (inputChars.length !== PLAYER_HISTORY.length - 1) return false;
+
+  const required: [number, InputChar][] = [
+    [0, R],
+    [2, R],
+    [3, D],
+    [4, U],
+    [5, R],
+    [7, R],
+  ];
+  const hasRequired = required.some(([i, ch]) => inputChars[i] === ch);
+  const hasForbidden = [1, 6].some((i) => inputChars[i] === L);
+
+  return hasRequired && !hasForbidden;
+};
 
 interface SceneProps {
   baseSize: number;
@@ -53,7 +64,7 @@ const Scene = ({ baseSize, containerWidth }: SceneProps) => {
       boardWidth={BOARD_WIDTH}
       boardRaw={BOARD_RAW}
       playerHistory={PLAYER_HISTORY}
-      answer={ANSWER}
+      answerChecker={answerChecker}
       isDark={false}
       id={"5"}
       sharedText="Scene 5 Clear!"

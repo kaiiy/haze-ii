@@ -1,5 +1,6 @@
 import React from "react";
 import BudouX from "@/components/BudouX";
+import { vStorage } from "@/lib/storage";
 
 interface TitleProps {
   isDark?: boolean;
@@ -49,22 +50,42 @@ const Info = ({ title, content, isDark = false }: InfoProps) => (
   </div>
 );
 
-const PreconditionContent = () => (
-  <div className="text-xl flex flex-col text-center pt-1">
-    <div>
-      <BudouX text="マスとマスの境界に壁はない。" />
+const PreconditionContent = () => {
+  const storage = vStorage.load();
+  const sceneStates = storage.sceneStates;
+
+  const isCheckpointClear = sceneStates.find(
+    (sceneState) => sceneState.id === "C",
+  )?.checked;
+  if (isCheckpointClear === undefined) {
+    throw new Error("isCheckpointClear is undefined");
+  }
+
+  return (
+    <div className="text-xl flex flex-col text-center pt-1">
+      <div>
+        <BudouX text="マスとマスの境界に壁はない。" />
+      </div>
+      <div>
+        <BudouX text="盤面には白マスと黒マスのみが存在する。" />
+      </div>
+      <div className="mt-3">
+        <BudouX text="移動可能なマスは上下左右に隣接する白マスのみである。" />
+      </div>
+      <div>
+        <BudouX text="黒マスのあるマスへは進めない。" />
+      </div>
+      <div className="mt-3">
+        <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
+      </div>
+      {isCheckpointClear && (
+        <div className="mt-3 font-bold">
+          <BudouX text="[NEW] 白マス中の数字はGからの最短距離を表す。" />
+        </div>
+      )}
     </div>
-    <div className="mb-3">
-      <BudouX text="黒マスのあるマスへは進めない。" />
-    </div>
-    <div className="mb-3">
-      <BudouX text="移動可能なマスは上下左右に隣接するマスのみである。" />
-    </div>
-    <div>
-      <BudouX text="SとGは盤面中にどちらも1つしか存在しない。" />
-    </div>
-  </div>
-);
+  );
+};
 
 const TutorialContent = () => (
   <div className="text-xl flex flex-col text-center pt-1">

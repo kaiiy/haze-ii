@@ -61,7 +61,18 @@ interface SceneProps {
 
 const S4_CORRECT: number[] = [1];
 const S6_CORRECT: number[] = [3];
-const DIGIT1: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
+const DIGIT1: string[] = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+] as const;
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     const navigate = useNavigate();
@@ -110,15 +121,6 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         if (S4_CORRECT.includes(inputNum) && !s4List?.includes(inputNum)) {
             setS4List([...s4List, inputNum]);
             setInputS4Value("");
-
-            // クリア判定
-            if (
-                s4List.length === S4_CORRECT.length - 1 &&
-                s6List.length === S6_CORRECT.length
-            ) {
-                setIsClear(true);
-                vStorage.overwriteChecked("L", true);
-            }
         }
     };
 
@@ -150,17 +152,19 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         if (S6_CORRECT.includes(inputNum) && !s6List?.includes(inputNum)) {
             setS6List([...s6List, inputNum]);
             setInputS6Value("");
-
-            // クリア判定
-            if (
-                s4List.length === S4_CORRECT.length &&
-                s6List.length === S6_CORRECT.length - 1
-            ) {
-                setIsClear(true);
-                vStorage.overwriteChecked("L", true);
-            }
         }
     };
+
+    useEffect(() => {
+        // クリア判定
+        if (
+            s4List.length === S4_CORRECT.length &&
+            s6List.length === S6_CORRECT.length
+        ) {
+            setIsClear(true);
+            vStorage.overwriteChecked("C", true);
+        }
+    }, [s4List, s6List]);
 
     const submitAnswer = () => {
         handleS4keyDown();
@@ -193,7 +197,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
             }}
         >
             <NavTooltip />
-            <Nav text="CHECKPOINT" />
+            <Nav text="CHECKPOINT" id="C" />
 
             <ContentInfo title="チェックポイント" content="S はいくつ？" />
 
@@ -313,6 +317,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
                 showClear={showClear}
                 fontSize={fontSize}
                 sharedText={"Checkpoint Clear!"}
+                showPressSpace={false}
             />
         </ContainerBase>
     );

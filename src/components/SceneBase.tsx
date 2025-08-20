@@ -203,6 +203,7 @@ const SceneBase = (
         containerWidth={containerWidth}
         navText={sceneName}
         isDark={isDark}
+        id={id}
       >
         <div className="w-full h-full">
           <div className="flex justify-center relative w-full">

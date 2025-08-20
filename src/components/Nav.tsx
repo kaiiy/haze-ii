@@ -2,14 +2,17 @@ import { MdHome } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
+import { SceneId } from "@/lib/storage";
 
 interface NavProps {
   text: string;
   showClickMe?: boolean;
   shareText?: string;
+  id?: SceneId;
+  hideId?: boolean;
 }
 
-const Nav = ({ text, showClickMe, shareText }: NavProps) => {
+const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
   const twitterText = shareText || "謎解きゲーム『HAZE II』";
   return (
     <>
@@ -17,7 +20,8 @@ const Nav = ({ text, showClickMe, shareText }: NavProps) => {
       <div className="fixed top-0 left-0 right-0 bg-white backdrop-blur-md shadow-sm p-4 px-4 border-b font-notoSans z-50 md:hidden">
         <div className="flex justify-between items-center">
           <Link tabIndex={-1} to="/">
-            <span className="text-xl font-bold">HAZE II</span>
+            <span className="text-xl font-bold">HAZE II</span>{" "}
+            {hideId ? "" : <span className="text-md font-bold">/ {id}</span>}
           </Link>
           <div className="flex gap-4 items-center">
             <a

@@ -59,9 +59,20 @@ interface SceneProps {
   containerWidth: number;
 }
 
-const S4_CORRECT: number[] = [2, 3];
+const S4_CORRECT: number[] = [4, 5, 6];
 const S6_CORRECT: number[] = [2, 3, 4, 6];
-const DIGIT1: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
+const DIGIT1: string[] = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+] as const;
 
 const Scene = ({ containerWidth, baseSize }: SceneProps) => {
   const navigate = useNavigate();
@@ -110,15 +121,6 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     if (S4_CORRECT.includes(inputNum) && !s4List?.includes(inputNum)) {
       setS4List([...s4List, inputNum]);
       setInputS4Value("");
-
-      // クリア判定
-      if (
-        s4List.length === S4_CORRECT.length - 1 &&
-        s6List.length === S6_CORRECT.length
-      ) {
-        setIsClear(true);
-        vStorage.overwriteChecked("L", true);
-      }
     }
   };
 
@@ -162,6 +164,17 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
     }
   };
 
+  useEffect(() => {
+    // クリア判定
+    if (
+      s4List.length === S4_CORRECT.length &&
+      s6List.length === S6_CORRECT.length
+    ) {
+      setIsClear(true);
+      vStorage.overwriteChecked("C", true);
+    }
+  }, [s4List, s6List]);
+
   const submitAnswer = () => {
     handleS4keyDown();
     handleS6keyDown();
@@ -193,9 +206,24 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
       }}
     >
       <NavTooltip />
-      <Nav text="LAST" />
+      <Nav text="LAST" id="L" />
 
       <ContentInfo title="最終問題" content="S はいくつ？" />
+
+      <div className="flex gap-6 justify-center">
+        <div className="w-1/2">
+          <Info title="S = 1" />
+          <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
+            <SceneBox
+              index="2"
+              clear={isSceneClear(
+                "2",
+                sceneStates,
+              )}
+            />
+          </div>
+        </div>
+      </div>
 
       <div className="flex gap-6">
         <div className="w-1/2">
@@ -209,16 +237,16 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
               )}
             />
             <SceneBox
-              index="2"
+              index="3"
               clear={isSceneClear(
-                "2",
+                "3",
                 sceneStates,
               )}
             />
             <SceneBox
-              index="3"
+              index="4"
               clear={isSceneClear(
-                "3",
+                "4",
                 sceneStates,
               )}
             />
@@ -235,9 +263,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
               )}
             />
             <SceneBox
-              index="5"
+              index="6"
               clear={isSceneClear(
-                "5",
+                "6",
                 sceneStates,
               )}
             />
@@ -271,9 +299,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
             <SceneBox
-              index="4"
+              index="5"
               clear={isSceneClear(
-                "4",
+                "5",
                 sceneStates,
               )}
             />
@@ -300,9 +328,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
             <SceneBox
-              index="6"
+              index="7"
               clear={isSceneClear(
-                "6",
+                "7",
                 sceneStates,
               )}
             />
@@ -326,6 +354,7 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         showClear={showClear}
         fontSize={fontSize}
         sharedText={"All Clear!"}
+        showPressSpace={false}
       />
     </ContainerBase>
   );

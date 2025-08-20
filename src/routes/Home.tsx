@@ -43,6 +43,7 @@ const Home = ({ containerWidth }: HomeProps) => {
     <Container width={containerWidth}>
       <Nav
         text="HOME"
+        hideId={true}
         shareText={`${
           !isAllClear
             ? "謎解きゲーム『HAZE II』\n"
