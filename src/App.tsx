@@ -67,7 +67,7 @@ const App = () => {
   }, []);
 
   return (
-    <main className="pt-16 md:pt-0">
+    <main className="pt-[88px] md:pt-0">
       <Routes>
         <Route
           path="/"
