@@ -43,7 +43,7 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               <RiTwitterXFill className="w-6 h-6" />
             </a>
             <a
-              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.mdi"
+              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.md"
               target="_blank"
               rel="noreferrer"
               tabIndex={-1}
@@ -113,7 +113,7 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               <FaGithub className="w-7 h-7" />
             </a>
             <a
-              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.mdi"
+              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.md"
               target="_blank"
               rel="noreferrer"
               tabIndex={-1}
