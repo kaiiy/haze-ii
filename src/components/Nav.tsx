@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaGithub } from "react-icons/fa";
 import { RiTwitterXFill } from "react-icons/ri";
 import { SceneId } from "@/lib/storage";
+import { MdLightbulbCircle } from "react-icons/md";
 
 interface NavProps {
   text: string;
@@ -36,10 +37,22 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               tabIndex={-1}
               className="flex items-center justify-center"
               data-tooltip-id={showClickMe ? "my-tooltip-clear" : "my-tooltip"}
-              data-tooltip-content={showClickMe ? "Click Me" : "Share on X"}
+              data-tooltip-content={showClickMe ? "Click me" : "Share on X"}
               data-tooltip-place="bottom"
             >
               <RiTwitterXFill className="w-6 h-6" />
+            </a>
+            <a
+              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.mdi"
+              target="_blank"
+              rel="noreferrer"
+              tabIndex={-1}
+              className="flex items-center justify-center"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="View hint"
+              data-tooltip-place="right"
+            >
+              <MdLightbulbCircle className="w-7 h-7" />
             </a>
             <a
               href="https://github.com/kaiiy/haze-ii"
@@ -48,7 +61,7 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               tabIndex={-1}
               className="flex items-center justify-center"
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="View Repository"
+              data-tooltip-content="View repository"
               data-tooltip-place="bottom"
             >
               <FaGithub className="w-6 h-6" />
@@ -82,7 +95,7 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               tabIndex={-1}
               className="flex items-center justify-center"
               data-tooltip-id={showClickMe ? "my-tooltip-clear" : "my-tooltip"}
-              data-tooltip-content={showClickMe ? "Click Me" : "Share on X"}
+              data-tooltip-content={showClickMe ? "Click me" : "Share on X"}
               data-tooltip-place="right"
             >
               <RiTwitterXFill className="w-7 h-7" />
@@ -94,10 +107,22 @@ const Nav = ({ text, showClickMe, shareText, id, hideId }: NavProps) => {
               tabIndex={-1}
               className="flex items-center justify-center"
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="View Repository"
+              data-tooltip-content="View repository"
               data-tooltip-place="right"
             >
               <FaGithub className="w-7 h-7" />
+            </a>
+            <a
+              href="https://github.com/kaiiy/haze-ii/blob/main/docs/hints/home.mdi"
+              target="_blank"
+              rel="noreferrer"
+              tabIndex={-1}
+              className="flex items-center justify-center"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="View hint"
+              data-tooltip-place="right"
+            >
+              <MdLightbulbCircle className="w-8 h-8" />
             </a>
             <hr />
           </div>
