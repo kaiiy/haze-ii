@@ -99,7 +99,9 @@ const updateCurrentSceneToNext = (
         return;
     }
     const nextId = SCENE_IDS[index + 1];
-    if (nextId > previousId) {
+    const indexOfPreviousId = SCENE_IDS.indexOf(previousId);
+    const indexOfNextId = SCENE_IDS.indexOf(nextId);
+    if (indexOfPreviousId < indexOfNextId) {
         overwrite({ currentScene: SCENE_IDS[index + 1] });
     }
 };

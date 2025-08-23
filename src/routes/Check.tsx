@@ -163,6 +163,10 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
         ) {
             setIsClear(true);
             vStorage.overwriteChecked("C", true);
+
+            const loaded = vStorage.load();
+            const prevId = loaded.currentScene;
+            vStorage.updateCurrentSceneToNext(prevId, "C");
         }
     }, [s4List, s6List]);
 
