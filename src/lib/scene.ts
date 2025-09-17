@@ -8,7 +8,6 @@ const SCENE_IDS = [
     "4",
     "5",
     "6",
-    "7",
     "L",
 ] as const;
 
