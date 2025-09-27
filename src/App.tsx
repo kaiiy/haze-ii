@@ -11,7 +11,6 @@ import Scene3 from "./routes/Scene3";
 import Scene4 from "./routes/Scene4";
 import Scene5 from "./routes/Scene5";
 import Scene6 from "./routes/Scene6";
-import Scene7 from "./routes/Scene7";
 
 import Check from "./routes/Check";
 import Last from "./routes/Last";
@@ -119,12 +118,6 @@ const App = () => {
           path="/6"
           element={
             <Scene6 containerWidth={containerWidth} baseSize={baseSize} />
-          }
-        />
-        <Route
-          path="/7"
-          element={
-            <Scene7 containerWidth={containerWidth} baseSize={baseSize} />
           }
         />
         <Route

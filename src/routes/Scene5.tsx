@@ -6,47 +6,43 @@ import { AnswerChecker } from "@/lib/answer";
 
 const SCENE_NAME = "SCENE 5";
 
-const BOARD_HEIGHT = 2;
-const BOARD_WIDTH = 5;
+const BOARD_HEIGHT = 3;
+const BOARD_WIDTH = 8;
 const BOARD_RAW: BoardRaw = [
-  ["S", " ", " ", " ", "G"],
-  ["B", "B", " ", "B", "B"],
+  [" ", " ", " ", " ", " ", " ", " ", " "],
+  [" ", "S", "4", " ", " ", "1", "G", " "],
+  [" ", " ", " ", " ", " ", " ", " ", " "],
 ] as const;
 
 const PLAYER_HISTORY: OriginalVector[] = [
-  { x: 0, y: 0 },
-  { x: 1, y: 0 },
-  { x: 1, y: 0 },
-  { x: 2, y: 0 },
+  { x: 1, y: 1 },
   { x: 2, y: 1 },
-  { x: 2, y: 0 },
-  { x: 3, y: 0 },
-  { x: 3, y: 0 },
-  { x: 4, y: 0 },
+  { x: 3, y: 1 },
+  { x: 4, y: 1 },
+  { x: 5, y: 1 },
+  { x: 6, y: 1 },
 ].map(
   vectorToOriginalVector,
 );
 
-const U = "ArrowUp";
-const D = "ArrowDown";
-const L = "ArrowLeft";
-const R = "ArrowRight";
-
 const answerChecker: AnswerChecker = (inputChars: InputChar[]): boolean => {
-  if (inputChars.length !== PLAYER_HISTORY.length - 1) return false;
+  if (inputChars.length !== PLAYER_HISTORY.length - 1) {
+    return false;
+  }
 
-  const required: [number, InputChar][] = [
-    [0, R],
-    [2, R],
-    [3, D],
-    [4, U],
-    [5, R],
-    [7, R],
-  ];
-  const hasRequired = required.some(([i, ch]) => inputChars[i] === ch);
-  const hasForbidden = [1, 6].some((i) => inputChars[i] === L);
+  const inputCharsSet = new Set(inputChars);
+  if (inputCharsSet.size >= 3) {
+    return false;
+  }
 
-  return hasRequired && !hasForbidden;
+  if (inputCharsSet.has("ArrowLeft") && inputCharsSet.has("ArrowRight")) {
+    return false;
+  }
+  if (inputCharsSet.has("ArrowUp") && inputCharsSet.has("ArrowDown")) {
+    return false;
+  }
+
+  return true;
 };
 
 interface SceneProps {
