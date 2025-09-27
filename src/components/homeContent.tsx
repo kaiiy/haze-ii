@@ -95,27 +95,4 @@ const TutorialContent = () => (
   </div>
 );
 
-const Tutorial2Content = () => (
-  <div className="text-xl flex flex-col text-center pt-1">
-    <div>
-      <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を4回、「スペースキー」を1回、「上矢印キー」を4回、そして最後に「エンターキー」を1回押してください。" />
-    </div>
-  </div>
-);
-
-const Tutorial2DarkContent = () => (
-  <div className="text-xl flex flex-col text-center pt-1">
-    <div>
-      <BudouX text="下の正方形「7」をクリックして、「右矢印キー」を4回、「スペースキー」を1回、「上矢印キー」を2回、そして最後に「エンターキー」を1回押してください。" />
-    </div>
-  </div>
-);
-
-export {
-  Info,
-  PreconditionContent,
-  Title,
-  Tutorial2Content,
-  Tutorial2DarkContent,
-  TutorialContent,
-};
+export { Info, PreconditionContent, Title, TutorialContent };

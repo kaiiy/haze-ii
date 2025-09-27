@@ -12,6 +12,5 @@
 - [Scene 4](./scene4.md)
 - [Scene 5](./scene5.md)
 - [Scene 6](./scene6.md)
-- [Scene 7](./scene7.md)
 
 - [Last](./last.md)

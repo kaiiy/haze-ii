@@ -299,9 +299,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
             <SceneBox
-              index="5"
+              index="4"
               clear={isSceneClear(
-                "5",
+                "4",
                 sceneStates,
               )}
             />
@@ -328,9 +328,9 @@ const Scene = ({ containerWidth, baseSize }: SceneProps) => {
           </div>
           <div className="flex flex-wrap gap-3 justify-center font-notoSerif mb-6">
             <SceneBox
-              index="7"
+              index="6"
               clear={isSceneClear(
-                "7",
+                "6",
                 sceneStates,
               )}
             />
